@@ -9,8 +9,7 @@ data class PersonModel(
     val nickname: String,
     val emailAccount: String? = null,
     val birthday: LocalDate,
-    val gender: Genders
-    //,
-//    val image: String? = null
+    val gender: Genders,
+    val image: String? = null
     ) {
 }

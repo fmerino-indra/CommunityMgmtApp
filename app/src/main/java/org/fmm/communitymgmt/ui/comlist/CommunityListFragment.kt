@@ -11,9 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.databinding.FragmentCommunityListBinding
+import org.fmm.communitymgmt.ui.comlist.recyclerview.CommunityListAdapter
 
 /**
  * A simple [Fragment] subclass.
@@ -28,6 +30,8 @@ class CommunityListFragment : Fragment() {
 
     private var _binding: FragmentCommunityListBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var communityListAdapter: CommunityListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +53,17 @@ class CommunityListFragment : Fragment() {
     }
 
     private fun initUI() {
+        initAdapter()
         initUIState()
+    }
+
+    private fun initAdapter() {
+        // De momento no le pasamos función para onSelect
+        communityListAdapter = CommunityListAdapter()
+        binding.rvCommunityList.apply {
+            layoutManager = GridLayoutManager(context, 2)
+            adapter = communityListAdapter
+        }
     }
 
     private fun initUIState() {
@@ -57,8 +71,6 @@ class CommunityListFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 communityListViewModel.state.collect{
-                    // Cuando tenga un RecycleView, aquí tendré que llamar a su adapter
-                // .updateList(it)
                     when(it) {
                         is CommunityListState.Error -> errorState()
                         CommunityListState.Loading -> loadingState()
@@ -80,7 +92,9 @@ class CommunityListFragment : Fragment() {
 
     private fun successState(state: CommunityListState.Success) {
         binding.progressBar.isVisible = false
-        binding.tvTextAux.text = state.communityList.toString()
+        communityListAdapter.updateCommunityList(state.communityList)
+        Log.i("[FMMP]", "Debería estar pintando el RecyclerView")
+        Log.i("[FMMP", "Tamaño: ${state.communityList.size}")
     }
 
 

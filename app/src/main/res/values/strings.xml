@@ -3,4 +3,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="community_list">Community List</string>
     <string name="enrollment">Enrollment</string>
+    <string name="person_image">Photo</string>
+    <string name="address">Address</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
 </resources>

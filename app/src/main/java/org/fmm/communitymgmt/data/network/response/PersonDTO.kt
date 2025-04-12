@@ -21,5 +21,5 @@ data class PersonDTO(
     val image: ImageDTO? = null
     ) {
     fun toDomain():PersonModel = PersonModel(name, surname1, surname2, nickname, emailAccount,
-        LocalDate.parse("2025-01-01"), Genders.MALE)
+        LocalDate.parse("2025-01-01"), Genders.MALE, image?.smallPhoto)
 }

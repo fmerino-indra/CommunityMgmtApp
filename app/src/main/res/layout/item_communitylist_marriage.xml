@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/clCommunityList"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+
+    >
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/husbandPhoto"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:contentDescription="@string/person_image"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/husbandName"
+        app:layout_constraintWidth_percent="0.5"
+        app:shapeAppearanceOverlay="@style/Circular"
+        />
+    <TextView
+        android:id="@+id/husbandName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryDark"
+        android:text="@string/name"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/husbandPhoto"
+        app:layout_constraintTop_toTopOf="@id/husbandPhoto"
+        app:layout_constraintWidth_percent="0.5"
+
+        />
+    <TextView
+        android:id="@+id/husbandPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryDark"
+        android:text="@string/phone"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/husbandPhoto"
+        app:layout_constraintTop_toBottomOf="@id/husbandName"
+        app:layout_constraintWidth_percent="0.5"
+
+        />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/wifePhoto"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:contentDescription="@string/person_image"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/husbandPhoto"
+        app:layout_constraintEnd_toStartOf="@id/wifeName"
+        app:layout_constraintWidth_percent="0.5"
+        app:shapeAppearanceOverlay="@style/Circular"
+        />
+    <TextView
+        android:id="@+id/wifeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryDark"
+        android:text="@string/name"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/wifePhoto"
+        app:layout_constraintTop_toTopOf="@id/wifePhoto"
+        app:layout_constraintWidth_percent="0.5"
+
+        />
+    <TextView
+        android:id="@+id/wifePhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryDark"
+        android:text="@string/phone"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/wifePhoto"
+        app:layout_constraintTop_toBottomOf="@id/wifeName"
+        app:layout_constraintWidth_percent="0.5"
+
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

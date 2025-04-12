@@ -7,14 +7,11 @@
     tools:context=".ui.comlist.CommunityListFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/tvTextAux"
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/community_list"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_height="match_parent"
+        android:id="@+id/rvCommunityList"
+        />
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
