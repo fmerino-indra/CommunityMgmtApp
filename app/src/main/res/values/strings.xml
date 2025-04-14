@@ -7,4 +7,9 @@
     <string name="address">Address</string>
     <string name="name">Name</string>
     <string name="phone">Phone</string>
+    <string name="marriageName">%1$s %2$s %3$s</string>
+    <string name="email">email</string>
+    <string name="icphone">icPhone</string>
+    <string name="icmail">icmail</string>
+    <string name="nickName">Nick Name</string>
 </resources>

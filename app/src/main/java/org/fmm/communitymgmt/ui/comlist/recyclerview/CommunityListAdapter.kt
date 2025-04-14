@@ -2,6 +2,7 @@ package org.fmm.communitymgmt.ui.comlist.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.AutoCompleteTextView.Validator
 import androidx.recyclerview.widget.RecyclerView
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.domainmodels.model.AbstractRelationship
@@ -34,6 +35,11 @@ class CommunityListAdapter(private var communityList: List<AbstractRelationship>
                     .item_communitylist_marriage, parent, false)
                 CommunityListMarriageViewHolder(view)
             }
+            VIEW_TYPE_SINGLE -> {
+                val view = LayoutInflater.from(parent.context).inflate(R.layout
+                    .item_communitylist_single, parent, false)
+                CommunityListSingleViewHolder(view)
+            }
             else -> {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout
                     .item_communitylist_marriage, parent, false)
@@ -49,6 +55,7 @@ class CommunityListAdapter(private var communityList: List<AbstractRelationship>
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = communityList[position]) {
             is MarriageModel -> (holder as CommunityListMarriageViewHolder).render(item)
+            is SingleModel -> (holder as CommunityListSingleViewHolder).render(item)
         }
     }
 

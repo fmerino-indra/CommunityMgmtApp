@@ -15,5 +15,5 @@ data class SingleDTO(
 
     ) : AbstractRelationshipDTO() {
 
-    override fun toDomain():SingleModel = SingleModel(id, relationshipName, person.toDomain())
+    fun toDomain():SingleModel = SingleModel(id, relationshipName, person.toDomain())
 }

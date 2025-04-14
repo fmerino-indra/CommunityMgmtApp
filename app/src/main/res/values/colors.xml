@@ -2,13 +2,45 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
+<!--
     <color name="primary">#1f1f1f</color>
     <color name="primaryDark">#181818</color>
     <color name="secondary">#ee9361</color>
     <color name="accent">#ffffff</color>
-    <color name="gold">#ffe78f</color>
     <color name="black_alpha">#98000000</color>
-
+-->
+    <color name="gold">#ffe78f</color>
     <color name="red">#ff0000</color>
+
+    <color name="primary">#2d6a4e</color>
+    <color name="secondary">#516258</color>
+    <color name="tertiary">#466271</color>
+    <color name="error">#ab2d25</color>
+    <color name="background">#fbfdf9</color>
+    <color name="outline">#727973</color>
+
+    <color name="onprimary">#ffffff</color>
+    <color name="onsecondary">#ffffff</color>
+    <color name="ontertiary">#ffffff</color>
+    <color name="onerror">#ffffff</color>
+    <color name="onbackground">#1a1c1a</color>
+
+    <color name="accent">#ffffff</color>
+
+    <color name="primaryContainer">#a4f5ca</color>
+    <color name="secondaryContainer">#092015</color>
+    <color name="tertiaryContainer">#c9e7f9</color>
+    <color name="errorContainer">#f9dbd7</color>
+    <color name="surface">#fbfdf9</color>
+    <color name="surfaceVariant">#dde5de</color>
+
+    <color name="onprimaryContainer">#092015</color>
+    <color name="onsecondaryContainer">#0f1f17</color>
+    <color name="ontertiaryContainer">#081e28</color>
+    <color name="onerrorContainer">#3b0605</color>
+    <color name="onsurface">#1a1c1a</color>
+    <color name="onsurfaceVariant">#424943</color>
+    s 191c1a
+    onb e1e3df
+    sv 404943
 </resources>

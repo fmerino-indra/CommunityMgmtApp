@@ -1,5 +1,6 @@
 package org.fmm.communitymgmt.ui.comlist.recyclerview
 
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
@@ -9,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.ItemCommunitylistMarriageBinding
 import org.fmm.communitymgmt.domainmodels.model.AbstractRelationship
+import org.fmm.communitymgmt.domainmodels.model.EmailAccount
 import org.fmm.communitymgmt.domainmodels.model.MarriageModel
+import java.util.stream.Collectors
 import kotlin.io.encoding.ExperimentalEncodingApi
 import kotlin.math.log
 
@@ -22,22 +25,46 @@ class CommunityListMarriageViewHolder(view: View): RecyclerView.ViewHolder(view)
             is MarriageModel -> {
                 var bitmap = decodeBase64ToBitmap((relationship.husband.image))
                 if (bitmap != null) {
-                    binding.husbandPhoto.setImageBitmap(bitmap)
+                    binding.hPhoto.setImageBitmap(bitmap)
                 } else {
-                    binding.husbandPhoto.setImageResource(R.drawable.ic_male_face)
+                    binding.hPhoto.setImageResource(R.drawable.ic_male_face)
                 }
                 bitmap = decodeBase64ToBitmap((relationship.wife.image))
                 if (bitmap != null) {
-                    binding.wifePhoto.setImageBitmap(bitmap)
+                    binding.wPhoto.setImageBitmap(bitmap)
                 } else {
-                    binding.wifePhoto.setImageResource(R.drawable.ic_female_face)
+                    binding.wPhoto.setImageResource(R.drawable.ic_female_face)
                 }
+                binding.hNickName.text = relationship.husband.nickname
+                binding.husbandName.text = binding.root.context.getString(R.string.marriageName,
+                    relationship.husband.name, relationship.husband.surname1, relationship
+                        .husband.surname2)
 
-                binding.husbandName.text = relationship.husband.nickname
-                binding.husbandPhone.text = relationship.husband.emailAccount
+                binding.hPhone.text = relationship.husband.mobileNumbers?.joinToString(
+                    separator = ", "){
+                    it.mobileNumber
+                }
+                Log.d("[FMMP]", "Nº de teléfono ${relationship.relationshipName} tratados")
+                binding.hEmail.text = relationship.husband.emailAccounts?.joinToString(
+                    separator = ", "){
+                    it.emailAccount
+                }
+                /*
+                Hay una función que hace esto:
+                    lista.jointToString(separator = ", ")
+                 */
+                binding.wNickName.text = relationship.wife.nickname
+                binding.wifeName.text = binding.root.context.getString(R.string.marriageName,
+                    relationship.wife.name, relationship.wife.surname1, relationship.wife.surname2)
 
-                binding.wifeName.text = relationship.wife.nickname
-                binding.wifePhone.text = relationship.wife.emailAccount
+                binding.wPhone.text = relationship.wife.mobileNumbers?.joinToString(
+                    separator = ", "){
+                    it.mobileNumber
+                }
+                binding.wEmail.text = relationship.wife.emailAccounts?.joinToString (
+                    separator = ", "){
+                    it.emailAccount
+                }
             }
         }
     }

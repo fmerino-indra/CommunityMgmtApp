@@ -18,6 +18,6 @@ data class MarriageDTO(
 
     ) : AbstractRelationshipDTO() {
 
-    override fun toDomain():MarriageModel = MarriageModel(id, relationshipName, husband.toDomain(),
+    fun toDomain():MarriageModel = MarriageModel(id, relationshipName, husband.toDomain(),
         wife.toDomain(), LocalDate.of(2000,12,12))
 }

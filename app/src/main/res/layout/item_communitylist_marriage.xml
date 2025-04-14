@@ -1,86 +1,322 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvHCommunityItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="16dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clHCommunityList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/husbandName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/hPhoto"
+                android:layout_width="@dimen/photo_width"
+                android:layout_height="@dimen/photo_height"
+                android:contentDescription="@string/person_image"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/husbandName"
+                app:layout_constraintWidth_percent="0.25"
+                app:shapeAppearanceOverlay="@style/Rounded" />
+
+            <TextView
+                android:id="@+id/hNickName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/nickName"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintStart_toEndOf="@id/hPhoto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/hPhoto"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                />
+
+            <TextView
+                android:id="@+id/hPhone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/phone"
+                android:textSize="14sp"
+                app:drawableStartCompat="@drawable/ic_phone"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintStart_toStartOf="@id/hNickName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hNickName"
+                />
+
+            <TextView
+                android:id="@+id/hEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textSize="14sp"
+                app:drawableLeftCompat="@drawable/ic_email"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintStart_toStartOf="@id/hNickName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hPhone"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvWCommunityItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="16dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clWCommunityList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/wifeName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/wPhoto"
+                android:layout_width="@dimen/photo_width"
+                android:layout_height="@dimen/photo_height"
+                android:contentDescription="@string/person_image"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/wifeName"
+                app:shapeAppearanceOverlay="@style/Rounded" />
+
+            <TextView
+                android:id="@+id/wNickName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/nickName"
+                android:textSize="14sp"
+                android:textStyle="bold"
+
+                app:layout_constrainedWidth="true"
+                app:layout_constraintStart_toEndOf="@id/wPhoto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/wPhoto"
+
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+
+                />
+
+            <TextView
+                android:id="@+id/wPhone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/phone"
+                android:textSize="14sp"
+                app:drawableStartCompat="@drawable/ic_phone"
+                app:layout_constraintStart_toStartOf="@id/wNickName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/wNickName"
+                />
+
+            <TextView
+                android:id="@+id/wEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textSize="14sp"
+                app:drawableLeftCompat="@drawable/ic_email"
+                app:layout_constraintStart_toStartOf="@id/wNickName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/wPhone"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout><!--
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/clCommunityList"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp"
-
     >
+    <TextView
+        android:id="@+id/relationshipName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_horizontal"
 
+        />
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/husbandPhoto"
-        android:layout_width="0dp"
+        android:layout_width="100dp"
         android:layout_height="100dp"
         android:contentDescription="@string/person_image"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/husbandName"
+        app:layout_constraintTop_toBottomOf="@id/relationshipName"
         app:layout_constraintWidth_percent="0.5"
-        app:shapeAppearanceOverlay="@style/Circular"
+        app:shapeAppearanceOverlay="@style/Rounded"
         />
     <TextView
         android:id="@+id/husbandName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/husbandPhoto"
+        app:layout_constraintTop_toBottomOf="@id/husbandPhoto"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constrainedWidth="true"
+        />
+    <ImageView
+        android:id="@+id/icHPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/primaryDark"
-        android:text="@string/name"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/husbandPhoto"
-        app:layout_constraintTop_toTopOf="@id/husbandPhoto"
-        app:layout_constraintWidth_percent="0.5"
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/husbandPhone"
+        app:layout_constraintTop_toBottomOf="@id/husbandName"
+        android:contentDescription="@string/icphone"
+        android:src="@drawable/ic_phone"
         />
+
     <TextView
         android:id="@+id/husbandPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/primaryDark"
         android:text="@string/phone"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@id/husbandPhoto"
+        app:layout_constraintStart_toEndOf="@id/icHPhone"
         app:layout_constraintTop_toBottomOf="@id/husbandName"
         app:layout_constraintWidth_percent="0.5"
-
+        app:layout_constrainedWidth="true"
         />
 
+    <ImageView
+        android:id="@+id/icHEMail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/husbandEmail"
+        app:layout_constraintTop_toBottomOf="@id/husbandPhone"
+        android:contentDescription="@string/icmail"
+        android:src="@drawable/ic_email"
+        />
+    <TextView
+        android:id="@+id/husbandEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/email"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/husbandPhoto"
+        app:layout_constraintTop_toBottomOf="@id/husbandPhone"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constrainedWidth="true"
+        />
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/wifePhoto"
-        android:layout_width="0dp"
+        android:layout_width="100dp"
         android:layout_height="100dp"
         android:contentDescription="@string/person_image"
         android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/husbandPhoto"
-        app:layout_constraintEnd_toStartOf="@id/wifeName"
+        app:layout_constraintStart_toEndOf="@id/husbandPhoto"
+        app:layout_constraintTop_toTopOf="@id/husbandPhoto"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.5"
-        app:shapeAppearanceOverlay="@style/Circular"
+        app:shapeAppearanceOverlay="@style/Rounded"
         />
     <TextView
         android:id="@+id/wifeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/primaryDark"
         android:text="@string/name"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/wifePhoto"
-        app:layout_constraintTop_toTopOf="@id/wifePhoto"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/wifePhoto"
+        app:layout_constraintTop_toBottomOf="@id/wifePhoto"
         app:layout_constraintWidth_percent="0.5"
-
+        app:layout_constrainedWidth="true"
+        />
+    <ImageView
+        android:id="@+id/icWPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/wifePhoto"
+        app:layout_constraintEnd_toStartOf="@id/wifePhone"
+        app:layout_constraintTop_toBottomOf="@id/wifeName"
+        android:contentDescription="@string/icphone"
+        android:src="@drawable/ic_phone"
         />
     <TextView
         android:id="@+id/wifePhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/primaryDark"
         android:text="@string/phone"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@id/wifePhoto"
+        app:layout_constraintStart_toStartOf="@id/wifePhoto"
         app:layout_constraintTop_toBottomOf="@id/wifeName"
         app:layout_constraintWidth_percent="0.5"
-
+        app:layout_constrainedWidth="true"
         />
+    <ImageView
+        android:id="@+id/icWEMail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/wifePhoto"
+        app:layout_constraintEnd_toStartOf="@id/wifeEmail"
+        app:layout_constraintTop_toBottomOf="@id/wifePhone"
+        android:contentDescription="@string/icmail"
+        android:src="@drawable/ic_email"
+        />
+    <TextView
+        android:id="@+id/wifeEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/email"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/icWEMail"
+        app:layout_constraintTop_toBottomOf="@id/wifePhone"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constrainedWidth="true"
+        />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+-->

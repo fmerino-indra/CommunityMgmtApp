@@ -1,5 +1,6 @@
 package org.fmm.communitymgmt.ui.comlist
 
+import android.icu.text.Transliterator.Position
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.databinding.FragmentCommunityListBinding
@@ -60,8 +62,28 @@ class CommunityListFragment : Fragment() {
     private fun initAdapter() {
         // De momento no le pasamos función para onSelect
         communityListAdapter = CommunityListAdapter()
+        val lM = GridLayoutManager(context, 2)
+        lM.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                val viewType = communityListAdapter.getItemViewType(position)
+                return if (viewType == 0) {
+                    2
+                } else {
+                    1
+                }
+            }
+        }
+//        binding.rvCommunityList.apply {
+//            layoutManager = GridLayoutManager(context, 2)
+//            layoutManager = lM
+//            adapter = communityListAdapter
+//        }
+
+
         binding.rvCommunityList.apply {
-            layoutManager = GridLayoutManager(context, 2)
+            layoutManager = LinearLayoutManager(context).apply {
+                orientation = LinearLayoutManager.VERTICAL
+            }
             adapter = communityListAdapter
         }
     }

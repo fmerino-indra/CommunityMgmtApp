@@ -11,5 +11,6 @@ typealias CommunityListDTO = List<@Polymorphic AbstractRelationshipDTO>
 abstract class AbstractRelationshipDTO {
     abstract val id: Int
     abstract val relationshipName: String
-    abstract fun toDomain(): AbstractRelationship
+    //abstract fun toDomain(): AbstractRelationship
+
 }
