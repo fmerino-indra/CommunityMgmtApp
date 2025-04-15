@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/community_list_graph"
+    app:startDestination="@id/communityListFragment">
+
+    <fragment
+        android:id="@+id/communityListFragment"
+        android:name="org.fmm.communitymgmt.ui.comlist.list.CommunityListFragment"
+        android:label="fragment_community_list"
+        tools:layout="@layout/fragment_community_list" >
+        <action
+            android:id="@+id/action_communityListFragment_to_editPersonFragment"
+            app:destination="@id/editPersonFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enrollmentFragment"
+        android:name="org.fmm.communitymgmt.ui.enrollment.EnrollmentFragment"
+        android:label="fragment_enrollment"
+        tools:layout="@layout/fragment_enrollment" />
+    <fragment
+        android:id="@+id/editPersonFragment"
+        android:name="org.fmm.communitymgmt.ui.comlist.detail.EditPersonFragment"
+        android:label="EditPersonFragment" >
+        <argument android:name="relationshipId"
+            app:argType="integer"
+            />
+    </fragment>
+</navigation>

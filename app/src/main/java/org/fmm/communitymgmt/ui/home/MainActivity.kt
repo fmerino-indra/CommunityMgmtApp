@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.fmm.communitymgmt.R
@@ -27,12 +29,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun initUI() {
         initNavigation()
+        initToolBar()
+    }
+
+    private fun initToolBar() {
+        //supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     private fun initNavigation() {
         val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as
                 NavHostFragment
         navController = navHost.navController
+
+        //setSupportActionBar(binding.mgmtToolbar)
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        binding.mgmtToolbar.setupWithNavController(navController)
         binding.bottomNavView.setupWithNavController(navController)
     }
 }

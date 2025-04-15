@@ -1,4 +1,4 @@
-package org.fmm.communitymgmt.ui.comlist.recyclerview
+package org.fmm.communitymgmt.ui.comlist.list.recyclerview
 
 import android.content.res.Resources
 import android.graphics.Bitmap
@@ -19,7 +19,7 @@ import kotlin.math.log
 class CommunityListMarriageViewHolder(view: View): RecyclerView.ViewHolder(view) {
     private val binding = ItemCommunitylistMarriageBinding.bind(view)
 
-    fun render(relationship: AbstractRelationship){
+    fun render(relationship: AbstractRelationship, onItemSelected: (AbstractRelationship) -> Unit) {
         Log.d("[FMMP]", "Tiene que pintar esto: ${relationship.relationshipName}")
         when(relationship) {
             is MarriageModel -> {

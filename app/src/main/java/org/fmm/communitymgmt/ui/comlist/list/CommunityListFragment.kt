@@ -1,6 +1,5 @@
-package org.fmm.communitymgmt.ui.comlist
+package org.fmm.communitymgmt.ui.comlist.list
 
-import android.icu.text.Transliterator.Position
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,12 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.databinding.FragmentCommunityListBinding
-import org.fmm.communitymgmt.ui.comlist.recyclerview.CommunityListAdapter
+import org.fmm.communitymgmt.ui.comlist.list.recyclerview.CommunityListAdapter
 
 /**
  * A simple [Fragment] subclass.
@@ -61,7 +61,12 @@ class CommunityListFragment : Fragment() {
 
     private fun initAdapter() {
         // De momento no le pasamos función para onSelect
-        communityListAdapter = CommunityListAdapter()
+        communityListAdapter = CommunityListAdapter(onItemSelected = {
+            Log.d("[FMMP]", "Se ha pulsado sobre el CardView ${it.relationshipName}")
+
+            findNavController().navigate(CommunityListFragmentDirections
+                .actionCommunityListFragmentToEditPersonFragment(it.id))
+        })
         val lM = GridLayoutManager(context, 2)
         lM.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
@@ -118,6 +123,5 @@ class CommunityListFragment : Fragment() {
         Log.i("[FMMP]", "Debería estar pintando el RecyclerView")
         Log.i("[FMMP", "Tamaño: ${state.communityList.size}")
     }
-
 
 }

@@ -1,4 +1,4 @@
-package org.fmm.communitymgmt.ui.comlist.recyclerview
+package org.fmm.communitymgmt.ui.comlist.list.recyclerview
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -19,7 +19,7 @@ import kotlin.math.log
 class CommunityListSingleViewHolder(view: View): RecyclerView.ViewHolder(view) {
     private val binding = ItemCommunitylistSingleBinding.bind(view)
 
-    fun render(relationship: AbstractRelationship){
+    fun render(relationship: AbstractRelationship, onItemSelected: (AbstractRelationship) -> Unit){
         Log.d("[FMMP]", "Tiene que pintar esto: ${relationship.relationshipName}")
         when(relationship) {
             is SingleModel -> {
@@ -45,8 +45,15 @@ class CommunityListSingleViewHolder(view: View): RecyclerView.ViewHolder(view) {
                     separator = ", "){
                     it.emailAccount
                 }
+                binding.cvCommunityItem.setOnClickListener {
+                    itemClicked(newLambda = {onItemSelected(relationship)})
+                }
             }
         }
+    }
+
+    private fun itemClicked(newLambda: () -> Unit) {
+        newLambda()
     }
 
     @OptIn(ExperimentalEncodingApi::class)

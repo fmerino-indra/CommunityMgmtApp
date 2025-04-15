@@ -1,4 +1,4 @@
-package org.fmm.communitymgmt.ui.comlist.recyclerview
+package org.fmm.communitymgmt.ui.comlist.list.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,7 +10,9 @@ import org.fmm.communitymgmt.domainmodels.model.MarriageModel
 import org.fmm.communitymgmt.domainmodels.model.OtherModel
 import org.fmm.communitymgmt.domainmodels.model.SingleModel
 
-class CommunityListAdapter(private var communityList: List<AbstractRelationship> = emptyList()):
+class CommunityListAdapter(private var communityList: List<AbstractRelationship> = emptyList(),
+                           private val onItemSelected: (AbstractRelationship) ->
+                           Unit):
     RecyclerView
     .Adapter<RecyclerView.ViewHolder>() {
         companion object {
@@ -54,8 +56,10 @@ class CommunityListAdapter(private var communityList: List<AbstractRelationship>
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = communityList[position]) {
-            is MarriageModel -> (holder as CommunityListMarriageViewHolder).render(item)
-            is SingleModel -> (holder as CommunityListSingleViewHolder).render(item)
+            is MarriageModel -> (holder as CommunityListMarriageViewHolder).render(item,
+                onItemSelected)
+            is SingleModel -> (holder as CommunityListSingleViewHolder).render(item,
+                onItemSelected)
         }
     }
 

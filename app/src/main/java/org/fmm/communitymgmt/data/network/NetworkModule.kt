@@ -18,7 +18,9 @@ import org.fmm.communitymgmt.data.network.response.MarriageDTO
 import org.fmm.communitymgmt.data.network.response.OtherDTO
 import org.fmm.communitymgmt.data.network.response.SingleDTO
 import org.fmm.communitymgmt.data.repositories.CommunityListRepositoryImpl
+import org.fmm.communitymgmt.data.repositories.RelationshipRepositoryImpl
 import org.fmm.communitymgmt.domainlogic.repositories.CommunityListRepository
+import org.fmm.communitymgmt.domainlogic.repositories.RelationshipRepository
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -70,6 +72,16 @@ object NetworkModule {
     fun provideCommunityListRepository(communityListApiService: CommunityListApiService)
     :CommunityListRepository {
         return CommunityListRepositoryImpl(communityListApiService)
+    }
+
+    @Provides
+    fun provideRelationshipApiService(retrofit:Retrofit):RelationshipApiService {
+        return retrofit.create(RelationshipApiService::class.java)
+    }
+    @Provides
+    fun provideRelationshipRepository(relationshipApiService: RelationshipApiService)
+            :RelationshipRepository {
+        return RelationshipRepositoryImpl(relationshipApiService)
     }
 
 }
