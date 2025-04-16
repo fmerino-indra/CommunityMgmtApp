@@ -9,3 +9,4 @@ plugins {
     id("androidx.navigation.safeargs.kotlin") version "2.8.9" apply false
 }
 val viewBindingEnabled by extra(true)
+val dataBindingEnabled by extra(true)

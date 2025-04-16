@@ -6,4 +6,9 @@ import org.fmm.communitymgmt.domainmodels.model.MobileNumber
 @Serializable
 data class MobileNumberDTO (val id:Int, val mobileNumber:String) {
     fun toDomain():MobileNumber = MobileNumber(id, mobileNumber)
+    companion object {
+        fun fromDomain(mobileNumber: MobileNumber) = with(mobileNumber) {
+            MobileNumberDTO(id, this.mobileNumber)
+        }
+    }
 }

@@ -6,4 +6,11 @@ import org.fmm.communitymgmt.domainmodels.model.EmailAccount
 @Serializable
 data class EmailAccountDTO (val id:Int, val emailAccount:String) {
     fun toDomain() = EmailAccount(id, emailAccount)
+
+    companion object {
+        fun fromDomain(emailAccount: EmailAccount) =
+            with(emailAccount) {
+                EmailAccountDTO(id, this.emailAccount)
+            }
+    }
 }

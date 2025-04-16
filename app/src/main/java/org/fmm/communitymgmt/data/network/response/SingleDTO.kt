@@ -15,5 +15,14 @@ data class SingleDTO(
 
     ) : AbstractRelationshipDTO() {
 
-    fun toDomain():SingleModel = SingleModel(id, relationshipName, person.toDomain())
+    fun toDomain() = SingleModel(id, relationshipName, person.toDomain())
+
+    companion object {
+        fun fromDomain(model: SingleModel) = model.run {
+            SingleDTO(
+                id = this.id, relationshipName = this.relationshipName, person = PersonDTO
+                    .fromDomain(this.person)
+            )
+        }
+    }
 }

@@ -41,10 +41,9 @@ class MainActivity : AppCompatActivity() {
                 NavHostFragment
         navController = navHost.navController
 
-        //setSupportActionBar(binding.mgmtToolbar)
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        val appBarConfiguration = AppBarConfiguration(navController.graph, binding.dlCommunityListMain)
 
-        binding.mgmtToolbar.setupWithNavController(navController)
-        binding.bottomNavView.setupWithNavController(navController)
+        binding.laToolbar.setupWithNavController(navController,appBarConfiguration)
+        binding.mainBottomNavView.setupWithNavController(navController)
     }
 }

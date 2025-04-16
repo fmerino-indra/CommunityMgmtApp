@@ -1,8 +1,10 @@
 package org.fmm.communitymgmt.domainmodels.model
 
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
+
 
 data class PersonModel(
+    val id: Int,
     val name: String,
     val surname1: String?,
     val surname2: String? = null,

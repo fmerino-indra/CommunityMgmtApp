@@ -4,4 +4,5 @@ import org.fmm.communitymgmt.domainmodels.model.AbstractRelationship
 
 interface RelationshipRepository {
     suspend fun getRelationshipDetail(id:Int): AbstractRelationship?
+    suspend fun editRelationshipDetail(relationship:AbstractRelationship)
 }

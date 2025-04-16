@@ -56,10 +56,12 @@ android {
     }
 
     /**
-     * Habilita el viewBinding
+     * Habilita el viewBinding y el dataBinding
      */
     buildFeatures {
         viewBinding = rootProject.extra["viewBindingEnabled"] as Boolean
+//        dataBinding = rootProject.extra["dataBindingEnabled"] as Boolean
+        dataBinding = true
         buildConfig=true
     }
 }
@@ -94,4 +96,7 @@ dependencies {
     //kotlinx-serialization
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit2.kotlinx.serialization.converter)
+
+    //kotlinx-datetime: LocalDateComponentSerializer
+    implementation(libs.kotlinx.datetime)
 }

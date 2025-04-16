@@ -38,4 +38,17 @@ class RelationshipRepositoryImpl @Inject constructor(private val apiService:
         }
         return null
     }
+
+    override suspend fun editRelationshipDetail(relationship: AbstractRelationship) {
+        runCatching {
+            if (relationship is SingleModel) {
+                apiService.editRelationshipDetail(relationship.id, SingleDTO.fromDomain
+                    (relationship))
+            }
+        }.onSuccess {
+            Log.d("[FMMP]", "Editado correctamente: \n $it")
+        }.onFailure {
+            Log.e("[FMMP]", "Ha ocurrido un error al Editar: \n $it")
+        }
+    }
 }

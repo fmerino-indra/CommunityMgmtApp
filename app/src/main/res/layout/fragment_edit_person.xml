@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Aquí defines las variables que van a estar disponibles en el layout -->
+    <data>
+        <variable
+            name="viewModelFMM"
+            type="org.fmm.communitymgmt.ui.comlist.detail.EditPersonViewModel" />
+        <variable
+            name="formFMM"
+            type="org.fmm.communitymgmt.ui.comlist.detail.EditPersonFormState" />
+    </data>
+
+<LinearLayout
+
     android:id="@+id/llEditPersonalData"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
+
     <EditText
         android:id="@+id/name"
         android:layout_width="match_parent"
@@ -13,6 +27,8 @@
         android:hint="@string/name"
         android:inputType="text"
         android:autofillHints=""
+        app:formName="@{formFMM}"
+        app:onNameChanged="@{viewModelFMM::onNameChanged}"
         />
     <EditText
         android:id="@+id/surname1"
@@ -21,6 +37,8 @@
         android:hint="@string/surname1"
         android:inputType="text"
         android:autofillHints=""
+        app:formSurname1="@{formFMM}"
+        app:onSurname1Changed="@{viewModelFMM::onSurname1Changed}"
         />
     <EditText
         android:id="@+id/surname2"
@@ -29,6 +47,8 @@
         android:hint="@string/surname2"
         android:inputType="text"
         android:autofillHints=""
+        app:formSurname2="@{formFMM}"
+        app:onSurname2Changed="@{viewModelFMM::onSurname2Changed}"
         />
     <LinearLayout
         android:layout_width="wrap_content"
@@ -40,13 +60,17 @@
         android:id="@+id/btnAccept"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/accept"/>
+
+        android:text="@string/accept"
+        android:enabled="@{formFMM.valid}"
+        />
 
     <Button
         android:id="@+id/btnCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
+        android:layout_marginHorizontal="8dp"
         android:text="@string/cancel"/>
     </LinearLayout>
     <ProgressBar
@@ -57,3 +81,4 @@
         android:indeterminateTint="@color/gold"
         />
 </LinearLayout>
+</layout>
