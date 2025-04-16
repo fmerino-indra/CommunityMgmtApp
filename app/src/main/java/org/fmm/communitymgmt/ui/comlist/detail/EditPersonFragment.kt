@@ -211,8 +211,15 @@ Lo hacemos con setOnClickLIstener
                     }
                 }
             }
-            view.removeTextChangedListener(textWatcher)
+
+            val existingWatcher = view.getTag(R.id.edit_text_watcher_tag) as? TextWatcher
+            if (existingWatcher != null) {
+                view.removeTextChangedListener(existingWatcher)
+            }
+            // Esta forma no funciona
+            // view.removeTextChangedListener(textWatcher)
             view.addTextChangedListener(textWatcher)
+            view.setTag(R.id.edit_text_watcher_tag, textWatcher)
         }
 
         @BindingAdapter("formSurname1", "onSurname1Changed", requireAll = true)
@@ -228,6 +235,11 @@ Lo hacemos con setOnClickLIstener
                 Log.d("[FMMP] [EditPersonFragment - BindingAdapter]", "El valor de state.surname1" +
                         " ha cambiado\n ${state.surname1}")
                 view.setText(state.surname1)
+            }
+
+            val existingWatcher = view.getTag(R.id.edit_text_watcher_tag) as? TextWatcher
+            if (existingWatcher != null) {
+                view.removeTextChangedListener(existingWatcher)
             }
 
             val textWatcher = object: TextWatcher {
@@ -257,8 +269,8 @@ Lo hacemos con setOnClickLIstener
                 }
 
             }
-            view.removeTextChangedListener(textWatcher)
             view.addTextChangedListener(textWatcher)
+            view.setTag(R.id.edit_text_watcher_tag, textWatcher)
         }
 
         @BindingAdapter("formSurname2", "onSurname2Changed", requireAll = true)
@@ -274,6 +286,11 @@ Lo hacemos con setOnClickLIstener
                 Log.d("[FMMP] [EditPersonFragment - BindingAdapter]", "El valor de state.surname2" +
                         " ha cambiado\n ${state.surname2}")
                 view.setText(state.surname2)
+            }
+
+            val existingWatcher = view.getTag(R.id.edit_text_watcher_tag) as? TextWatcher
+            if (existingWatcher != null) {
+                view.removeTextChangedListener(existingWatcher)
             }
 
             val textWatcher = object : TextWatcher {
@@ -293,8 +310,8 @@ Lo hacemos con setOnClickLIstener
                     }
                 }
             }
-            view.removeTextChangedListener(textWatcher)
             view.addTextChangedListener(textWatcher)
+            view.setTag(R.id.edit_text_watcher_tag, textWatcher)
         }
     }
 }
