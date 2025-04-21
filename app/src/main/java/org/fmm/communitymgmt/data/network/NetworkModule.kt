@@ -1,9 +1,11 @@
 package org.fmm.communitymgmt.data.network
 
+import android.content.Context
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -21,6 +23,9 @@ import org.fmm.communitymgmt.data.repositories.CommunityListRepositoryImpl
 import org.fmm.communitymgmt.data.repositories.RelationshipRepositoryImpl
 import org.fmm.communitymgmt.domainlogic.repositories.CommunityListRepository
 import org.fmm.communitymgmt.domainlogic.repositories.RelationshipRepository
+import org.fmm.communitymgmt.ui.security.util.Auth0Manager
+import org.fmm.communitymgmt.ui.security.util.EncryptedPrefsStorage
+import org.fmm.communitymgmt.ui.security.util.SecureConfigManager
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -47,7 +52,7 @@ object NetworkModule {
     @Singleton
     @OptIn(ExperimentalSerializationApi::class) // Marcamos la función porque algunas
     // características están marcadas como experimentales.
-    fun provideRetrofiet():Retrofit {
+    fun provideRetrofit():Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
@@ -84,4 +89,33 @@ object NetworkModule {
         return RelationshipRepositoryImpl(relationshipApiService)
     }
 
+/*
+    @Provides
+    @Singleton
+    fun provideEncryptedPrefsStorage (@ApplicationContext context: Context): EncryptedPrefsStorage {
+        return EncryptedPrefsStorage(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuth0Manager (
+        @ApplicationContext context: Context,
+        encryptedPrefsStorage: EncryptedPrefsStorage,
+        secureConfigManager: SecureConfigManager
+    ): Auth0Manager {
+        return Auth0Manager(
+            context, encryptedPrefsStorage,
+            secureConfigManager
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideSecureConfigManager (@ApplicationContext context: Context, encryptedPrefsStorage:
+    EncryptedPrefsStorage
+    ): SecureConfigManager {
+        return SecureConfigManager(context, encryptedPrefsStorage)
+    }
+
+ */
 }

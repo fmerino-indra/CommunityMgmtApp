@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="secure_prefs_name">secure_prefs</string>
+    <string name="config_json_name">api-config.json</string>
+    <string name="config_json_client_id">client_id</string>
+    <string name="config_json_backend_domain">domain</string>
+
+    <string name="auth_token_key">auth_token</string>
+
+    <string name="com_auth0_domain">com_auth0_domain</string>
+    <string name="com_auth0_host">oauth2</string>
+    <!-- Google: org.fmm.communitymgmt:/oauth2/redirect-->
+    <!-- OAuth0: https://{YOUR_AUTH0_DOMAIN}/android/{YOUR_APP_PACKAGE_NAME}/callback-->
+
+</resources>

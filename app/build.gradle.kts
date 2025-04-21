@@ -28,6 +28,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders["auth0Domain"]= "@string/com_auth0_domain"
+        manifestPlaceholders["auth0Scheme"]= applicationId!!
+        manifestPlaceholders["auth0Host"]= "@string/com_auth0_host"
     }
 
     buildTypes {
@@ -99,4 +102,12 @@ dependencies {
 
     //kotlinx-datetime: LocalDateComponentSerializer
     implementation(libs.kotlinx.datetime)
+
+    //AppAuth: Esta es de más bajo nivel o mejor, más manual
+    //implementation(libs.appauth)
+
+    //Oauth 2
+    implementation(libs.auth0)
+//    implementation(libs.androidx.biometric)
+
 }
