@@ -31,8 +31,7 @@
         <item name="colorOnSurfaceVariant">@color/onsurfaceVariant</item>
     </style>
 
-    <style name="Theme.CommunityMgmtApp" parent="Base.Theme.CommunityMgmtApp">
-    </style>
+    <style name="Theme.CommunityMgmtApp" parent="Base.Theme.CommunityMgmtApp"></style>
 
     <style name="Title">
         <item name="android:textStyle">bold</item>

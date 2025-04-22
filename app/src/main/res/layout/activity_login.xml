@@ -5,13 +5,23 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.InitActivity">
-    <Button
-        android:id="@+id/btn_Login"
+    tools:context=".ui.security.google.LoginActivity">
+    <ImageView
+        android:id="@+id/icGoogle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/ic_google"
+        android:contentDescription="Logo de google"
+        android:layout_marginBottom="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/login"/>
+        />
+    <Button
+        android:id="@+id/btnLoginWithGoogle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/icGoogle"
+        app:layout_constraintTop_toTopOf="@+id/icGoogle"
+        android:text="@string/init_session_with_google"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

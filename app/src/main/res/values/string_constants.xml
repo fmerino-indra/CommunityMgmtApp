@@ -12,4 +12,6 @@
     <!-- Google: org.fmm.communitymgmt:/oauth2/redirect-->
     <!-- OAuth0: https://{YOUR_AUTH0_DOMAIN}/android/{YOUR_APP_PACKAGE_NAME}/callback-->
 
+    <string name="google_auth">https://accounts.google.com/o/oauth2/auth</string>
+    <string name="google_token">https://auth2.googleapis.com/token</string>
 </resources>

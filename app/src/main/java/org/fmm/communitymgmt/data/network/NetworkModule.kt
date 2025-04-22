@@ -23,7 +23,6 @@ import org.fmm.communitymgmt.data.repositories.CommunityListRepositoryImpl
 import org.fmm.communitymgmt.data.repositories.RelationshipRepositoryImpl
 import org.fmm.communitymgmt.domainlogic.repositories.CommunityListRepository
 import org.fmm.communitymgmt.domainlogic.repositories.RelationshipRepository
-import org.fmm.communitymgmt.ui.security.util.Auth0Manager
 import org.fmm.communitymgmt.ui.security.util.EncryptedPrefsStorage
 import org.fmm.communitymgmt.ui.security.util.SecureConfigManager
 import retrofit2.Retrofit

@@ -1,11 +1,10 @@
 package org.fmm.communitymgmt.ui.security.util
 
 import android.content.Context
-import com.auth0.android.authentication.storage.Storage
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.util.SecureStorage
 
-class EncryptedPrefsStorage (context:Context): Storage {
+class EncryptedPrefsStorage (context:Context) {
     private var secureStorage: SecureStorage = SecureStorage(context, context.getString(R.string.secure_prefs_name))
 
     fun saveString(key: String, value:String) {
@@ -31,7 +30,7 @@ class EncryptedPrefsStorage (context:Context): Storage {
     fun clear() {
         secureStorage.clearAll()
     }
-
+/*
     override fun remove(name: String) {
         secureStorage.deleteEncryptedValue(name)
     }
@@ -67,5 +66,7 @@ class EncryptedPrefsStorage (context:Context): Storage {
     override fun store(name: String, value: String?) {
         secureStorage.saveEncryptedString(name, value?:"")
     }
+
+ */
 
 }

@@ -1,4 +1,6 @@
 {
-  "client_id": "client id de Auth0",
-  "domain": "org.fmm.communitymgmt"
+  "client_id": "828614483216-ql47ddnq773mt6ge92ak0f1idkmlsb6d.apps.googleusercontent.com",
+  "redirect_uri": "com.googleusercontent.apps.828614483216-ql47ddnq773mt6ge92ak0f1idkmlsb6d:/oauth2redirect",
+  "authorization_scope": "openid email profile",
+  "discovery_uri": "https://accounts.google.com/.well-known/openid-configuration"
 }

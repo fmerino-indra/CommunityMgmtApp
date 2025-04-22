@@ -31,6 +31,8 @@ android {
         manifestPlaceholders["auth0Domain"]= "@string/com_auth0_domain"
         manifestPlaceholders["auth0Scheme"]= applicationId!!
         manifestPlaceholders["auth0Host"]= "@string/com_auth0_host"
+        manifestPlaceholders["appAuthRedirectScheme"]= "com.googleusercontent.apps.828614483216-ql47ddnq773mt6ge92ak0f1idkmlsb6d"
+
     }
 
     buildTypes {
@@ -104,10 +106,10 @@ dependencies {
     implementation(libs.kotlinx.datetime)
 
     //AppAuth: Esta es de más bajo nivel o mejor, más manual
-    //implementation(libs.appauth)
+    implementation(libs.appauth)
 
     //Oauth 2
-    implementation(libs.auth0)
-//    implementation(libs.androidx.biometric)
+//    implementation(libs.auth0)
+    implementation(libs.androidx.biometric)
 
 }

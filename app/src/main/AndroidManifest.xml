@@ -18,36 +18,30 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.home.InitActivity"
-            android:exported="true" >
+            android:name=".ui.security.google.LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.CommunityMgmtApp" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
         </activity>
         <activity
             android:name=".ui.home.MainActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"
+            android:theme="@style/Theme.CommunityMgmtApp" />
         <activity
-            android:name="com.auth0.android.provider.RedirectActivity"
+            android:name="net.openid.appauth.RedirectUriReceiverActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data
-                    android:host="${auth0Host}"
-                    android:pathPrefix="/redirect"
-                    android:scheme="${applicationId}" />
+                    android:host="oauth2redirect"
+                    android:scheme="${appAuthRedirectScheme}"/>
             </intent-filter>
-            <!-- Google: org.fmm.communitymgmt:/oauth2/redirect -->
-            <!-- OAuth0: https://{YOUR_AUTH0_DOMAIN}/android/{YOUR_APP_PACKAGE_NAME}/callback -->
-
         </activity>
     </application>
 
