@@ -106,10 +106,21 @@ dependencies {
     implementation(libs.kotlinx.datetime)
 
     //AppAuth: Esta es de más bajo nivel o mejor, más manual
-    implementation(libs.appauth)
+//    implementation(libs.appauth)
 
     //Oauth 2
 //    implementation(libs.auth0)
     implementation(libs.androidx.biometric)
 
+    // Credential Manager (Core)
+    implementation("androidx.credentials:credentials:1.5.0")
+
+    // Google ID Token Credential (extensión para Google Sign In)
+    implementation("androidx.credentials:credentials-play-services-auth:1.5.0")
+
+    // Opcional (si se quiere usar el botón federado de Google)
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+
+    // Antiguo GoogleSignIn
+    implementation("com.google.android.gms:play-services-auth:21.3.0")
 }

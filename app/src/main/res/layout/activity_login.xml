@@ -16,12 +16,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
-    <Button
-        android:id="@+id/btnLoginWithGoogle"
-        android:layout_width="match_parent"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/googleSignInButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/icGoogle"
-        app:layout_constraintTop_toTopOf="@+id/icGoogle"
-        android:text="@string/init_session_with_google"
-        />
+        android:text="Sign in with Google"
+        app:icon="@drawable/ic_google"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp"
+        app:layout_constraintStart_toEndOf="@+id/icGoogle"
+        app:layout_constraintTop_toTopOf="@id/icGoogle"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

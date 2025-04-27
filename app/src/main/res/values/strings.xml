@@ -66,4 +66,6 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="init_session_with_google">Init session with Google</string>
+    <string name="server_client_id">828614483216-ql47ddnq773mt6ge92ak0f1idkmlsb6d.apps.googleusercontent.com</string>
+    <string name="web_server_client_id">828614483216-4qvhvjf40tokokb7vjjgv1m1589i9ds7.apps.googleusercontent.com</string>
 </resources>
