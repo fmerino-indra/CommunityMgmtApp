@@ -9,6 +9,9 @@ plugins {
 
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt.android)
+
+    id("kotlin-parcelize")
+
 //    id("androidx.navigation.safeargs.kotlin")
 
 //    id("com.google.dagger.hilt.android")
@@ -113,14 +116,14 @@ dependencies {
     implementation(libs.androidx.biometric)
 
     // Credential Manager (Core)
-    implementation("androidx.credentials:credentials:1.5.0")
+    implementation(libs.androidx.credentials)
 
     // Google ID Token Credential (extensión para Google Sign In)
-    implementation("androidx.credentials:credentials-play-services-auth:1.5.0")
+    implementation(libs.androidx.credentials.play.services.auth)
 
     // Opcional (si se quiere usar el botón federado de Google)
-    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+    implementation(libs.googleid)
 
     // Antiguo GoogleSignIn
-    implementation("com.google.android.gms:play-services-auth:21.3.0")
+    implementation(libs.play.services.auth)
 }

@@ -1,4 +1,4 @@
-package org.fmm.communitymgmt.util
+package org.fmm.communitymgmt.ui.security.util
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -13,7 +13,7 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 
-class SecureStorage constructor (private val context: Context, private val
+class SecureStorage (private val context: Context, private val
 securePrefsName:String) {
     private val keyAlias = "secureTokenKey"
     private val cipherName = "AES/GCM/NoPadding"

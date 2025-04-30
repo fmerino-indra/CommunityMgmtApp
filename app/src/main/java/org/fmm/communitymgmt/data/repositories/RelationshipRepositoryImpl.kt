@@ -1,19 +1,12 @@
 package org.fmm.communitymgmt.data.repositories
 
 import android.util.Log
-import androidx.collection.intSetOf
-import org.fmm.communitymgmt.data.network.CommunityListApiService
 import org.fmm.communitymgmt.data.network.RelationshipApiService
 import org.fmm.communitymgmt.data.network.response.MarriageDTO
-import org.fmm.communitymgmt.data.network.response.OtherDTO
 import org.fmm.communitymgmt.data.network.response.SingleDTO
-import org.fmm.communitymgmt.domainlogic.repositories.CommunityListRepository
 import org.fmm.communitymgmt.domainlogic.repositories.RelationshipRepository
 import org.fmm.communitymgmt.domainmodels.model.AbstractRelationship
-import org.fmm.communitymgmt.domainmodels.model.MarriageModel
-import org.fmm.communitymgmt.domainmodels.model.OtherModel
 import org.fmm.communitymgmt.domainmodels.model.SingleModel
-import java.util.stream.Collectors
 import javax.inject.Inject
 
 class RelationshipRepositoryImpl @Inject constructor(private val apiService:
@@ -31,6 +24,7 @@ class RelationshipRepositoryImpl @Inject constructor(private val apiService:
                     return aux
                 }
                 is MarriageDTO -> it.toDomain()
+                // @TODO -> Implement OtherDTO. It's a special relationship.
                 else -> (it as SingleDTO).toDomain()
             }
         }.onFailure {

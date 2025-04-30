@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.security.google.signin.LoginFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/googleSignInButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in_with_google"
+        app:icon="@drawable/ic_google"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_gravity="center"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/githubSignInButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in_with_github"
+        app:icon="@drawable/ic_github_mark"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

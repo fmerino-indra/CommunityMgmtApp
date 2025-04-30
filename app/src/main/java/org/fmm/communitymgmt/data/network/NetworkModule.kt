@@ -15,16 +15,19 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.fmm.communitymgmt.BuildConfig.BASE_URL
+import org.fmm.communitymgmt.data.core.interceptors.AuthInterceptor
 import org.fmm.communitymgmt.data.network.response.AbstractRelationshipDTO
 import org.fmm.communitymgmt.data.network.response.MarriageDTO
 import org.fmm.communitymgmt.data.network.response.OtherDTO
 import org.fmm.communitymgmt.data.network.response.SingleDTO
+import org.fmm.communitymgmt.data.network.response.UserInfoApiService
 import org.fmm.communitymgmt.data.repositories.CommunityListRepositoryImpl
 import org.fmm.communitymgmt.data.repositories.RelationshipRepositoryImpl
+import org.fmm.communitymgmt.data.repositories.UserInfoRepositoryImpl
 import org.fmm.communitymgmt.domainlogic.repositories.CommunityListRepository
 import org.fmm.communitymgmt.domainlogic.repositories.RelationshipRepository
+import org.fmm.communitymgmt.domainlogic.repositories.UserInfoRepository
 import org.fmm.communitymgmt.ui.security.util.EncryptedPrefsStorage
-import org.fmm.communitymgmt.ui.security.util.SecureConfigManager
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -51,23 +54,26 @@ object NetworkModule {
     @Singleton
     @OptIn(ExperimentalSerializationApi::class) // Marcamos la función porque algunas
     // características están marcadas como experimentales.
-    fun provideRetrofit():Retrofit {
+    fun provideRetrofit(okHttpClient: OkHttpClient):Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
     }
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
         val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
         return OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
             .addInterceptor(interceptor)
             .build()
     }
 
+    // CommunityList Api Service and Repository
     @Provides
     fun provideCommunityListApiService(retrofit:Retrofit):CommunityListApiService {
         return retrofit.create(CommunityListApiService::class.java)
@@ -78,6 +84,18 @@ object NetworkModule {
         return CommunityListRepositoryImpl(communityListApiService)
     }
 
+    // UserInfo Api Service and Repository
+    @Provides
+    fun provideUserInfoApiService(retrofit:Retrofit):UserInfoApiService {
+        return retrofit.create(UserInfoApiService::class.java)
+    }
+    @Provides
+    fun provideUserInfoRepository(userInfoApiService: UserInfoApiService)
+            :UserInfoRepository {
+        return UserInfoRepositoryImpl(userInfoApiService)
+    }
+
+    // Relationship Api Service and Repository
     @Provides
     fun provideRelationshipApiService(retrofit:Retrofit):RelationshipApiService {
         return retrofit.create(RelationshipApiService::class.java)
@@ -88,33 +106,34 @@ object NetworkModule {
         return RelationshipRepositoryImpl(relationshipApiService)
     }
 
-/*
     @Provides
     @Singleton
-    fun provideEncryptedPrefsStorage (@ApplicationContext context: Context): EncryptedPrefsStorage {
+    fun provideEncryptedPrefsStorage (@ApplicationContext context: Context):
+            EncryptedPrefsStorage {
         return EncryptedPrefsStorage(context)
     }
 
-    @Provides
-    @Singleton
-    fun provideAuth0Manager (
-        @ApplicationContext context: Context,
-        encryptedPrefsStorage: EncryptedPrefsStorage,
-        secureConfigManager: SecureConfigManager
-    ): Auth0Manager {
-        return Auth0Manager(
-            context, encryptedPrefsStorage,
-            secureConfigManager
-        )
-    }
+    /*
+        @Provides
+        @Singleton
+        fun provideAuth0Manager (
+            @ApplicationContext context: Context,
+            encryptedPrefsStorage: EncryptedPrefsStorage,
+            secureConfigManager: SecureConfigManager
+        ): Auth0Manager {
+            return Auth0Manager(
+                context, encryptedPrefsStorage,
+                secureConfigManager
+            )
+        }
 
-    @Provides
-    @Singleton
-    fun provideSecureConfigManager (@ApplicationContext context: Context, encryptedPrefsStorage:
-    EncryptedPrefsStorage
-    ): SecureConfigManager {
-        return SecureConfigManager(context, encryptedPrefsStorage)
-    }
+        @Provides
+        @Singleton
+        fun provideSecureConfigManager (@ApplicationContext context: Context, encryptedPrefsStorage:
+        EncryptedPrefsStorage
+        ): SecureConfigManager {
+            return SecureConfigManager(context, encryptedPrefsStorage)
+        }
 
- */
+     */
 }

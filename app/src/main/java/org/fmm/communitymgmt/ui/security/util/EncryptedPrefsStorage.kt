@@ -2,10 +2,11 @@ package org.fmm.communitymgmt.ui.security.util
 
 import android.content.Context
 import org.fmm.communitymgmt.R
-import org.fmm.communitymgmt.util.SecureStorage
+import javax.inject.Inject
 
-class EncryptedPrefsStorage (context:Context) {
-    private var secureStorage: SecureStorage = SecureStorage(context, context.getString(R.string.secure_prefs_name))
+class EncryptedPrefsStorage @Inject constructor (context:Context) {
+    private var secureStorage: SecureStorage = SecureStorage(context, context.getString(R.string
+    .secure_prefs_name))
 
     fun saveString(key: String, value:String) {
         secureStorage.saveEncryptedString(key, value)
