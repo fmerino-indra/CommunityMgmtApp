@@ -2,6 +2,8 @@ package org.fmm.communitymgmt
 
 import android.app.Application
 import android.content.Context
+import coil.Coil
+import coil.util.CoilUtils
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.datetime.LocalDate
 import kotlin.reflect.typeOf

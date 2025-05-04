@@ -126,4 +126,13 @@ dependencies {
 
     // Antiguo GoogleSignIn
     implementation(libs.play.services.auth)
+
+    // JWT
+    //implementation(libs.jjwt.root)
+    //implementation("io.jsonwebtoken:jjwt-root:0.12.6")
+    implementation(libs.fusionauth.jwt)
+    // Coil (async images)
+    implementation(libs.coil)
+
+
 }

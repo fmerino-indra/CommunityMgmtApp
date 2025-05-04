@@ -1,5 +1,6 @@
 package org.fmm.communitymgmt.data.network.response
 
+import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.serializers.LocalDateComponentSerializer
 import kotlinx.serialization.Serializable
@@ -10,7 +11,7 @@ import java.util.stream.Collectors
 
 @Serializable
 data class PersonDTO(
-    val id: Int,
+    val id: Int?=null,
     val name: String,
     val surname1: String?,
     val surname2: String? = null,
@@ -18,7 +19,7 @@ data class PersonDTO(
     val mobileNumbers: List<MobileNumberDTO>? = null,
     val emailAccounts: List<EmailAccountDTO>? = null,
 
-    val birthday: LocalDate,
+    val birthday: Long?,
     val gender: String,
     val image: ImageDTO? = null
 ) {

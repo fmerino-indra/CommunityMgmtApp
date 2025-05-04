@@ -4,6 +4,7 @@ import org.fmm.communitymgmt.data.network.response.AbstractRelationshipDTO
 import org.fmm.communitymgmt.data.network.response.CommunityListDTO
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
@@ -15,5 +16,4 @@ interface RelationshipApiService {
     suspend fun editRelationshipDetail(@Path("relationshipId") relationshipId:Int, @Body
     relationship: AbstractRelationshipDTO):
             AbstractRelationshipDTO
-
 }

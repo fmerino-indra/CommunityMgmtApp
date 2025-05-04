@@ -10,10 +10,12 @@
     <data>
         <variable
             name="viewModelFMM"
-            type="org.fmm.communitymgmt.ui.comlist.detail.EditPersonViewModel" />
+            type="org.fmm.communitymgmt.ui.security.signup.SignUpViewModel" />
         <variable
             name="formFMM"
-            type="org.fmm.communitymgmt.ui.comlist.detail.EditPersonFormState" />
+            type="org.fmm.communitymgmt.ui.security.signup.SignUpFormState" />
+        <import type="org.fmm.communitymgmt.domainmodels.model.Genders"/>
+            
     </data>
 
 <LinearLayout
@@ -22,7 +24,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:id="@+id/llUserInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:layout_margin="6dp"
+
+        >
+        <TextView
+            android:id="@+id/tvUserInfoName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModelFMM.userSession.userInfo.name}"
+            android:layout_margin="6dp"/>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/userInfoPhoto"
+            android:layout_width="@dimen/tiny_photo_width"
+            android:layout_height="@dimen/tiny_photo_height"
+            android:contentDescription="@string/person_image"
+            android:scaleType="centerCrop"
+
+            app:shapeAppearanceOverlay="@style/Rounded"
+            />
+
+    </LinearLayout>
     <ViewFlipper
         android:id="@+id/vfSignUpForm"
         android:layout_width="match_parent"
@@ -48,7 +75,9 @@
                 android:enabled="false"
                 android:hint="IdP user Id"
                 android:inputType="text"
-                tools:ignore="Autofill" />
+                tools:ignore="Autofill"
+                app:formFieldValue="@{formFMM.providerId}"
+                />
             <EditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
@@ -82,28 +111,181 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/nickName"
                 android:inputType="text"
-                app:formSurname2="@{formFMM}"
-                app:onSurname2Changed="@{viewModelFMM::onSurname2Changed}"
+                app:formFieldValue="@{formFMM.nickname}"
+                app:onFieldChanged="@{viewModelFMM::onNicknameChanged}"
                 tools:ignore="Autofill" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/rgGender"
+                android:text="@string/gender"
+                />
+            <RadioGroup
+                android:id="@+id/rgGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:text="@string/gender"
+                app:formGenderValue="@{formFMM.gender}"
+                app:onRadioGroupChanged="@{viewModelFMM::onGenderChanged}"
+                >
+                <RadioButton android:id="@+id/radio_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/male"
+                    android:tag="@{Genders.MALE}"/>
+                <RadioButton android:id="@+id/radio_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/female"
+                    android:tag="@{Genders.FEMALE}"/>
+            </RadioGroup>
             <EditText
                 android:id="@+id/birthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/birthday"
                 android:inputType="date"
-                app:formSurname2="@{formFMM}"
-                app:onSurname2Changed="@{viewModelFMM::onSurname2Changed}"
-                tools:ignore="Autofill" />
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/gender"
+                app:formFieldValue="@{formFMM.birthday}"
+                app:onFieldChanged="@{viewModelFMM::onBirthdayChanged}"
+                tools:ignore="Autofill"
+                />
+            <EditText
+                android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/gender"
-                android:textOn="@string/male"
-                android:textOff="@string/female"/>
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                app:formFieldValue="@{formFMM.emailAccount}"
+                app:onFieldChanged="@{viewModelFMM::onEmailChanged}"
+                tools:ignore="Autofill" />
+            <CheckBox
+                android:id="@+id/isResponsible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/is_responsible"
+                app:formBooleanValue="@{formFMM.isResponsible}"
+                app:onBooleanChanged="@{viewModelFMM::onIsResponsibleChanged}"
 
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llStep2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvAddressData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Step 2: Address data"
+                />
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Address"
+                android:inputType="text"
+                tools:ignore="Autofill"
+                app:formFieldValue="@{formFMM.address}"
+                app:onFieldChanged="@{viewModelFMM::onAddressChanged}"
+                />
+            <EditText
+                android:id="@+id/addressNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/addressNumber"
+                android:inputType="text"
+                tools:ignore="Autofill,TextFields"
+                app:formFieldValue="@{formFMM.addressNumber}"
+                app:onFieldChanged="@{viewModelFMM::onAddressNumberChanged}"
+                />
+            <EditText
+                android:id="@+id/postalCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/postalCode"
+                android:inputType="text"
+                tools:ignore="Autofill"
+                app:formFieldValue="@{formFMM.postalCode}"
+                app:onFieldChanged="@{viewModelFMM::onPostalCodeChanged}"
+                />
+            <EditText
+                android:id="@+id/city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/city"
+                android:inputType="text"
+                tools:ignore="Autofill"
+                app:formFieldValue="@{formFMM.city}"
+                app:onFieldChanged="@{viewModelFMM::onCityChanged}"
+                />
         </LinearLayout>
 
     </ViewFlipper>
+    <ProgressBar
+        android:id="@+id/pb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/gold"
+        android:layout_gravity="center"
+        />
+
+    <LinearLayout
+        android:id="@+id/llStepsButtons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:visibility="visible"
+        >
+        <Button
+            android:id="@+id/btnPrevious"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginHorizontal="8dp"
+            android:text="@string/previous"/>
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/llFinalButtons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:visibility="gone"
+        >
+        <Button
+            android:id="@+id/btnAccept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:layout_marginEnd="48dp"
+            android:text="@string/accept"
+            android:enabled="@{formFMM.valid}"
+            />
+
+        <Button
+            android:id="@+id/btnFinalPrevious"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/previous"/>
+        <Button
+            android:id="@+id/btnFinalNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next"
+            />
+
+    </LinearLayout>
 </LinearLayout>
 </layout>

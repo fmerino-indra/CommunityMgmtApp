@@ -7,6 +7,8 @@ import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
 sealed class SignUpUIState {
     data object Loading: SignUpUIState()
     data class Error(val error:String): SignUpUIState()
-    data class EditMode(val userInfo: UserInfoModel, val person: PersonModel): SignUpUIState()
+    data object EditMode: SignUpUIState()
+    // @todo Crear un EditOtherMode -> para editar otro usuario (para superuser)
+    data object RegisteredMode: SignUpUIState()
 
 }

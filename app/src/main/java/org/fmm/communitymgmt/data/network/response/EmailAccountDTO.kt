@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 import org.fmm.communitymgmt.domainmodels.model.EmailAccount
 
 @Serializable
-data class EmailAccountDTO (val id:Int, val emailAccount:String) {
+data class EmailAccountDTO (val id:Int?=null, val emailAccount:String) {
     fun toDomain() = EmailAccount(id, emailAccount)
 
     companion object {

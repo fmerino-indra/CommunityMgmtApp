@@ -15,3 +15,5 @@
 local.properties
 /secrets/client_secret_828614483216-ql47ddnq773mt6ge92ak0f1idkmlsb6d.apps.googleusercontent.com.json
 /app/src/main/assets/client_secret-google.json
+/.kotlin
+/secrets/

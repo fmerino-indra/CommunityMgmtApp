@@ -70,9 +70,14 @@
     <string name="logo_de_google">Logo de google</string>
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="app_logo">Logo</string>
-    <string name="birthday">birthday</string>
-    <string name="gender">gender\n</string>
-    <string name="male">male</string>
-    <string name="female">female</string>
+    <string name="birthday">Birthday</string>
+    <string name="gender">Gender\n</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
     <string name="sign_in_with_github">Sign in with Github</string>
+    <string name="addressNumber">Address number</string>
+    <string name="postalCode">Postal Code</string>
+    <string name="city">City</string>
+    <string name="is_responsible">Is Responsible</string>
+
 </resources>

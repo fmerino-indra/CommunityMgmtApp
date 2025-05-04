@@ -8,19 +8,15 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class UserInfoModel (
     // Unique internal Id
-    val id:Int,
-    // Unique IdP functional Id
-//    val upn:String,
-    // Unique IdP internal Id (IdPUserId)
-    val userId:String,
+    val id:Int?,
     val name: String,
     val email: String,
     val emailVerified: Boolean,
-    val providerId: Int,
+    val providerId: String?,
     val provider: String,
-    val imageUrl: String?,
-    // Relationship with Person
-    @IgnoredOnParcel val person: PersonModel? = null
+    val imageUrl: String,
+    // Relationship with Person @IgnoredOnParcel
+    val person: PersonModel? = null
 ): Parcelable {
 
 }

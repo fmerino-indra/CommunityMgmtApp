@@ -3,26 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="org.fmm.communitymgmt.ui.security.google.signin.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_loginFragment_to_community_list_graph"
-            app:destination="@id/community_list_graph" />
-        <action
-            android:id="@+id/action_loginFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
-    </fragment>
-    <include app:graph="@navigation/community_list_graph" />
+    app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/signUpFragment"
         android:name="org.fmm.communitymgmt.ui.security.signup.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
-        <argument android:name="userInfo"
-            app:argType="org.fmm.communitymgmt.domainmodels.model.UserInfoModel" />
+        <action
+            android:id="@+id/action_signUpFragment_to_homeActivity"
+            app:destination="@id/homeActivity" />
     </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="org.fmm.communitymgmt.ui.MainFragment"
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_homeActivity"
+            app:destination="@id/homeActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/homeActivity"
+        android:name="org.fmm.communitymgmt.ui.home.HomeActivity"
+        android:label="activity_home"
+        tools:layout="@layout/activity_home" />
 </navigation>

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="edit_text_watcher_tag" type="id"/>
+    <item name="switch_listener_tag" type="id"/>
+    <item name="radio_group_listener_tag" type="id"/>
 </resources>

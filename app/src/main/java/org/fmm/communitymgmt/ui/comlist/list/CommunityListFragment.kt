@@ -14,6 +14,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.ImageLoader
+import coil.request.ImageRequest
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.databinding.FragmentCommunityListBinding
@@ -34,6 +36,7 @@ class CommunityListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var communityListAdapter: CommunityListAdapter
+    private lateinit var iLoader: ImageLoader
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -119,6 +122,17 @@ class CommunityListFragment : Fragment() {
 
     private fun successState(state: CommunityListState.Success) {
         binding.progressBar.isVisible = false
+/*
+        if (state.userInfo.imageUrl.isNotBlank() && state.userInfo.imageUrl.isNotEmpty()) {
+            val request = ImageRequest.Builder(requireContext())
+                .data(state.userInfo.imageUrl)
+                .target(binding.userInfoPhoto)
+                .build()
+
+            iLoader.enqueue(request)
+        }
+*/
+
         communityListAdapter.updateCommunityList(state.communityList)
         Log.i("[FMMP]", "Debería estar pintando el RecyclerView")
         Log.i("[FMMP", "Tamaño: ${state.communityList.size}")

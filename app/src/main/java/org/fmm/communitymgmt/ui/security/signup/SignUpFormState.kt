@@ -1,22 +1,61 @@
 package org.fmm.communitymgmt.ui.security.signup
+
+import org.fmm.communitymgmt.domainmodels.model.Genders
+import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
+
 // @todo Actualizar los campos con los correspondientes
 // @todo Pintar la pantalla
 data class SignUpFormState (
+    val providerId : String? = "",
     val name: String = "",
     val surname1: String = "",
     val surname2: String = "",
     val nickname: String = "",
-    val phoneNumber: String = "",
+    val gender: Genders? = null,
+    val birthday: String = "",
     val emailAccount: String = "",
-    val tinyPhoto: String = "",
-    val mimeType: String = "",
+    val isResponsible: Boolean? = false,
 
     val nameError: String = "",
     val surname1Error: String = "",
     val surname2Error: String = "",
     val nicknameError: String = "",
-    val phoneNumberError: String = "",
+    val genderError: String = "",
     val emailAccountError: String = "",
-    val tinyPhotoError: String = "",
-    val mimeTypeError: String = "",
-    val isValid:Boolean = false)
+    val isResponibleError: String = "",
+
+    val isStep1Valid:Boolean = false,
+
+    val phoneNumber: String = "",
+
+    val address: String = "",
+    val addressNumber: String = "",
+    val postalCode: String = "",
+    val city: String = "",
+
+    val addressError: String = "",
+    val addressNumberError: String = "",
+    val postalCodeError: String = "",
+    val cityError: String = "",
+
+
+    val isStep2Valid:Boolean = false,
+
+
+
+    val phoneNumberError: String = "",
+
+    var currentStep: Int = 0
+//    val userInfo: UserInfoModel?
+) {
+
+    fun isValid() : Boolean {
+        return if (currentStep == 0)
+            isStep1Valid
+        else if (currentStep == 1)
+            isStep2Valid
+        else
+            false
+    }
+}
+

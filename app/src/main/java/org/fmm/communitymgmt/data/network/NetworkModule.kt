@@ -20,13 +20,14 @@ import org.fmm.communitymgmt.data.network.response.AbstractRelationshipDTO
 import org.fmm.communitymgmt.data.network.response.MarriageDTO
 import org.fmm.communitymgmt.data.network.response.OtherDTO
 import org.fmm.communitymgmt.data.network.response.SingleDTO
-import org.fmm.communitymgmt.data.network.response.UserInfoApiService
 import org.fmm.communitymgmt.data.repositories.CommunityListRepositoryImpl
 import org.fmm.communitymgmt.data.repositories.RelationshipRepositoryImpl
 import org.fmm.communitymgmt.data.repositories.UserInfoRepositoryImpl
 import org.fmm.communitymgmt.domainlogic.repositories.CommunityListRepository
 import org.fmm.communitymgmt.domainlogic.repositories.RelationshipRepository
 import org.fmm.communitymgmt.domainlogic.repositories.UserInfoRepository
+import org.fmm.communitymgmt.domainlogic.usecase.SignUpUserInfoUseCase
+import org.fmm.communitymgmt.domainlogic.usecase.SignUpUserInfoUseCase_Factory
 import org.fmm.communitymgmt.ui.security.util.EncryptedPrefsStorage
 import retrofit2.Retrofit
 import javax.inject.Singleton
@@ -86,13 +87,17 @@ object NetworkModule {
 
     // UserInfo Api Service and Repository
     @Provides
-    fun provideUserInfoApiService(retrofit:Retrofit):UserInfoApiService {
+    fun provideUserInfoApiService(retrofit:Retrofit): UserInfoApiService {
         return retrofit.create(UserInfoApiService::class.java)
     }
     @Provides
     fun provideUserInfoRepository(userInfoApiService: UserInfoApiService)
             :UserInfoRepository {
         return UserInfoRepositoryImpl(userInfoApiService)
+    }
+    @Provides
+    fun provideUserInfoUseCase(userInfoRepository: UserInfoRepository): SignUpUserInfoUseCase {
+        return SignUpUserInfoUseCase(userInfoRepository)
     }
 
     // Relationship Api Service and Repository
@@ -106,34 +111,11 @@ object NetworkModule {
         return RelationshipRepositoryImpl(relationshipApiService)
     }
 
+    // EncryptedPrefsStorage
     @Provides
     @Singleton
     fun provideEncryptedPrefsStorage (@ApplicationContext context: Context):
             EncryptedPrefsStorage {
         return EncryptedPrefsStorage(context)
     }
-
-    /*
-        @Provides
-        @Singleton
-        fun provideAuth0Manager (
-            @ApplicationContext context: Context,
-            encryptedPrefsStorage: EncryptedPrefsStorage,
-            secureConfigManager: SecureConfigManager
-        ): Auth0Manager {
-            return Auth0Manager(
-                context, encryptedPrefsStorage,
-                secureConfigManager
-            )
-        }
-
-        @Provides
-        @Singleton
-        fun provideSecureConfigManager (@ApplicationContext context: Context, encryptedPrefsStorage:
-        EncryptedPrefsStorage
-        ): SecureConfigManager {
-            return SecureConfigManager(context, encryptedPrefsStorage)
-        }
-
-     */
 }

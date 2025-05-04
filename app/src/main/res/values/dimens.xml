@@ -3,5 +3,7 @@
     <dimen name="photo_width">75dp</dimen>
     <dimen name="photo_height">75dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="load_image">200dp</dimen>
+    <dimen name="load_image">140dp</dimen>
+    <dimen name="tiny_photo_width">25dp</dimen>
+    <dimen name="tiny_photo_height">25dp</dimen>
 </resources>
