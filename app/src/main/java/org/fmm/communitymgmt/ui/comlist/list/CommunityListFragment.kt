@@ -19,7 +19,10 @@ import coil.request.ImageRequest
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.databinding.FragmentCommunityListBinding
+import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
 import org.fmm.communitymgmt.ui.comlist.list.recyclerview.CommunityListAdapter
+import org.fmm.communitymgmt.ui.security.model.UserSession
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
@@ -36,7 +39,6 @@ class CommunityListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var communityListAdapter: CommunityListAdapter
-    private lateinit var iLoader: ImageLoader
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,6 +62,11 @@ class CommunityListFragment : Fragment() {
     private fun initUI() {
         initAdapter()
         initUIState()
+        initToolbar()
+    }
+
+    private fun initToolbar() {
+
     }
 
     private fun initAdapter() {

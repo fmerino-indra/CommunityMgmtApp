@@ -95,6 +95,8 @@ dependencies {
     //DaggerHilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+//    kapt ("org.jetbrains.kotlin:kotlin-annotation-processing-gradle")
+
 
     //Retrofit
     implementation(libs.retrofit)
