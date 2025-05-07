@@ -17,3 +17,4 @@ local.properties
 /app/src/main/assets/client_secret-google.json
 /.kotlin
 /secrets/
+/app/src/main/assets/comunidad-v2.json

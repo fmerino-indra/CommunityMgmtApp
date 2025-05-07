@@ -26,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.FragmentCommunityEnrollmentBinding
+import org.fmm.communitymgmt.ui.common.AddressViewModel
 import org.fmm.communitymgmt.ui.enrollment.ResponsibleDialog
 import org.fmm.communitymgmt.ui.enrollment.YesNoDialog
 import org.fmm.communitymgmt.ui.enrollment.signup.SignUpFragmentDirections
@@ -55,10 +56,14 @@ class CommunityEnrollmentFragment : Fragment() {
         askResponsible()
     }
     private fun initData() {
+
         binding.lifecycleOwner = viewLifecycleOwner
         binding.communityEnrollmentViewModel = communityEnrollmentViewModel
         binding.formCommunityEnrollment = communityEnrollmentViewModel
             .formCommunityEnrollmentState.value
+
+        binding.parishAddress.addressCallback = communityEnrollmentViewModel.addressViewModel
+        binding.parishAddress.addressForm = communityEnrollmentViewModel.formAddressState.value
         communityEnrollmentViewModel.initData()
     }
     private fun initUI() {
@@ -93,6 +98,15 @@ class CommunityEnrollmentFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 communityEnrollmentViewModel.formCommunityEnrollmentState.collect {
                     binding.formCommunityEnrollment = communityEnrollmentViewModel.formCommunityEnrollmentState.value
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                communityEnrollmentViewModel.formAddressState.collect {
+                    binding.parishAddress.addressForm = it
+                    communityEnrollmentViewModel.onAddressChanged(it)
                 }
             }
         }
@@ -195,7 +209,7 @@ class CommunityEnrollmentFragment : Fragment() {
             if (view.text.toString() != value) {
                 view.setText(value)
             }
-
+//R.id.parishName
             if (onChanged != null) {
                 val existingWatcher = view.getTag(R.id.edit_text_watcher_tag) as? TextWatcher
                 if (existingWatcher != null) {
@@ -227,7 +241,34 @@ class CommunityEnrollmentFragment : Fragment() {
             view.setOnCheckedChangeListener(listener)
         }
 
+        @BindingAdapter("addressFormFieldValue", "onStringChanged", requireAll = true)
+        @JvmStatic
+        fun bindAddressTextField(
+            view: EditText, value: String?, onChanged: AddressViewModel.OnAddressTextChanged?
+        ) {
+            if (value == null) return
+            if (view.text.toString() != value) {
+                view.setText(value)
+            }
+
+            if (onChanged != null) {
+                val existingWatcher = view.getTag(R.id.edit_text_watcher_tag) as? TextWatcher
+                if (existingWatcher != null) {
+                    view.removeTextChangedListener(existingWatcher)
+                }
+
+                val otroWatcher = AddressTextWatcher(value, onChanged) { newText ->
+                    newText != value
+                }
+
+                view.addTextChangedListener(otroWatcher)
+                view.setTag(R.id.edit_text_watcher_tag, otroWatcher)
+            }
+        }
+
     }
+
+
 
     class GenericTextWatcher(val value:String,
                              private val onChanged: CommunityEnrollmentViewModel.OnTextChangedFMM?,
@@ -251,4 +292,25 @@ class CommunityEnrollmentFragment : Fragment() {
         }
     }
 
+    class AddressTextWatcher(val value:String,
+                             private val onChanged: AddressViewModel.OnAddressTextChanged?,
+                             val callback: (a:String) -> Boolean):
+        TextWatcher {
+
+        override fun beforeTextChanged(
+            s: CharSequence?,
+            start: Int,
+            count: Int,
+            after: Int
+        ) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            val newText = s?.toString().orEmpty()
+            if (callback(newText)) {
+                onChanged!!.onChangedText(newText)
+            }
+        }
+    }
 }

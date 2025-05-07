@@ -12,6 +12,8 @@ import kotlinx.coroutines.withContext
 import org.fmm.communitymgmt.domainlogic.usecase.SignUpUserInfoUseCase
 import org.fmm.communitymgmt.domainmodels.model.CommunityModel
 import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
+import org.fmm.communitymgmt.ui.common.AddressForm
+import org.fmm.communitymgmt.ui.common.AddressViewModel
 import org.fmm.communitymgmt.ui.security.model.UserSession
 import javax.inject.Inject
 
@@ -31,6 +33,17 @@ class CommunityEnrollmentViewModel @Inject constructor(
     = MutableStateFlow<CommunityEnrollmentUIState>(CommunityEnrollmentUIState.Loading)
     val uiCommunityEnrollmentSate: StateFlow<CommunityEnrollmentUIState> =
         _uiCommunityEnrollmentState
+
+
+    private val _formAddressState
+            = MutableStateFlow(AddressForm()
+    )
+    val formAddressState: StateFlow<AddressForm>
+        get() =
+            _formAddressState
+
+    val addressViewModel = AddressViewModel(_formAddressState)
+
 
 
     private lateinit var _userInfo: UserInfoModel
@@ -55,10 +68,10 @@ class CommunityEnrollmentViewModel @Inject constructor(
                             id = null,
                             communityNumber = communityNumber,
                             parish = parish,
-                            parishAddress = parishAddress,
-                            parishAddressNumber = parishAddressNumber,
-                            parishAddressPostalCode = parishAddressPostalCode,
-                            parishAddressCity = parishAddressCity
+                            parishAddress = parishAddressForm.address,
+                            parishAddressNumber = parishAddressForm.addressNumber,
+                            parishAddressPostalCode = parishAddressForm.postalCode,
+                            parishAddressCity = parishAddressForm.city
                         )
                     }
                 )
@@ -80,28 +93,17 @@ class CommunityEnrollmentViewModel @Inject constructor(
         val nError = if (updatedState.communityNumber.isBlank()) "Name is mandatory" else
             null
         val pError = if (updatedState.parish.isBlank()) "Surname1 is mandatory" else null
-        val pAError = if (updatedState.parishAddress.isBlank()) "Email is mandatory" else null
-        val pANError = if (updatedState.parishAddressNumber.isBlank()) "Gender is mandatory" else null
-        val pAPCError = if (updatedState.parishAddressPostalCode.isBlank()) "Postal Code" +
-                " is mandatory" else null
-        val pACError = if (updatedState.parishAddressCity.isBlank()) "City is mandatory" else null
+        val newAddress = addressViewModel.validateAddress(updatedState.parishAddressForm)
 
         val isValid = nError == null
                 && pError == null
-                && pAError == null
-                && pANError == null
-                && pAPCError == null
-                && pACError == null
+                && newAddress.isAddressValid
 
         return updatedState.copy(
             nError = nError?:"",
             pError = pError?:"",
-            pAError = pAError ?:"",
-            pANError = pANError?:"",
-            pAPCError = pAPCError?:"",
-            pACError = pACError?:"",
+            parishAddressForm = newAddress,
             isValid = isValid
-
         )
     }
 
@@ -114,22 +116,7 @@ class CommunityEnrollmentViewModel @Inject constructor(
         val updated = _formCommunityEnrollmentState.value.copy(parish =text)
         _formCommunityEnrollmentState.value = validateForm(updated)
     }
-    fun onAddressChanged(text: String) {
-        val updated = _formCommunityEnrollmentState.value.copy(parishAddress =text)
-        _formCommunityEnrollmentState.value = validateForm(updated)
-    }
-    fun onAddressNumberChanged(text: String) {
-        val updated = _formCommunityEnrollmentState.value.copy(parishAddressNumber =text)
-        _formCommunityEnrollmentState.value = validateForm(updated)
-    }
-    fun onPostalCodeChanged(text: String) {
-        val updated = _formCommunityEnrollmentState.value.copy(parishAddressPostalCode =text)
-        _formCommunityEnrollmentState.value = validateForm(updated)
-    }
-    fun onCityChanged(text: String) {
-        val updated = _formCommunityEnrollmentState.value.copy(parishAddressCity =text)
-        _formCommunityEnrollmentState.value = validateForm(updated)
-    }
+
     fun onIsResponsibleChanged(value: Boolean) {
         _formCommunityEnrollmentState.update {
             it.copy(isResponsible = value)
@@ -142,6 +129,13 @@ class CommunityEnrollmentViewModel @Inject constructor(
         }
     }
 
+    fun onAddressChanged(formAddressState: AddressForm) {
+        val newForm = formCommunityEnrollmentState.value.copy(
+            parishAddressForm = formAddressState
+        )
+        _formCommunityEnrollmentState.value = validateForm(newForm)
+    }
+
     /**
      * Interfaz funcional para el binding adaptaer (en fragment)
      */
@@ -151,5 +145,4 @@ class CommunityEnrollmentViewModel @Inject constructor(
     fun interface OnBooleanChangeFMM {
         fun onChangedBoolean(value: Boolean)
     }
-
 }

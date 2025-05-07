@@ -15,7 +15,6 @@
             name="formFMM"
             type="org.fmm.communitymgmt.ui.enrollment.signup.SignUpFormState" />
         <import type="org.fmm.communitymgmt.domainmodels.model.Genders"/>
-            
     </data>
 
 <LinearLayout
@@ -186,7 +185,6 @@
                 app:onFieldChanged="@{viewModelFMM::onCityChanged}"
                 />
         </LinearLayout>
-
     </ViewFlipper>
     <ProgressBar
         android:id="@+id/pb"

@@ -67,6 +67,14 @@
                 app:formFieldValue="@{formCommunityEnrollment.parish}"
                 app:onStringChanged="@{communityEnrollmentViewModel::onParishNameChanged}"
                 />
+            <include layout="@layout/inclusion_address"
+                android:id="@+id/parishAddress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                />
+
+<!--
             <EditText
                 android:id="@+id/address"
                 android:layout_width="match_parent"
@@ -107,6 +115,7 @@
                 app:formFieldValue="@{formCommunityEnrollment.parishAddressCity}"
                 app:onStringChanged="@{communityEnrollmentViewModel::onCityChanged}"
                 />
+-->
             </LinearLayout>
         <LinearLayout
             android:id="@+id/llButtons"
