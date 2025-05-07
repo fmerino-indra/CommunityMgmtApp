@@ -1,4 +1,4 @@
-package org.fmm.communitymgmt.ui.security.signup
+package org.fmm.communitymgmt.ui.enrollment.signup
 
 import org.fmm.communitymgmt.domainmodels.model.Genders
 import org.fmm.communitymgmt.domainmodels.model.UserInfoModel

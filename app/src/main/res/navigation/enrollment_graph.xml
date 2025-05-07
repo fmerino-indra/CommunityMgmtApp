@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/signUpFragment">
+    <fragment
+        android:id="@+id/enrollmentFragment"
+        android:name="org.fmm.communitymgmt.ui.enrollment.EnrollmentFragment"
+        android:label="fragment_enrollment"
+        tools:layout="@layout/fragment_enrollment" />
+    <fragment
+        android:id="@+id/communityEnrollmentFragment"
+        android:name="org.fmm.communitymgmt.ui.enrollment.comenroll.CommunityEnrollmentFragment"
+        android:label="fragment_community_enrollment"
+        tools:layout="@layout/fragment_community_enrollment" >
+        <action
+            android:id="@+id/action_communityEnrollmentFragment_to_homeActivity2"
+            app:destination="@id/homeActivity2" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="org.fmm.communitymgmt.ui.enrollment.signup.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_communityEnrollmentFragment"
+            app:destination="@id/communityEnrollmentFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/homeActivity2"
+        android:name="org.fmm.communitymgmt.ui.home.HomeActivity"
+        android:label="activity_home"
+        tools:layout="@layout/activity_home" />
+</navigation>

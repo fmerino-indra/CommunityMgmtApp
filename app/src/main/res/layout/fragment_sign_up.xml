@@ -3,17 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.security.signup.SignUpFragment">
+    tools:context=".ui.enrollment.signup.SignUpFragment">
 
 
     <!-- Aquí defines las variables que van a estar disponibles en el layout -->
     <data>
         <variable
             name="viewModelFMM"
-            type="org.fmm.communitymgmt.ui.security.signup.SignUpViewModel" />
+            type="org.fmm.communitymgmt.ui.enrollment.signup.SignUpViewModel" />
         <variable
             name="formFMM"
-            type="org.fmm.communitymgmt.ui.security.signup.SignUpFormState" />
+            type="org.fmm.communitymgmt.ui.enrollment.signup.SignUpFormState" />
         <import type="org.fmm.communitymgmt.domainmodels.model.Genders"/>
             
     </data>
@@ -24,36 +24,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <LinearLayout
-        android:id="@+id/llUserInfo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="end"
-        android:layout_margin="6dp"
-
-        >
-        <TextView
-            android:id="@+id/tvUserInfoName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModelFMM.userSession.userInfo.name}"
-            android:layout_margin="6dp"/>
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/userInfoPhoto"
-            android:layout_width="@dimen/tiny_photo_width"
-            android:layout_height="@dimen/tiny_photo_height"
-            android:contentDescription="@string/person_image"
-            android:scaleType="centerCrop"
-
-            app:shapeAppearanceOverlay="@style/Rounded"
-            />
-
-    </LinearLayout>
     <ViewFlipper
         android:id="@+id/vfSignUpForm"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:inAnimation="@android:anim/slide_in_left"
         android:outAnimation="@android:anim/slide_out_right"
@@ -84,8 +58,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/name"
                 android:inputType="text"
-                app:formName="@{formFMM}"
-                app:onNameChanged="@{viewModelFMM::onNameChanged}"
+                app:formFieldValue="@{formFMM.name}"
+                app:onFieldChanged="@{viewModelFMM::onNameChanged}"
                 tools:ignore="Autofill" />
             <EditText
                 android:id="@+id/surname1"
@@ -93,8 +67,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/surname1"
                 android:inputType="text"
-                app:formSurname1="@{formFMM}"
-                app:onSurname1Changed="@{viewModelFMM::onSurname1Changed}"
+                app:formFieldValue="@{formFMM.surname1}"
+                app:onFieldChanged="@{viewModelFMM::onSurname1Changed}"
                 tools:ignore="Autofill" />
             <EditText
                 android:id="@+id/surname2"
@@ -102,8 +76,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/surname2"
                 android:inputType="text"
-                app:formSurname2="@{formFMM}"
-                app:onSurname2Changed="@{viewModelFMM::onSurname2Changed}"
+                app:formFieldValue="@{formFMM.surname2}"
+                app:onFieldChanged="@{viewModelFMM::onSurname2Changed}"
                 tools:ignore="Autofill" />
             <EditText
                 android:id="@+id/nickname"
@@ -159,15 +133,6 @@
                 app:formFieldValue="@{formFMM.emailAccount}"
                 app:onFieldChanged="@{viewModelFMM::onEmailChanged}"
                 tools:ignore="Autofill" />
-            <CheckBox
-                android:id="@+id/isResponsible"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/is_responsible"
-                app:formBooleanValue="@{formFMM.isResponsible}"
-                app:onBooleanChanged="@{viewModelFMM::onIsResponsibleChanged}"
-
-                />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/llStep2"
@@ -184,7 +149,7 @@
                 android:id="@+id/address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Address"
+                android:hint="@string/address"
                 android:inputType="text"
                 tools:ignore="Autofill"
                 app:formFieldValue="@{formFMM.address}"

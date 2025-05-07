@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.domainlogic.usecase.GetUserInfo
+import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
 import org.fmm.communitymgmt.ui.security.model.UserSession
 import org.fmm.communitymgmt.ui.security.util.EncryptedPrefsStorage
 import org.fmm.communitymgmt.util.StringResourcesProvider
@@ -52,21 +53,22 @@ class SignInViewModel @Inject constructor(
 // @todo Extraer información del idToken
         viewModelScope.launch {
             _signInState.value = SignInState.LoggingInState(idToken)
-            val result = withContext(Dispatchers.IO) {
+            val result: UserInfoModel = withContext(Dispatchers.IO) {
                 getUserInfo()
             }
             userSession.userInfo = result
-            if (result.person != null) {
-                _signInState.value = SignInState.LoggedInState(idToken, userInfo = result)
+            if (result.isFullEnrolled()) {
                 // Usuario ya registrado
-
+                _signInState.value = SignInState.LoggedInState(idToken, userInfo = result)
+            } else if (result.isRegistering()) {
+                Log.d("SignInViewModel", "Registered user but NOT community:")
+                _signInState.value = SignInState.RegisteringState(idToken, userInfo = result)
             } else {
                 // Usuario no registrado
                 Log.d("SignInViewModel", "Logged in but NOT registered user:")
                 Log.d("SignInViewModel","$result")
                 // Go To Enrollment
                 _signInState.value = SignInState.NotRegisteredState(idToken, result)
-
             }
         }
     }
@@ -107,6 +109,7 @@ class SignInViewModel @Inject constructor(
                 .web_server_client_id))
             .setNonce(secureRandom.nextBytes(nonceBytes).toString())
             .build()
+
 /*
         val credentialRequest = GetCredentialRequest.Builder()
             .addCredentialOption(googleIdOption)

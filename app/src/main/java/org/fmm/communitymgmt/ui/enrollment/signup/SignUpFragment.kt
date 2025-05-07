@@ -1,9 +1,10 @@
-package org.fmm.communitymgmt.ui.security.signup
+package org.fmm.communitymgmt.ui.enrollment.signup
 
 import android.os.Bundle
 import android.provider.MediaStore.Audio.Radio
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -32,6 +34,7 @@ import org.fmm.communitymgmt.databinding.FragmentSignUpBinding
 import org.fmm.communitymgmt.domainmodels.model.Genders
 import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
 import org.fmm.communitymgmt.ui.MainFragmentDirections
+import org.fmm.communitymgmt.ui.enrollment.ResponsibleDialog
 import org.fmm.communitymgmt.ui.security.model.UserSession
 
 @AndroidEntryPoint
@@ -146,7 +149,6 @@ class SignUpFragment : Fragment() {
             }
         }
 
-
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 signUpViewModel.formSignUpState.collect {
@@ -156,12 +158,6 @@ class SignUpFragment : Fragment() {
             }
         }
 
-    }
-
-    private fun registeredState(it: SignUpUIState.RegisteredMode) {
-        findNavController().navigate(
-            SignUpFragmentDirections.actionSignUpFragmentToHomeActivity()
-        )
     }
 
     /**
@@ -181,9 +177,9 @@ class SignUpFragment : Fragment() {
         //binding.formFMM = editPersonViewModel.formState.value
         //it.relationship
         updateButtons()
+        /*
         if (userInfo.imageUrl.isNotBlank() && userInfo.imageUrl
-            .isNotEmpty
-                ()) {
+            .isNotEmpty()) {
             val request = ImageRequest.Builder(requireContext())
                 .data(userInfo.imageUrl)
                 .target(binding.userInfoPhoto)
@@ -192,6 +188,14 @@ class SignUpFragment : Fragment() {
             iLoader.enqueue(request)
         }
 
+         */
+
+    }
+
+    private fun registeredState(it: SignUpUIState.RegisteredMode) {
+        findNavController().navigate(
+            SignUpFragmentDirections.actionSignUpFragmentToCommunityEnrollmentFragment()
+        )
     }
 
     private fun errorState(editPersonUIState: SignUpUIState.Error) {
@@ -204,17 +208,17 @@ class SignUpFragment : Fragment() {
 
     }
 
+
     /**
      * Bindings
      */
     //    fun bindName(view: EditText, state: EditPersonFormState?, callback: ((String) -> Unit)) {
     companion object {
-
+/*
         @BindingAdapter("formName", "onNameChanged", requireAll = true)
         @JvmStatic
         fun bindName(
-            view: EditText, state: SignUpFormState?, onChanged: SignUpViewModel
-            .OnTextChangedFMM?
+            view: EditText, state: SignUpFormState?, onChanged: SignUpViewModel.OnTextChangedFMM?
         ) {
             if (state == null || onChanged == null) return
             if (view.text.toString() != state.name) {
@@ -261,8 +265,7 @@ class SignUpFragment : Fragment() {
         @BindingAdapter("formSurname1", "onSurname1Changed", requireAll = true)
         @JvmStatic
         fun bindSurname1(
-            view: EditText, state: SignUpFormState?, onChanged: SignUpViewModel
-            .OnTextChangedFMM?
+            view: EditText, state: SignUpFormState?, onChanged: SignUpViewModel.OnTextChangedFMM?
         ) {
             if (state == null || onChanged == null) return
             if (view.text.toString() != state.surname1) {
@@ -308,8 +311,7 @@ class SignUpFragment : Fragment() {
         @BindingAdapter("formSurname2", "onSurname2Changed", requireAll = true)
         @JvmStatic
         fun bindSurname2(
-            view: EditText, state: SignUpFormState?, onChanged: SignUpViewModel
-            .OnTextChangedFMM?
+            view: EditText, state: SignUpFormState?, onChanged: SignUpViewModel.OnTextChangedFMM?
         ) {
             if (state == null || onChanged == null) return
             if (view.text.toString() != state.surname2) {
@@ -342,11 +344,12 @@ class SignUpFragment : Fragment() {
             view.setTag(R.id.edit_text_watcher_tag, textWatcher)
         }
 
+ */
+
         @BindingAdapter("formFieldValue", "onFieldChanged", requireAll = false)
         @JvmStatic
         fun bindGenericaField(
-            view: EditText, value: String?, onChanged: SignUpViewModel
-            .OnTextChangedFMM?
+            view: EditText, value: String?, onChanged: SignUpViewModel.OnTextChangedFMM?
         ) {
             if (value == null) return
             if (view.text.toString() != value) {
@@ -436,6 +439,7 @@ class SignUpFragment : Fragment() {
 
     }
 }
+
 class GenericTextWatcher(val value:String,
                          private val onChanged: SignUpViewModel.OnTextChangedFMM?,
                          val functi: (a:String) -> Boolean):

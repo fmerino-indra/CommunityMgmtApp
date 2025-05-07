@@ -1,6 +1,5 @@
-package org.fmm.communitymgmt.ui.security.signup
+package org.fmm.communitymgmt.ui.enrollment.signup
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,8 +9,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import org.fmm.communitymgmt.domainlogic.usecase.SignUpUserInfoUseCase
 import org.fmm.communitymgmt.domainmodels.model.EmailAccount
 import org.fmm.communitymgmt.domainmodels.model.Genders
@@ -26,9 +23,6 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(
     private val signUpUserInfoUseCase: SignUpUserInfoUseCase,
     private val _userSession: UserSession):ViewModel() {
-//class SignUpViewModel @Inject constructor():ViewModel() {
-//    private lateinit var signUpUserInfoUseCase: SignUpUserInfoUseCase
-
 
     private val _uiSignUpState = MutableStateFlow<SignUpUIState>(SignUpUIState.Loading)
     val uiSignUpSate: StateFlow<SignUpUIState> = _uiSignUpState
@@ -82,12 +76,15 @@ class SignUpViewModel @Inject constructor(
                     userSession.userInfo = it
                     _uiSignUpState.value = SignUpUIState.RegisteredMode
                 }.onFailure {
-                    _uiSignUpState.value = SignUpUIState.Error("[FMMP] - Ha ocurrido un error " +
-                            "en SignUpUserInfo")
+                    _uiSignUpState.value = SignUpUIState.Error(
+                        "[FMMP] - Ha ocurrido un error " +
+                                "en SignUpUserInfo"
+                    )
                 }
             }
         }
     }
+
     private fun validateForm(updatedState: SignUpFormState): SignUpFormState {
         val nError = if (updatedState.name.isBlank()) "Name is mandatory" else null
         val s1Error = if (updatedState.surname1.isBlank()) "Surname1 is mandatory" else null

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="isResponsible">Are you the responsible of the Community?</string>
+    <string name="isMarried">Are you married?</string>
+</resources>

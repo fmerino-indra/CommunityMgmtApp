@@ -27,7 +27,6 @@ import org.fmm.communitymgmt.domainlogic.repositories.CommunityListRepository
 import org.fmm.communitymgmt.domainlogic.repositories.RelationshipRepository
 import org.fmm.communitymgmt.domainlogic.repositories.UserInfoRepository
 import org.fmm.communitymgmt.domainlogic.usecase.SignUpUserInfoUseCase
-import org.fmm.communitymgmt.domainlogic.usecase.SignUpUserInfoUseCase_Factory
 import org.fmm.communitymgmt.ui.security.util.EncryptedPrefsStorage
 import retrofit2.Retrofit
 import javax.inject.Singleton
@@ -99,6 +98,24 @@ object NetworkModule {
     fun provideUserInfoUseCase(userInfoRepository: UserInfoRepository): SignUpUserInfoUseCase {
         return SignUpUserInfoUseCase(userInfoRepository)
     }
+/*
+    // Community Api Service
+    @Provides
+    fun provideEnrollCommunityApiService(retrofit: Retrofit):EnrollCommunityApiService {
+        return retrofit.create(EnrollCommunityApiService::class.java)
+    }
+    @Provides
+    fun provideEnrollCommunityRepository(enrollCommunityApiService: EnrollCommunityApiService):
+    EnrollCommunityRepository {
+        return EnrollCommunityRepositoryImpl(enrollCommunityApiService)
+    }
+    @Provides
+    fun provideEnrollCommunityUseCase(enrollCommunityRepository: EnrollCommunityRepository)
+    :EnrollCommunityUseCase {
+        return EnrollCommunityUseCase(enrollCommunityRepository)
+    }
+
+ */
 
     // Relationship Api Service and Repository
     @Provides

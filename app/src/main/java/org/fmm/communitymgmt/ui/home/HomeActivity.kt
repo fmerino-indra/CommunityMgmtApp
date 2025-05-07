@@ -13,6 +13,7 @@ import coil.request.ImageRequest
 import dagger.hilt.android.AndroidEntryPoint
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.ActivityHomeBinding
+import org.fmm.communitymgmt.ui.common.UserInfoViewModel
 
 // FMMP: Para que esta clase pueda recibir cosas inyectadas
 @AndroidEntryPoint
@@ -21,7 +22,7 @@ class HomeActivity: AppCompatActivity() {
     private lateinit var navController: NavController
 
     private lateinit var iLoader: ImageLoader
-    private val homeViewModel: HomeViewModel by viewModels()
+    private val userInfoViewModel: UserInfoViewModel by viewModels()
 
 //    private val userSession get() = _userSession
 
@@ -86,11 +87,11 @@ class HomeActivity: AppCompatActivity() {
  */
     }
     private fun loadImageProfile() {
-        if (homeViewModel.userInfo.imageUrl.isNotBlank() && homeViewModel.userInfo.imageUrl
+        if (userInfoViewModel.userInfo.imageUrl.isNotBlank() && userInfoViewModel.userInfo.imageUrl
                 .isNotEmpty
                     ()) {
             val request = ImageRequest.Builder(this)
-                .data(homeViewModel.userInfo.imageUrl)
+                .data(userInfoViewModel.userInfo.imageUrl)
                 .target(binding.userInfoPhoto)
                 .build()
             iLoader.enqueue(request)

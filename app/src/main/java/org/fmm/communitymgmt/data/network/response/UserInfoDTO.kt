@@ -14,10 +14,12 @@ data class UserInfoDTO (
     val provider: String,
     val imageUrl: String,
     // Relationship with Person
-    val person: PersonDTO?=null
+    val person: PersonDTO?=null,
+    val community: CommunityDTO?=null
 ) {
     fun toDomain():UserInfoModel = UserInfoModel(
-        id, name, email, emailVerified, providerId, provider, imageUrl, person?.toDomain()
+        id, name, email, emailVerified, providerId, provider, imageUrl, person?.toDomain(),
+        community?.toDomain()
     )
 
 
@@ -26,7 +28,9 @@ data class UserInfoDTO (
             with(userInfo) {
 
                 UserInfoDTO(id,name,email,emailVerified,
-                    providerId,provider,imageUrl, person?.let { PersonDTO.fromDomain(it) })
+                    providerId,provider,imageUrl,
+                    person?.let { PersonDTO.fromDomain(it)},
+                    community?.let { CommunityDTO.fromDomain(it) })
             }
     }
 

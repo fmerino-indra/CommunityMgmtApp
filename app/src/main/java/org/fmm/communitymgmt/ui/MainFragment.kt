@@ -1,6 +1,7 @@
 package org.fmm.communitymgmt.ui
 
 import android.accounts.AccountManager
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.databinding.FragmentMainBinding
+import org.fmm.communitymgmt.ui.enrollment.EnrollmentActivity
 import org.fmm.communitymgmt.ui.security.google.signin.SignInState
 import org.fmm.communitymgmt.ui.security.google.signin.SignInViewModel
 
@@ -70,13 +72,27 @@ class MainFragment : Fragment() {
                         SignInState.NotLoggedIn -> notLoggedInState()
                         is SignInState.LoggingInState -> loggingInState(it)
                         is SignInState.LoggedInState -> loggedInState(it)
-                        is SignInState.Error -> errorState()
                         is SignInState.NotRegisteredState -> notRegisteredState(it)
+                        is SignInState.RegisteringState -> registeringState(it)
+                        is SignInState.Error -> errorState()
                         SignInState.NotCredentialsState -> noCredentials()
                     }
                 }
             }
         }
+    }
+
+    private fun registeringState(it: SignInState.RegisteringState) {
+        // No puedo usar FragmentDirections en este caso, porque quiero ir a un fragment
+        // diferente del por defecto de la actividad, y si son gráficos diferentes no deja.
+//        findNavController().navigate(
+//            MainFragmentDirections.actionMainFragmentToEnrollmentActivity()
+//        )
+        // Se hace así:
+        val intent = Intent(requireContext(), EnrollmentActivity::class.java).apply {
+            putExtra("targetFragment", "CommunityEnrollmentFragment")
+        }
+        startActivity(intent)
     }
 
     private fun noCredentials() {
@@ -94,7 +110,7 @@ class MainFragment : Fragment() {
         findNavController().navigate(
             // Esta clase es autogenerada por NavArgs
             // El método se crea cuando se hace el enganche en el graph. También se ha añadido un argumento que se pasa aquí, y se recibe en el activity
-            MainFragmentDirections.actionMainFragmentToSignUpFragment()
+            MainFragmentDirections.actionMainFragmentToEnrollmentActivity()
 //            MainFragmentDirections.actionMainFragmentToHomeActivity()
         )
     }

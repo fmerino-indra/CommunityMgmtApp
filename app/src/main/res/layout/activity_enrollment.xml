@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+<data>
+    <variable
+        name="userInfoViewModel"
+        type="org.fmm.communitymgmt.ui.common.UserInfoViewModel" />
+</data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/mainEnrollment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.enrollment.EnrollmentActivity">
+
+    <LinearLayout
+        android:id="@+id/llEnrollmentHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
+        >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end"
+            >
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/mainLogo"
+                android:layout_width="@dimen/tiny_photo_width"
+                android:layout_height="@dimen/tiny_photo_height"
+                android:contentDescription="@string/app_logo"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_google"
+                android:layout_margin="6dp"
+                android:layout_gravity="start|center_vertical"
+                />
+            <TextView
+                android:id="@+id/tvGoogle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{userInfoViewModel.userInfo.provider}"
+                android:layout_gravity="center"
+                />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/userInfoPhoto"
+                android:layout_width="@dimen/tiny_photo_width"
+                android:layout_height="@dimen/tiny_photo_height"
+                android:contentDescription="@string/person_image"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/Circular"
+                android:layout_gravity="end"
+                android:background="@color/red"
+                android:layout_margin="6dp"
+                />
+
+        </FrameLayout>
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{userInfoViewModel.userInfo.name}"
+            />
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{userInfoViewModel.userInfo.email}"
+            />
+    </LinearLayout>
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llEnrollmentHeader"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:dividerInsetStart="16dp"
+        app:dividerInsetEnd="16dp"
+        app:dividerThickness="01dp"
+        android:layout_margin="6dp"
+        />
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/enrollmentFragmentContainerView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/enrollment_graph"
+        android:layout_marginTop="6dp"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

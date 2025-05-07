@@ -16,8 +16,9 @@ class UserInfoRepositoryImpl @Inject constructor(private val apiService: UserInf
             return it.toDomain()
         }.onFailure {
             Log.e("UserInfoRepositoryImpl", "Problems requesting UserInfo", it)
+            throw RuntimeException("Problems receiving UserInfo", it)
         }
-        throw RuntimeException("Problems receiving UserInfo")
+        throw RuntimeException("Unspected result quering UserInfo")
     }
 
     override suspend fun signUpUserInfo(userInfo: UserInfoModel): UserInfoModel {
