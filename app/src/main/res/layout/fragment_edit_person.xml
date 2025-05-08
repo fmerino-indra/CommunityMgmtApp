@@ -6,10 +6,10 @@
     <data>
         <variable
             name="viewModelFMM"
-            type="org.fmm.communitymgmt.ui.comlist.detail.EditPersonViewModel" />
+            type="org.fmm.communitymgmt.ui.home.comlist.detail.EditPersonViewModel" />
         <variable
             name="formFMM"
-            type="org.fmm.communitymgmt.ui.comlist.detail.EditPersonFormState" />
+            type="org.fmm.communitymgmt.ui.home.comlist.detail.EditPersonFormState" />
     </data>
 
 <LinearLayout

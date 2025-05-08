@@ -1,4 +1,4 @@
-package org.fmm.communitymgmt.ui.comlist.list.recyclerview
+package org.fmm.communitymgmt.ui.home.comlist.list.recyclerview
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

@@ -1,4 +1,4 @@
-package org.fmm.communitymgmt.ui.comlist.detail
+package org.fmm.communitymgmt.ui.home.comlist.detail
 
 import org.fmm.communitymgmt.domainmodels.model.AbstractRelationship
 

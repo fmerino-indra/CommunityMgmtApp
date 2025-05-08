@@ -1,4 +1,4 @@
-package org.fmm.communitymgmt.ui.comlist.list
+package org.fmm.communitymgmt.ui.home.comlist.list
 
 import android.os.Bundle
 import android.util.Log
@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.databinding.FragmentCommunityListBinding
 import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
-import org.fmm.communitymgmt.ui.comlist.list.recyclerview.CommunityListAdapter
+import org.fmm.communitymgmt.ui.home.comlist.list.recyclerview.CommunityListAdapter
 import org.fmm.communitymgmt.ui.security.model.UserSession
 import javax.inject.Inject
 

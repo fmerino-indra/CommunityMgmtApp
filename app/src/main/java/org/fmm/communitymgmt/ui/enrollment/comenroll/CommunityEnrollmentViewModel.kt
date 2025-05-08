@@ -56,7 +56,7 @@ class CommunityEnrollmentViewModel @Inject constructor(
 
     fun onAcceptClick() {
         viewModelScope.launch {
-            _uiCommunityEnrollmentState.value = CommunityEnrollmentUIState.Loading
+//            _uiCommunityEnrollmentState.value = CommunityEnrollmentUIState.Loading
 
             val result = withContext(Dispatchers.IO) {
                 val userInfo = _userInfo.copy(community =

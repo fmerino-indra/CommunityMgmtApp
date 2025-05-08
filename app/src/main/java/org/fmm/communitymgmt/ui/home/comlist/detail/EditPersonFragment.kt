@@ -1,4 +1,4 @@
-package org.fmm.communitymgmt.ui.comlist.detail
+package org.fmm.communitymgmt.ui.home.comlist.detail
 
 import android.os.Bundle
 import android.text.Editable
@@ -173,8 +173,7 @@ Lo hacemos con setOnClickLIstener
         @BindingAdapter("formName", "onNameChanged", requireAll = true)
         @JvmStatic
         fun bindName(
-            view: EditText, state: EditPersonFormState?, onChanged: EditPersonViewModel
-            .OnTextChangedFMM?
+            view: EditText, state: EditPersonFormState?, onChanged: EditPersonViewModel.OnTextChangedFMM?
         ) {
             if (state == null || onChanged == null) return
             Log.d("[FMMP] [bindName]", "El valor de state.name se ha establecido" +
@@ -225,8 +224,7 @@ Lo hacemos con setOnClickLIstener
         @BindingAdapter("formSurname1", "onSurname1Changed", requireAll = true)
         @JvmStatic
         fun bindSurname1(
-            view: EditText, state: EditPersonFormState?, onChanged: EditPersonViewModel
-            .OnTextChangedFMM?
+            view: EditText, state: EditPersonFormState?, onChanged: EditPersonViewModel.OnTextChangedFMM?
         ) {
             if (state == null || onChanged == null) return
             Log.d("[FMMP] [bindName]", "El valor de state.surname1 se ha establecido" +
@@ -276,8 +274,7 @@ Lo hacemos con setOnClickLIstener
         @BindingAdapter("formSurname2", "onSurname2Changed", requireAll = true)
         @JvmStatic
         fun bindSurname2(
-            view: EditText, state: EditPersonFormState?, onChanged: EditPersonViewModel
-            .OnTextChangedFMM?
+            view: EditText, state: EditPersonFormState?, onChanged: EditPersonViewModel.OnTextChangedFMM?
         ) {
             if (state == null || onChanged == null) return
             Log.d("[FMMP] [bindName]", "El valor de state.surname2 se ha establecido" +

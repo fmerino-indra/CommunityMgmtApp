@@ -1,4 +1,4 @@
-package org.fmm.communitymgmt.ui.comlist.list
+package org.fmm.communitymgmt.ui.home.comlist.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -33,8 +33,10 @@ class CommunityListViewModel @Inject constructor(private val getCommunityList: G
             if (result!=null) {
                 _state.value = CommunityListState.Success(result)
             } else {
-                _state.value = CommunityListState.Error("[FMMP] Ha ocurrido un error leyendo los " +
-                        "datos")
+                _state.value = CommunityListState.Error(
+                    "[FMMP] Ha ocurrido un error leyendo los " +
+                            "datos"
+                )
             }
         }
     }

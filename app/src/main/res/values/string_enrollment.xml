@@ -4,7 +4,8 @@
     <string name="isMarried">Are you married?</string>
     <string name="qrException">An exception is rose when QR generation"</string>
     <string name="brothers_enrollment_fragment">You have just enrolled the Community and
-        the Parish. Now you have to invite all the brothers of your Community</string>
+        the Parish. Now you have to invite all the brothers of your Community creating a personal
+        invitation.</string>
 
     <string name="qrCode">QR Code</string>
     <string name="invitationName">Invitation name</string>

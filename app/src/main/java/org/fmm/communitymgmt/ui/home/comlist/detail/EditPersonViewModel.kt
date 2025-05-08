@@ -1,4 +1,4 @@
-package org.fmm.communitymgmt.ui.comlist.detail
+package org.fmm.communitymgmt.ui.home.comlist.detail
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

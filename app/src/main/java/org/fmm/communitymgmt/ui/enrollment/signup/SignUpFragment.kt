@@ -1,11 +1,8 @@
 package org.fmm.communitymgmt.ui.enrollment.signup
 
 import android.os.Bundle
-import android.provider.MediaStore.Audio.Radio
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,26 +12,21 @@ import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
-import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
-import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
-import coil.request.ImageRequest
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.FragmentSignUpBinding
 import org.fmm.communitymgmt.domainmodels.model.Genders
 import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
-import org.fmm.communitymgmt.ui.MainFragmentDirections
-import org.fmm.communitymgmt.ui.enrollment.ResponsibleDialog
 import org.fmm.communitymgmt.ui.security.model.UserSession
 
 @AndroidEntryPoint

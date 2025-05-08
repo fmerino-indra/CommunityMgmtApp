@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,23 +13,19 @@ import android.widget.EditText
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavController
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import coil.request.ImageRequest
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.FragmentCommunityEnrollmentBinding
 import org.fmm.communitymgmt.ui.common.AddressViewModel
-import org.fmm.communitymgmt.ui.enrollment.ResponsibleDialog
+import org.fmm.communitymgmt.ui.enrollment.YesNoBottomSheetDialogFragment
 import org.fmm.communitymgmt.ui.enrollment.YesNoDialog
-import org.fmm.communitymgmt.ui.enrollment.signup.SignUpFragmentDirections
-import org.fmm.communitymgmt.ui.enrollment.signup.SignUpUIState
 
 @AndroidEntryPoint
 class CommunityEnrollmentFragment : Fragment() {
@@ -117,14 +112,13 @@ class CommunityEnrollmentFragment : Fragment() {
      * States
      */
     private fun singleState() {
-        // Navegar a BrothersEnrollment sin petición
     }
 
     private fun marriedState() {
         // Navega a BrothersEnrollment creando una petición para el cónyuge
     }
     private fun registeredState(it: CommunityEnrollmentUIState.RegisteredMode) {
-        askMarried()
+        askMarried2()
         /*
         findNavController().navigate(
             CommunityEnrollmentFragmentDirections.actionCommunityEnrollmentFragmentToHomeActivity2()
@@ -158,6 +152,25 @@ class CommunityEnrollmentFragment : Fragment() {
             .isMarried))
         newFragment.show(parentFragmentManager, "isMarried")
     }
+
+    private fun askMarried2() {
+        val dialog = YesNoBottomSheetDialogFragment(getString(R.string.isMarried)) {
+                isMarried ->
+            if (isMarried) {
+
+
+            } else {
+                findNavController().navigate(
+                    CommunityEnrollmentFragmentDirections.actionCommunityEnrollmentFragmentToBrothersEnrollmentFragment()
+                )
+                // Navegar a BrothersEnrollment sin petición
+            }
+        }
+        dialog.show(parentFragmentManager, getString(R.string.important_question))
+
+    }
+
+
 /*
     private fun askResponsible() {
         val responseCallback:YesNoDialog.NoticeDialogListener = object:YesNoDialog

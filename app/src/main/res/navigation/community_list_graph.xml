@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/communityListFragment"
-        android:name="org.fmm.communitymgmt.ui.comlist.list.CommunityListFragment"
+        android:name="org.fmm.communitymgmt.ui.home.comlist.list.CommunityListFragment"
         android:label="@string/community_list"
         tools:layout="@layout/fragment_community_list" >
         <action
@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_enrollment" />
     <fragment
         android:id="@+id/editPersonFragment"
-        android:name="org.fmm.communitymgmt.ui.comlist.detail.EditPersonFragment"
+        android:name="org.fmm.communitymgmt.ui.home.comlist.detail.EditPersonFragment"
         android:label="@string/editPerson" >
         <argument android:name="relationshipId"
             app:argType="integer"
