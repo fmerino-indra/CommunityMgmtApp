@@ -53,7 +53,7 @@ class CommunityEnrollmentFragment : Fragment() {
         initData()
         initUI()
 
-        askResponsible()
+//        askResponsible()
     }
     private fun initData() {
 
@@ -158,6 +158,7 @@ class CommunityEnrollmentFragment : Fragment() {
             .isMarried))
         newFragment.show(parentFragmentManager, "isMarried")
     }
+/*
     private fun askResponsible() {
         val responseCallback:YesNoDialog.NoticeDialogListener = object:YesNoDialog
         .NoticeDialogListener {
@@ -175,26 +176,7 @@ class CommunityEnrollmentFragment : Fragment() {
             .isResponsible))
         newFragment.show(parentFragmentManager, "isResponsible")
     }
-    /*
-    private fun askResponsible() {
-        val newFragment = ResponsibleDialog(this)
-        newFragment.show(parentFragmentManager, "isResponsible")
-    }
-
-     */
-/*
-    override fun onDialogPositiveClick(dialog: DialogFragment) {
-        Log.d("dialogListener", "Ha pulsado Sí")
-        communityEnrollmentViewModel.onIsResponsibleChanged(true)
-    }
-
-    override fun onDialogNegativeClick(dialog: DialogFragment) {
-        Log.d("dialogListener", "Ha pulsado No")
-        communityEnrollmentViewModel.onIsResponsibleChanged(false)
-    }
-
 */
-
     /**
      * Bindings
      */

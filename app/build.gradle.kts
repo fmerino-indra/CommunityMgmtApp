@@ -133,8 +133,14 @@ dependencies {
     //implementation(libs.jjwt.root)
     //implementation("io.jsonwebtoken:jjwt-root:0.12.6")
     implementation(libs.fusionauth.jwt)
+
     // Coil (async images)
     implementation(libs.coil)
 
+    // Swipe Refresh Layout para RecyclerView
+    implementation (libs.androidx.swiperefreshlayout)
+
+    // QR
+    implementation (libs.zxing.android.embedded)
 
 }

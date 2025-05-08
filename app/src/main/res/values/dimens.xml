@@ -6,4 +6,8 @@
     <dimen name="load_image">140dp</dimen>
     <dimen name="tiny_photo_width">25dp</dimen>
     <dimen name="tiny_photo_height">25dp</dimen>
+    <dimen name="small_photo_width">50dp</dimen>
+    <dimen name="small_photo_height">50dp</dimen>
+    <dimen name="cardCornerRadius">16dp</dimen>
+    <dimen name="cardElevation">16dp</dimen>
 </resources>

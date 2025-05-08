@@ -7,7 +7,8 @@ data class CommunityModel (
     val parishAddress: String,
     val parishAddressNumber: String,
     val parishAddressPostalCode: String,
-    val parishAddressCity: String
+    val parishAddressCity: String,
+    val isActivated: Boolean
 ){
 
 }

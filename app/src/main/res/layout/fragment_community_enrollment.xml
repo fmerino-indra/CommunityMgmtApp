@@ -10,7 +10,7 @@
             type="org.fmm.communitymgmt.ui.enrollment.comenroll.CommunityEnrollmentViewModel" />
         <variable
             name="formCommunityEnrollment"
-            type="org.fmm.communitymgmt.ui.enrollment.comenroll.CommunityEnrollmentFormState" />
+            type="org.fmm.communitymgmt.ui.enrollment.comenroll.CommunityEnrollmentForm" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -73,50 +73,7 @@
                 android:layout_height="match_parent"
 
                 />
-
-<!--
-            <EditText
-                android:id="@+id/address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/address"
-                android:inputType="text"
-                tools:ignore="Autofill"
-                app:formFieldValue="@{formCommunityEnrollment.parishAddress}"
-                app:onStringChanged="@{communityEnrollmentViewModel::onAddressChanged}"
-                />
-            <EditText
-                android:id="@+id/addressNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/addressNumber"
-                android:inputType="text"
-                tools:ignore="Autofill,TextFields"
-                app:formFieldValue="@{formCommunityEnrollment.parishAddressNumber}"
-                app:onStringChanged="@{communityEnrollmentViewModel::onAddressNumberChanged}"
-                />
-            <EditText
-                android:id="@+id/postalCode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/postalCode"
-                android:inputType="text"
-                tools:ignore="Autofill"
-                app:formFieldValue="@{formCommunityEnrollment.parishAddressPostalCode}"
-                app:onStringChanged="@{communityEnrollmentViewModel::onPostalCodeChanged}"
-                />
-            <EditText
-                android:id="@+id/city"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/city"
-                android:inputType="text"
-                tools:ignore="Autofill"
-                app:formFieldValue="@{formCommunityEnrollment.parishAddressCity}"
-                app:onStringChanged="@{communityEnrollmentViewModel::onCityChanged}"
-                />
--->
-            </LinearLayout>
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/llButtons"
             android:layout_width="fill_parent"

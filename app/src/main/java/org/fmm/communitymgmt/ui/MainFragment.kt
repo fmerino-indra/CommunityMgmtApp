@@ -74,12 +74,21 @@ class MainFragment : Fragment() {
                         is SignInState.LoggedInState -> loggedInState(it)
                         is SignInState.NotRegisteredState -> notRegisteredState(it)
                         is SignInState.RegisteringState -> registeringState(it)
+                        is SignInState.NotActivatedState -> notActivatedState(it)
                         is SignInState.Error -> errorState()
                         SignInState.NotCredentialsState -> noCredentials()
                     }
                 }
             }
         }
+    }
+
+    private fun notActivatedState(it: SignInState.NotActivatedState) {
+        Log.d(this::class.simpleName, "Navigating to BrothersEnrollmentFragment")
+        val intent = Intent(requireContext(), EnrollmentActivity::class.java).apply {
+            putExtra("targetFragment", "BrothersEnrollmentFragment")
+        }
+        startActivity(intent)
     }
 
     private fun registeringState(it: SignInState.RegisteringState) {
@@ -137,7 +146,7 @@ class MainFragment : Fragment() {
         // Quitar progress bar
         // Guardar cosas en EncryptedPrefsStorage
         // No sé si pintar en algún sitio la foto
-        Log.d(this::class.toString(), it.userInfo.toString())
+        Log.d(this::class.simpleName, it.userInfo.toString())
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToHomeActivity()
         )

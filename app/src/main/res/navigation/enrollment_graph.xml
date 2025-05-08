@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_communityEnrollmentFragment_to_homeActivity2"
             app:destination="@id/homeActivity2" />
+        <action
+            android:id="@+id/action_communityEnrollmentFragment_to_brothersEnrollmentFragment"
+            app:destination="@id/brothersEnrollmentFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -32,4 +35,14 @@
         android:name="org.fmm.communitymgmt.ui.home.HomeActivity"
         android:label="activity_home"
         tools:layout="@layout/activity_home" />
+    <fragment
+        android:id="@+id/brothersEnrollmentFragment"
+        android:name="org.fmm.communitymgmt.ui.enrollment.brothers.BrothersEnrollmentFragment"
+        android:label="fragment_brothers_enrollment"
+        tools:layout="@layout/fragment_brothers_enrollment" />
+    <fragment
+        android:id="@+id/QRReaderFragment"
+        android:name="org.fmm.communitymgmt.ui.enrollment.qr.QRReaderFragment"
+        android:label="fragment_q_r_reader"
+        tools:layout="@layout/fragment_q_r_reader" />
 </navigation>

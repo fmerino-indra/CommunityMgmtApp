@@ -27,6 +27,9 @@
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
 
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
     <string name="biometrics_failed">Failed authentication</string>
     <string name="biometrics_title">Required authentication</string>
     <string name="biometrics_subtitle">Confirm your identity to continue</string>
@@ -51,5 +54,4 @@
     <string name="groupsMgmt">Groups management</string>
     <string name="communityNumber">Community Number</string>
     <string name="parishName">Parish Name</string>
-
 </resources>

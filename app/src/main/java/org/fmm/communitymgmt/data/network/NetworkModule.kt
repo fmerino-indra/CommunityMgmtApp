@@ -21,11 +21,14 @@ import org.fmm.communitymgmt.data.network.response.MarriageDTO
 import org.fmm.communitymgmt.data.network.response.OtherDTO
 import org.fmm.communitymgmt.data.network.response.SingleDTO
 import org.fmm.communitymgmt.data.repositories.CommunityListRepositoryImpl
+import org.fmm.communitymgmt.data.repositories.InvitationRepositoryImpl
 import org.fmm.communitymgmt.data.repositories.RelationshipRepositoryImpl
 import org.fmm.communitymgmt.data.repositories.UserInfoRepositoryImpl
 import org.fmm.communitymgmt.domainlogic.repositories.CommunityListRepository
+import org.fmm.communitymgmt.domainlogic.repositories.InvitationRepository
 import org.fmm.communitymgmt.domainlogic.repositories.RelationshipRepository
 import org.fmm.communitymgmt.domainlogic.repositories.UserInfoRepository
+import org.fmm.communitymgmt.domainlogic.usecase.GetInvitationsUseCase
 import org.fmm.communitymgmt.domainlogic.usecase.SignUpUserInfoUseCase
 import org.fmm.communitymgmt.ui.security.util.EncryptedPrefsStorage
 import retrofit2.Retrofit
@@ -98,24 +101,22 @@ object NetworkModule {
     fun provideUserInfoUseCase(userInfoRepository: UserInfoRepository): SignUpUserInfoUseCase {
         return SignUpUserInfoUseCase(userInfoRepository)
     }
-/*
-    // Community Api Service
-    @Provides
-    fun provideEnrollCommunityApiService(retrofit: Retrofit):EnrollCommunityApiService {
-        return retrofit.create(EnrollCommunityApiService::class.java)
-    }
-    @Provides
-    fun provideEnrollCommunityRepository(enrollCommunityApiService: EnrollCommunityApiService):
-    EnrollCommunityRepository {
-        return EnrollCommunityRepositoryImpl(enrollCommunityApiService)
-    }
-    @Provides
-    fun provideEnrollCommunityUseCase(enrollCommunityRepository: EnrollCommunityRepository)
-    :EnrollCommunityUseCase {
-        return EnrollCommunityUseCase(enrollCommunityRepository)
-    }
 
- */
+    // Invitation Api Service
+    @Provides
+    fun provideInvitationApiService(retrofit: Retrofit):InvitationApiService {
+        return retrofit.create(InvitationApiService::class.java)
+    }
+    @Provides
+    fun provideInvitationRepository(invitationApiService: InvitationApiService):
+    InvitationRepository {
+        return InvitationRepositoryImpl(invitationApiService)
+    }
+    @Provides
+    fun provideInvitationUseCase(invitationRepository: InvitationRepository)
+    :GetInvitationsUseCase {
+        return GetInvitationsUseCase(invitationRepository)
+    }
 
     // Relationship Api Service and Repository
     @Provides

@@ -58,8 +58,12 @@ class SignInViewModel @Inject constructor(
             }
             userSession.userInfo = result
             if (result.isFullEnrolled()) {
-                // Usuario ya registrado
-                _signInState.value = SignInState.LoggedInState(idToken, userInfo = result)
+                if (result.community!!.isActivated) {
+                    // Usuario ya registrado
+                    _signInState.value = SignInState.LoggedInState(idToken, userInfo = result)
+                } else {
+                    _signInState.value = SignInState.NotActivatedState(idToken, userInfo = result)
+                }
             } else if (result.isRegistering()) {
                 Log.d("SignInViewModel", "Registered user but NOT community:")
                 _signInState.value = SignInState.RegisteringState(idToken, userInfo = result)

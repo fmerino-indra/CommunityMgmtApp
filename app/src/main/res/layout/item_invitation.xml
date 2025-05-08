@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvInvitation"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    app:cardUseCompatPadding="false"
+    app:cardCornerRadius="@dimen/cardCornerRadius"
+    app:cardElevation="@dimen/cardElevation"
+
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clInvitation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    >
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/qrCode"
+            android:layout_width="@dimen/small_photo_width"
+            android:layout_height="@dimen/small_photo_height"
+            android:contentDescription="@string/qrCode"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo_qr"
+            android:layout_margin="6dp"
+            app:shapeAppearanceOverlay="@style/Rounded"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/invitationName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+        <TextView
+            android:id="@+id/invitationName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/qrCode"
+            app:layout_constraintTop_toTopOf="@id/qrCode"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/invitationName"
+
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

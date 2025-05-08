@@ -23,9 +23,9 @@ class CommunityEnrollmentViewModel @Inject constructor(
     private val _userSession:UserSession
 ): ViewModel() {
     private val _formCommunityEnrollmentState
-            = MutableStateFlow(CommunityEnrollmentFormState()
+            = MutableStateFlow(CommunityEnrollmentForm(isResponsible = true)
     )
-    val formCommunityEnrollmentState: StateFlow<CommunityEnrollmentFormState>
+    val formCommunityEnrollmentState: StateFlow<CommunityEnrollmentForm>
         get() =
         _formCommunityEnrollmentState
 
@@ -52,9 +52,6 @@ class CommunityEnrollmentViewModel @Inject constructor(
     fun initData() {
         _userInfo = _userSession.userInfo!!
         _uiCommunityEnrollmentState.value = CommunityEnrollmentUIState.EditMode
-//        if (!isResponsible)
-//            throw RuntimeException("Only Responsible")
-//        _formCommunityEnrollmentState.value = CommunityEnrollmentFormState(isResponsible = true)
     }
 
     fun onAcceptClick() {
@@ -71,7 +68,8 @@ class CommunityEnrollmentViewModel @Inject constructor(
                             parishAddress = parishAddressForm.address,
                             parishAddressNumber = parishAddressForm.addressNumber,
                             parishAddressPostalCode = parishAddressForm.postalCode,
-                            parishAddressCity = parishAddressForm.city
+                            parishAddressCity = parishAddressForm.city,
+                            isActivated = false
                         )
                     }
                 )
@@ -89,20 +87,20 @@ class CommunityEnrollmentViewModel @Inject constructor(
         }
     }
 
-    private fun validateForm(updatedState: CommunityEnrollmentFormState): CommunityEnrollmentFormState {
-        val nError = if (updatedState.communityNumber.isBlank()) "Name is mandatory" else
+    private fun validateForm(updatedForm: CommunityEnrollmentForm): CommunityEnrollmentForm {
+        val nError = if (updatedForm.communityNumber.isBlank()) "Name is mandatory" else
             null
-        val pError = if (updatedState.parish.isBlank()) "Surname1 is mandatory" else null
-        val newAddress = addressViewModel.validateAddress(updatedState.parishAddressForm)
+        val pError = if (updatedForm.parish.isBlank()) "Surname1 is mandatory" else null
+//        val newAddress = addressViewModel.validateAddress(updatedState.parishAddressForm)
 
         val isValid = nError == null
                 && pError == null
-                && newAddress.isAddressValid
+                && updatedForm.parishAddressForm.isAddressValid
 
-        return updatedState.copy(
+        return updatedForm.copy(
             nError = nError?:"",
             pError = pError?:"",
-            parishAddressForm = newAddress,
+//            parishAddressForm = newAddress,
             isValid = isValid
         )
     }

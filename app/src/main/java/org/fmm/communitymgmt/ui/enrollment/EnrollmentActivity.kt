@@ -1,15 +1,21 @@
 package org.fmm.communitymgmt.ui.enrollment
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.BindingAdapter
+import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import coil.ImageLoader
@@ -57,7 +63,8 @@ class EnrollmentActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.enrollmentFragmentContainerView) as
                     NavHostFragment
         navController = navHost.navController
-        redirectToCommunityEnrollment()
+        askResponsible()
+//        redirectToCommunityEnrollment()
     }
 
     private fun loadImageProfile() {
@@ -78,27 +85,25 @@ class EnrollmentActivity : AppCompatActivity() {
         val target = intent.getStringExtra("targetFragment")
         if (target == "CommunityEnrollmentFragment") {
             navController.navigate(R.id.communityEnrollmentFragment)
+        } else if (target == "BrothersEnrollmentFragment") {
+            navController.navigate(R.id.brothersEnrollmentFragment)
         }
 
     }
-/*
-    /**
-     * Bindings
-     */
-    //    fun bindName(view: EditText, state: EditPersonFormState?, callback: ((String) -> Unit)) {
-    companion object {
 
-        @BindingAdapter("viewModelFieldValue", requireAll = true)
-        @JvmStatic
-        fun bindName(
-            view: EditText, state: SignUpFormState?
-        ) {
-            if (state == null) return
-            if (view.text.toString() != state.name) {
-                view.setText(state.name)
+    private fun askResponsible() {
+        val dialog = YesNoBottomSheetDialogFragment(getString(R.string.isResponsible)) {
+            isResponsible ->
+            if (isResponsible) {
+                redirectToCommunityEnrollment()
+            } else {
+                redirectToWaitingInvitation()
             }
         }
+        dialog.show(supportFragmentManager, getString(R.string.important_question))
     }
 
- */
+    private fun redirectToWaitingInvitation() {
+        navController.navigate(R.id.QRReaderFragment)
+    }
 }

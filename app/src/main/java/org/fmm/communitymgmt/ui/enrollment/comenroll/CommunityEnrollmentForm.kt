@@ -2,7 +2,7 @@ package org.fmm.communitymgmt.ui.enrollment.comenroll
 
 import org.fmm.communitymgmt.ui.common.AddressForm
 
-data class CommunityEnrollmentFormState (
+data class CommunityEnrollmentForm (
     val isResponsible: Boolean = false,
     val isMarried: Boolean = false,
     val communityNumber:String="",

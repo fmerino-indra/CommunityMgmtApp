@@ -31,16 +31,20 @@
         android:inAnimation="@android:anim/slide_in_left"
         android:outAnimation="@android:anim/slide_out_right"
         >
+
         <LinearLayout
             android:id="@+id/llStep1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
+
             <TextView
                 android:id="@+id/tvPersonalData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Step 1: Personal data"/>
+                android:text="Step 1: Personal data" />
+
             <EditText
                 android:id="@+id/etUserId"
                 android:layout_width="wrap_content"
@@ -48,9 +52,9 @@
                 android:enabled="false"
                 android:hint="IdP user Id"
                 android:inputType="text"
-                tools:ignore="Autofill"
                 app:formFieldValue="@{formFMM.providerId}"
-                />
+                tools:ignore="Autofill" />
+
             <EditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
@@ -60,6 +64,7 @@
                 app:formFieldValue="@{formFMM.name}"
                 app:onFieldChanged="@{viewModelFMM::onNameChanged}"
                 tools:ignore="Autofill" />
+
             <EditText
                 android:id="@+id/surname1"
                 android:layout_width="match_parent"
@@ -69,6 +74,7 @@
                 app:formFieldValue="@{formFMM.surname1}"
                 app:onFieldChanged="@{viewModelFMM::onSurname1Changed}"
                 tools:ignore="Autofill" />
+
             <EditText
                 android:id="@+id/surname2"
                 android:layout_width="match_parent"
@@ -78,6 +84,7 @@
                 app:formFieldValue="@{formFMM.surname2}"
                 app:onFieldChanged="@{viewModelFMM::onSurname2Changed}"
                 tools:ignore="Autofill" />
+
             <EditText
                 android:id="@+id/nickname"
                 android:layout_width="match_parent"
@@ -87,12 +94,13 @@
                 app:formFieldValue="@{formFMM.nickname}"
                 app:onFieldChanged="@{viewModelFMM::onNicknameChanged}"
                 tools:ignore="Autofill" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:labelFor="@+id/rgGender"
-                android:text="@string/gender"
-                />
+                android:text="@string/gender" />
+
             <RadioGroup
                 android:id="@+id/rgGender"
                 android:layout_width="match_parent"
@@ -100,19 +108,23 @@
                 android:orientation="vertical"
                 android:text="@string/gender"
                 app:formGenderValue="@{formFMM.gender}"
-                app:onRadioGroupChanged="@{viewModelFMM::onGenderChanged}"
-                >
-                <RadioButton android:id="@+id/radio_male"
+                app:onRadioGroupChanged="@{viewModelFMM::onGenderChanged}">
+
+                <RadioButton
+                    android:id="@+id/radio_male"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/male"
-                    android:tag="@{Genders.MALE}"/>
-                <RadioButton android:id="@+id/radio_female"
+                    android:tag="@{Genders.MALE}"
+                    android:text="@string/male" />
+
+                <RadioButton
+                    android:id="@+id/radio_female"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/female"
-                    android:tag="@{Genders.FEMALE}"/>
+                    android:tag="@{Genders.FEMALE}"
+                    android:text="@string/female" />
             </RadioGroup>
+
             <EditText
                 android:id="@+id/birthday"
                 android:layout_width="match_parent"
@@ -121,8 +133,8 @@
                 android:inputType="date"
                 app:formFieldValue="@{formFMM.birthday}"
                 app:onFieldChanged="@{viewModelFMM::onBirthdayChanged}"
-                tools:ignore="Autofill"
-                />
+                tools:ignore="Autofill" />
+
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
@@ -201,6 +213,7 @@
         android:orientation="horizontal"
         android:gravity="end"
         android:visibility="visible"
+        android:layout_margin="5dp"
         >
         <Button
             android:id="@+id/btnPrevious"
