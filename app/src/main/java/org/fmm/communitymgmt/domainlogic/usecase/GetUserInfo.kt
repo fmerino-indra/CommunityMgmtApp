@@ -17,7 +17,9 @@ class GetUserInfo @Inject constructor(private val userInfoRepository:UserInfoRep
         } catch (re: RuntimeException) {
             // @todo Acceder a BBDD local room para ver si el user está ya enrolado y hay datos
             Log.d("GetUserInfo", "Unspected UserInfo $re")
+            throw re
         }
+/*
         val idToken = encryptedPrefsStorage.getString("auth_token")
         val jwt = JWTUtils.decodePayload(idToken)
 
@@ -30,5 +32,7 @@ class GetUserInfo @Inject constructor(private val userInfoRepository:UserInfoRep
             provider = jwt.otherClaims["provider"].toString(),
             imageUrl = jwt.otherClaims["imageUrl"].toString()
         )
+
+ */
     }
 }

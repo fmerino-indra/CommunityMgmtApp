@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.FragmentBrothersEnrollmentBinding
 import org.fmm.communitymgmt.domainmodels.model.InvitationModel
+import org.fmm.communitymgmt.ui.enrollment.brothers.dialog.AddInvitationDialog
 import org.fmm.communitymgmt.ui.enrollment.brothers.recyclerview.InvitationListAdapter
 import org.fmm.communitymgmt.ui.enrollment.qr.QRGenBottomSheetDialogFragment
 
@@ -56,6 +57,29 @@ class BrothersEnrollmentFragment : Fragment() {
     private fun initUI() {
         initAdapter()
         initUIState()
+        initListeners()
+    }
+
+    private fun initListeners() {
+        binding.fabAddInvitation.setOnClickListener {
+            showAddInvitationDialog()
+        }
+    }
+
+    private fun showAddInvitationDialog() {
+        val fragmentManager = parentFragmentManager
+        val newFragment = AddInvitationDialog(this.brothersEnrollmentViewModel)
+
+        newFragment.show(fragmentManager, "dialog")
+        /* No funciona
+        val transaction = fragmentManager.beginTransaction()
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        transaction
+            .add(android.R.id.content, newFragment)
+            .addToBackStack(null)
+            .commit()
+
+         */
     }
 
     private fun initAdapter() {

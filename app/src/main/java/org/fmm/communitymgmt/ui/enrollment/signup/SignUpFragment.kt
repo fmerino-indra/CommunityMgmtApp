@@ -20,6 +20,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -43,6 +44,11 @@ class SignUpFragment : Fragment() {
     private lateinit var userSession: UserSession
     private lateinit var userInfo: UserInfoModel
 
+    private lateinit var aux: SignUpFragmentArgs
+
+    private var isResponsible: Boolean = false
+//    val isResponsible = args.isResponsible
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,6 +71,11 @@ class SignUpFragment : Fragment() {
 
     private fun initData() {
         signUpViewModel.initData()
+
+        val args: SignUpFragmentArgs by navArgs()
+        isResponsible = args.isResponsible
+        val state= requireActivity().intent.getIntExtra(getString(R.string.enrollmentState),-1)
+
         userSession = signUpViewModel.userSession
         userInfo = userSession.userInfo!!
     }
@@ -185,9 +196,15 @@ class SignUpFragment : Fragment() {
     }
 
     private fun registeredState(it: SignUpUIState.RegisteredMode) {
-        findNavController().navigate(
-            SignUpFragmentDirections.actionSignUpFragmentToCommunityEnrollmentFragment()
-        )
+        if (isResponsible) {
+            findNavController().navigate(
+                SignUpFragmentDirections.actionSignUpFragmentToCommunityEnrollmentFragment()
+            )
+        } else {
+            findNavController().navigate(
+                SignUpFragmentDirections.actionSignUpFragmentToQRReaderFragment2()
+            )
+        }
     }
 
     private fun errorState(editPersonUIState: SignUpUIState.Error) {

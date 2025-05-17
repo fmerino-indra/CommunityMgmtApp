@@ -39,7 +39,7 @@ class SignUpViewModel @Inject constructor(
         require(userSession.isLoggedIn())
         _userInfoModel = userSession.userInfo!!
 
-        _formSignUpState.value = userSession.userInfo!!.run {
+        _formSignUpState.value = userSession.userInfo!!.socialUserInfo.run {
             SignUpFormState(
                 providerId = providerId,
                 name = name,

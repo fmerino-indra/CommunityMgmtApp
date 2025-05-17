@@ -1,6 +1,5 @@
 package org.fmm.communitymgmt.ui.enrollment.brothers
 
-import org.fmm.communitymgmt.domainmodels.model.AbstractRelationship
 import org.fmm.communitymgmt.domainmodels.model.InvitationModel
 
 sealed class BrothersEnrollmentState {

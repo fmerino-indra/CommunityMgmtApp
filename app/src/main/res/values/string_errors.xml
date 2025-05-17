@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qrException">An exception has occurred while QR generation.</string>
+    <string name="loginException">An exception has occurred after Signing In. Try again later
+        .</string>
+    <string name="listException">An exception has occurred while CommunityList (%1$s).</string>
+
+</resources>

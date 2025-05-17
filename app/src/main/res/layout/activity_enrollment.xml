@@ -43,7 +43,7 @@
                 android:id="@+id/tvGoogle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{userInfoViewModel.userInfo.provider}"
+                android:text="@{userInfoViewModel.userInfo.socialUserInfo.provider}"
                 android:layout_gravity="center"
                 />
             <com.google.android.material.imageview.ShapeableImageView
@@ -63,13 +63,13 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{userInfoViewModel.userInfo.name}"
+            android:text="@{userInfoViewModel.userInfo.socialUserInfo.name}"
             />
         <TextView
             android:id="@+id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{userInfoViewModel.userInfo.email}"
+            android:text="@{userInfoViewModel.userInfo.socialUserInfo.email}"
             />
     </LinearLayout>
     <com.google.android.material.divider.MaterialDivider

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvCommunityDialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="16dp"
+    app:cardUseCompatPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/mainLogo"
+            android:layout_width="@dimen/photo_width"
+            android:layout_height="@dimen/photo_width"
+            android:contentDescription="@string/app_logo"
+            android:scaleType="centerCrop"
+            android:src="@drawable/iconos_del_camino"
+            android:layout_margin="6dp"
+            android:layout_gravity="center"
+            app:strokeColor="@color/primary"
+
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Community Management"
+            android:layout_marginVertical="6dp"
+            android:textSize="11sp"
+            android:layout_gravity="center_horizontal"
+            android:textAlignment="center"
+            app:dividerColor="@color/primary"
+
+            />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:dividerColor="@color/primary"
+            app:dividerThickness="3dp"
+            />
+
+        <!-- TODO: Update blank fragment layout -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_community"
+            android:layout_marginVertical="6dp"
+            android:layout_gravity="center"
+            android:textSize="24sp"
+            android:textAlignment="center"
+            android:textColor="@color/primary"
+
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCommunities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

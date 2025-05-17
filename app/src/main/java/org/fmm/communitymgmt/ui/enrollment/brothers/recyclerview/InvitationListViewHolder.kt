@@ -6,6 +6,9 @@ import android.util.Base64
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.ItemCommunitylistSingleBinding
 import org.fmm.communitymgmt.databinding.ItemInvitationBinding
@@ -21,6 +24,10 @@ class InvitationListViewHolder(view: View): RecyclerView.ViewHolder(view) {
     fun render(invitation: InvitationModel, onItemSelected: (InvitationModel) -> Unit){
         // Hay que generar el QR
         binding.invitationName.text = invitation.name
+        if (invitation.iat !=null)
+            binding.qrDate.text = Instant.fromEpochMilliseconds(invitation.iat).toLocalDateTime(TimeZone.of("Europe/Madrid")).toString()
+        if (invitation.exp !=null)
+            binding.qrExp.text = Instant.fromEpochMilliseconds(invitation.exp).toLocalDateTime(TimeZone.of("Europe/Madrid")).toString()
         binding.cvInvitation.setOnClickListener {
             itemClicked(newLambda = {onItemSelected(invitation)})
         }

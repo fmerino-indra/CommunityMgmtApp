@@ -24,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.ActivityEnrollmentBinding
 import org.fmm.communitymgmt.databinding.ActivityMainBinding
+import org.fmm.communitymgmt.ui.common.EnrollmentStates
 import org.fmm.communitymgmt.ui.common.UserInfoViewModel
 import org.fmm.communitymgmt.ui.enrollment.signup.SignUpFormState
 import org.fmm.communitymgmt.ui.enrollment.signup.SignUpViewModel
@@ -64,46 +65,66 @@ class EnrollmentActivity : AppCompatActivity() {
                     NavHostFragment
         navController = navHost.navController
         askResponsible()
-//        redirectToCommunityEnrollment()
     }
 
     private fun loadImageProfile() {
-        if (userInfoViewModel.userInfo.imageUrl.isNotBlank() && userInfoViewModel.userInfo.imageUrl
+        if (userInfoViewModel.userInfo.socialUserInfo.imageUrl.isNotBlank() &&
+            userInfoViewModel.userInfo.socialUserInfo.imageUrl
                 .isNotEmpty
                     ()
         ) {
             val request = ImageRequest.Builder(this)
-                .data(userInfoViewModel.userInfo.imageUrl)
+                .data(userInfoViewModel.userInfo.socialUserInfo.imageUrl)
                 .target(binding.userInfoPhoto)
                 .build()
             iLoader.enqueue(request)
         }
     }
 
-    private fun redirectToCommunityEnrollment() {
+    private fun enrollmentNavigate(isResponsible: Boolean) {
+        val state= intent.getIntExtra(getString(R.string.enrollmentState),-1)
+        var fragmentRef: Int? = null
 
-        val target = intent.getStringExtra("targetFragment")
-        if (target == "CommunityEnrollmentFragment") {
-            navController.navigate(R.id.communityEnrollmentFragment)
-        } else if (target == "BrothersEnrollmentFragment") {
-            navController.navigate(R.id.brothersEnrollmentFragment)
+        if (isResponsible) {
+            fragmentRef = when(state) {
+                EnrollmentStates.NOTENROLLED.id -> R.id.signUpFragment
+                EnrollmentStates.NOTCOMMUNITY.id -> R.id.communityEnrollmentFragment
+                EnrollmentStates.FULLENROLLED.id -> R.id.brothersEnrollmentFragment
+                else -> {
+                    -1
+                }
+            }
+        } else {
+            fragmentRef = when(state) {
+                EnrollmentStates.NOTENROLLED.id -> R.id.signUpFragment
+                EnrollmentStates.NOTCOMMUNITY.id -> R.id.QRReaderFragment
+                EnrollmentStates.FULLENROLLED.id -> R.id.QRReaderFragment // Cuando la comunidad
+                // no está activada
+                else -> {
+                    -1
+                }
+            }
         }
-
+        if (fragmentRef>=-1) {
+            if (state == EnrollmentStates.NOTENROLLED.id) {
+                navController.navigate(
+                    EnrollmentFragmentDirections
+                        .actionEnrollmentFragmentToSignUpFragment(isResponsible)
+                )
+            } else {
+                navController.navigate(fragmentRef)
+            }
+        } else {
+            // Tratar error
+        }
     }
-
     private fun askResponsible() {
         val dialog = YesNoBottomSheetDialogFragment(getString(R.string.isResponsible)) {
             isResponsible ->
-            if (isResponsible) {
-                redirectToCommunityEnrollment()
-            } else {
-                redirectToWaitingInvitation()
-            }
+
+            enrollmentNavigate(isResponsible)
         }
         dialog.show(supportFragmentManager, getString(R.string.important_question))
     }
 
-    private fun redirectToWaitingInvitation() {
-        navController.navigate(R.id.QRReaderFragment)
-    }
 }

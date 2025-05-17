@@ -1,18 +1,19 @@
 package org.fmm.communitymgmt.util
 
-import android.util.Log
 import kotlinx.datetime.LocalDate
 
-    fun Long.toLocalDate(): LocalDate = LocalDate.fromEpochDays(this.toInt())
-    fun LocalDate.toEpochDaysLong(): Long {
-        return this.toEpochDays().toLong()
-    }
-    fun LocalDate.formatSpanish(): String {
-        val day = this.dayOfMonth.toString().padStart(2, '0')
-        val month = this.monthNumber.toString().padStart(2, '0')
-        val year = this.year.toString()
-        return "$day/$month/$year"
-    }
+fun Long.toLocalDate(): LocalDate = LocalDate.fromEpochDays(this.toInt())
+fun LocalDate.toEpochDaysLong(): Long {
+    return this.toEpochDays().toLong()
+}
+
+fun LocalDate.formatSpanish(): String {
+    val day = this.dayOfMonth.toString().padStart(2, '0')
+    val month = this.monthNumber.toString().padStart(2, '0')
+    val year = this.year.toString()
+    return "$day/$month/$year"
+}
+
 class DateExtensions {
     companion object {
         fun parseSpanishDate(str: String?): LocalDate? {
@@ -32,7 +33,7 @@ class DateExtensions {
                 }
 
                  */
-                return LocalDate(dayOfMonth = day, monthNumber =  month, year =  year)
+                return LocalDate(dayOfMonth = day, monthNumber = month, year = year)
             } else return null
         }
     }

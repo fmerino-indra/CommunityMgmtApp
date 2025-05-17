@@ -22,6 +22,7 @@ import kotlinx.coroutines.withContext
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.domainlogic.usecase.GetUserInfo
 import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
+import org.fmm.communitymgmt.ui.common.EnrollmentStates
 import org.fmm.communitymgmt.ui.security.model.UserSession
 import org.fmm.communitymgmt.ui.security.util.EncryptedPrefsStorage
 import org.fmm.communitymgmt.util.StringResourcesProvider
@@ -40,40 +41,44 @@ class SignInViewModel @Inject constructor(
     val signInSate: StateFlow<SignInState> = _signInState
     private lateinit var credentialManager: CredentialManager
 
-//    private lateinit var encryptedPrefsStorage: EncryptedPrefsStorage
-
     private fun processJwt(idToken: String) {
         val jwt = JWTUtils.decodePayload(idToken)
         jwt.getString("email")
         Log.d("SignInViewModel", "$jwt")
+    }
+
+    private fun whatSate(userInfo:UserInfoModel):SignInState {
+        if (userInfo.person == null) {
+            return SignInState.NotRegisteredState
+        } else if (userInfo.allCommunities?.isEmpty() == true) {
+            return SignInState.RegisteringState
+//        } else if (userInfo.community == null) {
+            // A seleccionar comunidad
+        } else if (userInfo.community?.isActivated == false) {
+            return SignInState.NotActivatedState
+        } else {
+            return SignInState.LoggedInState(userInfo)
+        }
     }
     private fun onGoogleCredentialReceived(idToken: String) {
         saveEncryptedToken(idToken)
         processJwt(idToken)
 // @todo Extraer información del idToken
         viewModelScope.launch {
-            _signInState.value = SignInState.LoggingInState(idToken)
-            val result: UserInfoModel = withContext(Dispatchers.IO) {
-                getUserInfo()
-            }
-            userSession.userInfo = result
-            if (result.isFullEnrolled()) {
-                if (result.community!!.isActivated) {
-                    // Usuario ya registrado
-                    _signInState.value = SignInState.LoggedInState(idToken, userInfo = result)
-                } else {
-                    _signInState.value = SignInState.NotActivatedState(idToken, userInfo = result)
+            _signInState.value = SignInState.LoggingInState
+            val result: Result<UserInfoModel> = withContext(Dispatchers.IO) {
+                runCatching {
+                    getUserInfo()
+                }.onSuccess {
+                    userSession.userInfo = it
+                    _signInState.value = whatSate(userSession.userInfo!!)
+                }.onFailure {
+                    Log.e("SignInViewModel", "Error while login", it)
+                    _signInState.value = SignInState.Error("Error whil Signing In", kotlin.Exception(it))
                 }
-            } else if (result.isRegistering()) {
-                Log.d("SignInViewModel", "Registered user but NOT community:")
-                _signInState.value = SignInState.RegisteringState(idToken, userInfo = result)
-            } else {
-                // Usuario no registrado
-                Log.d("SignInViewModel", "Logged in but NOT registered user:")
-                Log.d("SignInViewModel","$result")
-                // Go To Enrollment
-                _signInState.value = SignInState.NotRegisteredState(idToken, result)
             }
+//            userSession.userInfo = result
+
         }
     }
 
@@ -92,7 +97,7 @@ class SignInViewModel @Inject constructor(
     }
     fun initViewModel(cManager: CredentialManager) {
         credentialManager = cManager
-        //@todo Estoy hay que coordinarlo con ManagerCredential de google, en la forma de login
+        //@todo Esto hay que coordinarlo con ManagerCredential de google, en la forma de login
         // automático
         if (userSession.isLoggedIn()) {
 

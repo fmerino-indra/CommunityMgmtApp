@@ -18,13 +18,13 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/fragmentContainerView"
+            app:layout_constraintBottom_toTopOf="@id/homeFragmentContainerView"
             android:theme="@style/Widget.AppCompat.ActionBar"
             app:popupTheme="@style/Theme.AppCompat.Light"
-            app:title=""
+            app:title="Título en xml: atributo title de toolbar"
             >
             <TextView
-                android:id="@+id/toolbarTitle"
+                android:id="@+id/toolbarTitleParticular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -43,7 +43,7 @@
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerView"
+            android:id="@+id/homeFragmentContainerView"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -51,7 +51,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/mainBottomNavView"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/community_list_graph" />
+            app:navGraph="@navigation/community_list_graph_v2" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/mainBottomNavView"

@@ -2,13 +2,26 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/signUpFragment">
+    android:id="@+id/enrollment_graph"
+    app:startDestination="@id/enrollmentFragment">
     <fragment
         android:id="@+id/enrollmentFragment"
         android:name="org.fmm.communitymgmt.ui.enrollment.EnrollmentFragment"
         android:label="fragment_enrollment"
-        tools:layout="@layout/fragment_enrollment" />
+        tools:layout="@layout/fragment_enrollment" >
+        <action
+            android:id="@+id/action_enrollmentFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_enrollmentFragment_to_communityEnrollmentFragment"
+            app:destination="@id/communityEnrollmentFragment" />
+        <action
+            android:id="@+id/action_enrollmentFragment_to_brothersEnrollmentFragment"
+            app:destination="@id/brothersEnrollmentFragment" />
+        <action
+            android:id="@+id/action_enrollmentFragment_to_QRReaderFragment"
+            app:destination="@id/QRReaderFragment" />
+    </fragment>
     <fragment
         android:id="@+id/communityEnrollmentFragment"
         android:name="org.fmm.communitymgmt.ui.enrollment.comenroll.CommunityEnrollmentFragment"
@@ -29,6 +42,13 @@
         <action
             android:id="@+id/action_signUpFragment_to_communityEnrollmentFragment"
             app:destination="@id/communityEnrollmentFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_QRReaderFragment2"
+            app:destination="@id/QRReaderFragment" />
+        <argument
+            android:name="isResponsible"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <activity
         android:id="@+id/homeActivity2"
@@ -44,5 +64,9 @@
         android:id="@+id/QRReaderFragment"
         android:name="org.fmm.communitymgmt.ui.enrollment.qr.QRReaderFragment"
         android:label="fragment_q_r_reader"
-        tools:layout="@layout/fragment_q_r_reader" />
+        tools:layout="@layout/fragment_q_r_reader" >
+        <action
+            android:id="@+id/action_QRReaderFragment_to_homeActivity2"
+            app:destination="@id/homeActivity2" />
+    </fragment>
 </navigation>

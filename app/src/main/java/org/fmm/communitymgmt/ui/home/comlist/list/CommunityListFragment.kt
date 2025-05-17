@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,23 +15,15 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import coil.ImageLoader
-import coil.request.ImageRequest
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.FragmentCommunityListBinding
-import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
+import org.fmm.communitymgmt.domainmodels.model.CommunityModel
 import org.fmm.communitymgmt.ui.home.comlist.list.recyclerview.CommunityListAdapter
-import org.fmm.communitymgmt.ui.security.model.UserSession
-import javax.inject.Inject
+import org.fmm.communitymgmt.ui.home.comlist.selectcommunity.CommunitySelectFragment
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CommunityListFragment.newInstance] factory method to
- * create an instance of this fragment.
- * @AndroidEntryPoint Per
- * mite cosas inyectadas
- */
 @AndroidEntryPoint
 class CommunityListFragment : Fragment() {
     private val communityListViewModel by viewModels<CommunityListViewModel>()
@@ -39,6 +32,8 @@ class CommunityListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var communityListAdapter: CommunityListAdapter
+
+    private lateinit var communitySelectFragment: CommunitySelectFragment
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,8 +56,15 @@ class CommunityListFragment : Fragment() {
 
     private fun initUI() {
         initAdapter()
+        initDialog()
         initUIState()
         initToolbar()
+    }
+
+    private fun initDialog() {
+        communitySelectFragment=CommunitySelectFragment(onSelected = {
+            communityListViewModel.selectCommunity(it)
+        })
     }
 
     private fun initToolbar() {
@@ -109,18 +111,34 @@ class CommunityListFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 communityListViewModel.state.collect{
                     when(it) {
-                        is CommunityListState.Error -> errorState()
+                        is CommunityListState.Error -> errorState(it)
                         CommunityListState.Loading -> loadingState()
                         is CommunityListState.Success -> successState(it)
                     }
                 }
             }
         }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                communityListViewModel.selectedCommunity.collect {
+                    if (it is CommunitySelectState.NotSelected) {
+                        notSelectedState()
+                        // Quitar panel semitransparente cuando lo haya
+                    } else
+                        selectedState()
+                }
+            }
+        }
     }
 
-    private fun errorState() {
+    private fun errorState(communityListState: CommunityListState.Error) {
         binding.progressBar.isVisible = false
         Log.d("[FMMP]", "Se ha producido un error al recibir o pintar la información")
+        Toast.makeText(
+            requireContext(), getString(R.string.listException, communityListState.error), Toast
+                .LENGTH_LONG
+        ).show()
     }
 
     private fun loadingState() {
@@ -141,8 +159,16 @@ class CommunityListFragment : Fragment() {
 */
 
         communityListAdapter.updateCommunityList(state.communityList)
-        Log.i("[FMMP]", "Debería estar pintando el RecyclerView")
-        Log.i("[FMMP", "Tamaño: ${state.communityList.size}")
     }
 
+    private fun notSelectedState() {
+        binding.loadingOverlay.isVisible = true
+        communitySelectFragment.show(parentFragmentManager, "select_sheet")
+    }
+
+    private fun selectedState() {
+        binding.loadingOverlay.isVisible = false
+        communitySelectFragment.dismiss()
+        communityListViewModel.getData()
+    }
 }

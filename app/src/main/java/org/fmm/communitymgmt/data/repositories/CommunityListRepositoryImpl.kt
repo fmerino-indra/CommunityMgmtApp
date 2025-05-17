@@ -7,13 +7,14 @@ import org.fmm.communitymgmt.data.network.response.OtherDTO
 import org.fmm.communitymgmt.data.network.response.SingleDTO
 import org.fmm.communitymgmt.domainlogic.repositories.CommunityListRepository
 import org.fmm.communitymgmt.domainmodels.model.AbstractRelationship
+import org.fmm.communitymgmt.domainmodels.model.CommunityModel
 import org.fmm.communitymgmt.domainmodels.model.SingleModel
 import javax.inject.Inject
 
 class CommunityListRepositoryImpl @Inject constructor(private val apiService: CommunityListApiService):
     CommunityListRepository{
-    override suspend fun getCommunityList(): List<AbstractRelationship> {
-        val list = apiService.getCommunityList()
+    override suspend fun getCommunityList(communityId:Int): List<AbstractRelationship> {
+        val list = apiService.getCommunityList(communityId)
         val newList = mutableListOf<AbstractRelationship>()
 
 
@@ -29,7 +30,7 @@ class CommunityListRepositoryImpl @Inject constructor(private val apiService: Co
                 is SingleDTO -> newList.add(it.toDomain())
             }
         }
-        Log.d("[FMMP]", "El modelo de negocio ha sido correctamente")
+        Log.d("[FMMP]", "El modelo de negocio ha sido creado correctamente")
         return newList
 /*
         return list.stream().map {
@@ -40,5 +41,12 @@ class CommunityListRepositoryImpl @Inject constructor(private val apiService: Co
         }.collect(Collectors.toList())
 
  */
+    }
+
+    override suspend fun getCommunities(): List<CommunityModel> {
+        val list = apiService.getCommunities()
+        return list.map {
+            it.toDomain()
+        }.toList()
     }
 }

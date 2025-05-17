@@ -1,10 +1,10 @@
 package org.fmm.communitymgmt.domainmodels.model
 
 sealed class InvitationState (
-    val id: Int,
+    val id: String,
     val name: String
 ) {
-    data object Generated: InvitationState(0, "Generated")
-    data object Processing: InvitationState(1, "Processing")
-    data object Ended: InvitationState(2, "Ended")
+    data object Generated: InvitationState("G", "Generated")
+    data object Processing: InvitationState("P", "Processing")
+    data object Finished: InvitationState("F", "Finished")
 }

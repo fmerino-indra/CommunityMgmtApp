@@ -28,6 +28,7 @@ class UserInfoRepositoryImpl @Inject constructor(private val apiService: UserInf
             return it.toDomain()
         }.onFailure {
             Log.e("UserInfoRepositoryImpl", "Problems while posting UserInfo", it)
+            throw RuntimeException("Problems while SignUp", it)
         }
         throw RuntimeException("Exception while posting UserInfo")
     }

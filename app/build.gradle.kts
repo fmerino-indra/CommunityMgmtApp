@@ -51,7 +51,8 @@ android {
         }
         debug {
             isDebuggable = true
-            buildConfigField("String", "BASE_URL",  "\"http://192.168.1.150:3000/\"")
+//            buildConfigField("String", "BASE_URL",  "\"http://192.168.1.150:3000/\"")
+            buildConfigField("String", "BASE_URL",  "\"http://192.168.1.150:8080/api/\"")
             resValue("string","fmmName", "[DEBUG] CommunityMgmtAppDebug")
         }
     }

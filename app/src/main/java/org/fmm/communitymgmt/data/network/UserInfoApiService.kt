@@ -6,10 +6,10 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface UserInfoApiService {
-    @GET("/userinfo")
+    @GET("userinfo/userinfo")
     suspend fun geUserInfo(): UserInfoDTO
 
-    @POST("/userinfo")
+    @POST("userinfo/userinfo")
     suspend fun postUserInfo(@Body userInfoDTO: UserInfoDTO): UserInfoDTO
 
     /**

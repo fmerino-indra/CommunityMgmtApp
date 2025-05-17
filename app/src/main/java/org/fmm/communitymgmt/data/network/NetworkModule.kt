@@ -28,6 +28,7 @@ import org.fmm.communitymgmt.domainlogic.repositories.CommunityListRepository
 import org.fmm.communitymgmt.domainlogic.repositories.InvitationRepository
 import org.fmm.communitymgmt.domainlogic.repositories.RelationshipRepository
 import org.fmm.communitymgmt.domainlogic.repositories.UserInfoRepository
+import org.fmm.communitymgmt.domainlogic.usecase.CreateInvitationUseCase
 import org.fmm.communitymgmt.domainlogic.usecase.GetInvitationsUseCase
 import org.fmm.communitymgmt.domainlogic.usecase.SignUpUserInfoUseCase
 import org.fmm.communitymgmt.ui.security.util.EncryptedPrefsStorage
@@ -117,6 +118,14 @@ object NetworkModule {
     :GetInvitationsUseCase {
         return GetInvitationsUseCase(invitationRepository)
     }
+
+
+    @Provides
+    fun provideCreateInvitationUseCase(invitationRepository: InvitationRepository)
+    :CreateInvitationUseCase {
+        return CreateInvitationUseCase(invitationRepository)
+    }
+
 
     // Relationship Api Service and Repository
     @Provides

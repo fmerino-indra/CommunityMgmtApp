@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="wellcome_enrollment">Wellcome to Neocatechumenal Way\nCommunity Management\n
+        Enroll yourselve to belong a community.</string>
     <string name="isResponsible">Are you the responsible of the Community?</string>
     <string name="isMarried">Are you married?</string>
-    <string name="qrException">An exception is rose when QR generation"</string>
     <string name="brothers_enrollment_fragment">You have just enrolled the Community and
         the Parish. Now you have to invite all the brothers of your Community creating a personal
         invitation.</string>
 
     <string name="qrCode">QR Code</string>
-    <string name="invitationName">Invitation name</string>
     <string name="qr_scan_code">Scan QR Code</string>
     <string name="start_scan">Start Scan</string>
     <string name="important_question">Important question!</string>
+    <string name="is_responsible">Is Responsible</string>
+
+    <string name="community_enrollment">Community Enrollment</string>
+    <string name="invitation_name">Invitation name</string>
+    <string name="add_brothers">Add brothers</string>
+    <string name="create_invitation">Create invitation</string>
 
 </resources>

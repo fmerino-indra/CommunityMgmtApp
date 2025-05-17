@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class GetCommunityList @Inject constructor(private val communityListRepository:
         CommunityListRepository) {
-    suspend operator fun invoke(): List<AbstractRelationship> {
-        return communityListRepository.getCommunityList()
+    suspend operator fun invoke(communityId:Int): List<AbstractRelationship> {
+        return communityListRepository.getCommunityList(communityId)
     }
 }

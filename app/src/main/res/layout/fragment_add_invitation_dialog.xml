@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="64dp"
+    android:paddingVertical="6dp"
+    >
+    <EditText
+        android:id="@+id/etInvitationName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/invitation_name"
+        android:inputType="text"
+        tools:ignore="Autofill"
+        />
+    <CheckBox
+        android:id="@+id/isMarriage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="true"
+        android:text="@string/marriage_invitation"
+
+        />
+    <EditText
+        android:id="@+id/etExpiration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/expiration_days"
+        android:inputType="number"
+        tools:ignore="Autofill,HardcodedText"
+        />
+
+    <Button
+        android:id="@+id/btnCreateInvitation"
+        android:layout_width="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="16dp"
+        android:layout_height="wrap_content"
+        android:text="@string/add_invitation"
+        />
+
+</LinearLayout>

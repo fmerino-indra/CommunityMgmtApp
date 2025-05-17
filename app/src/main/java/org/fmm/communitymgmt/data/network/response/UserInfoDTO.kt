@@ -2,24 +2,25 @@ package org.fmm.communitymgmt.data.network.response
 
 import kotlinx.serialization.Serializable
 import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
+import java.util.stream.Collectors
 
 @Serializable
 data class UserInfoDTO (
-    // Unique internal Id
-    val id:Int?=null,
-    val name: String,
-    val email: String,
-    val emailVerified: Boolean,
-    val providerId: String?,
-    val provider: String,
-    val imageUrl: String,
+    val socialUserInfo: SocialUserInfoDTO,
     // Relationship with Person
     val person: PersonDTO?=null,
-    val community: CommunityDTO?=null
+    val community: CommunityDTO?=null,
+    val allCommunities: List<CommunityDTO>?=null,
+    val dataJWT: String?
 ) {
     fun toDomain():UserInfoModel = UserInfoModel(
-        id, name, email, emailVerified, providerId, provider, imageUrl, person?.toDomain(),
-        community?.toDomain()
+        socialUserInfo.toDomain(),
+        person?.toDomain(),
+        community?.toDomain(),
+        allCommunities?.stream()?.map {
+            it.toDomain()
+        }?.collect(Collectors.toList()),
+        dataJWT
     )
 
 
@@ -27,11 +28,13 @@ data class UserInfoDTO (
         fun fromDomain(userInfo: UserInfoModel) =
             with(userInfo) {
 
-                UserInfoDTO(id,name,email,emailVerified,
-                    providerId,provider,imageUrl,
+                UserInfoDTO(socialUserInfo.let { SocialUserInfoDTO.fromDomain(it) },
                     person?.let { PersonDTO.fromDomain(it)},
-                    community?.let { CommunityDTO.fromDomain(it) })
+                    community?.let { CommunityDTO.fromDomain(it) },
+                    allCommunities?.stream()?.map { com ->
+                        CommunityDTO.fromDomain(com)
+                    }?.collect(Collectors.toList()),
+                    dataJWT)
             }
     }
-
 }
