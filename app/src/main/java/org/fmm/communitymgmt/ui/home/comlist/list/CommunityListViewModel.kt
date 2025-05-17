@@ -25,6 +25,7 @@ class CommunityListViewModel @Inject constructor(
     private val _userSession: UserSession
 ):ViewModel(){
     val userSession: UserSession get() = _userSession
+    val userInfo = userSession.userInfo!!
 
     private var _state =
         MutableStateFlow<CommunityListState>(CommunityListState.Loading)
@@ -40,6 +41,9 @@ class CommunityListViewModel @Inject constructor(
     }
 
     fun getData() {
+//        if (userInfo.allCommunities!!.size == 1)
+//            selectCommunity(userInfo.allCommunities[0])
+
         if (selectedCommunity.value !is CommunitySelectState.Selected) {
             return
         }

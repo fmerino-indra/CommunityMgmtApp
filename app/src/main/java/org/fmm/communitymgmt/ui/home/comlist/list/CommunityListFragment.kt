@@ -51,7 +51,10 @@ class CommunityListFragment : Fragment() {
 
     // Hacemos la carga de los datos pidiéndoselo al viewModel. Podría hacerlo él mismo desde init{}
     private fun initData() {
-        communityListViewModel.getData()
+        if (communityListViewModel.userSession.userInfo?.allCommunities?.size == 1)
+            communityListViewModel.selectCommunity(communityListViewModel.userSession.userInfo!!.allCommunities!![0])
+        else
+            communityListViewModel.getData()
     }
 
     private fun initUI() {
@@ -168,7 +171,8 @@ class CommunityListFragment : Fragment() {
 
     private fun selectedState() {
         binding.loadingOverlay.isVisible = false
-        communitySelectFragment.dismiss()
+        if (communitySelectFragment.isVisible)
+            communitySelectFragment.dismiss()
         communityListViewModel.getData()
     }
 }
