@@ -1,6 +1,5 @@
 package org.fmm.communitymgmt.ui.enrollment.brothers
 
-import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
@@ -24,7 +23,6 @@ import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.FragmentBrothersEnrollmentBinding
 import org.fmm.communitymgmt.domainmodels.model.InvitationModel
 import org.fmm.communitymgmt.domainmodels.model.InvitationState
-import org.fmm.communitymgmt.ui.enrollment.EnrollmentActivity
 import org.fmm.communitymgmt.ui.enrollment.brothers.dialog.AddInvitationDialog
 import org.fmm.communitymgmt.ui.enrollment.brothers.recyclerview.InvitationListAdapter
 import org.fmm.communitymgmt.ui.enrollment.qr.QRGenBottomSheetDialogFragment

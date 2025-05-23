@@ -1,4 +1,4 @@
-package org.fmm.communitymgmt.ui.enrollment.qr
+package org.fmm.communitymgmt.ui.enrollment.qrold
 
 import android.net.Uri
 import android.util.Log

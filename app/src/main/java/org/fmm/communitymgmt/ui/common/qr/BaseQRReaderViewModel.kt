@@ -1,12 +1,10 @@
 package org.fmm.communitymgmt.ui.common.qr
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-
+@Deprecated("No ha funcionado esta técnica")
 abstract class BaseQRReaderViewModel: ViewModel() {
     private var _qrReaderState: MutableStateFlow<QRReaderState>
             = MutableStateFlow (QRReaderState.Stopped)

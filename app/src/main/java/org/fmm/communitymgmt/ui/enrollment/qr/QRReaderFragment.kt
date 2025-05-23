@@ -1,14 +1,8 @@
 package org.fmm.communitymgmt.ui.enrollment.qr
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
-import android.media.AudioManager
-import android.media.ToneGenerator
 import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
-import android.os.VibratorManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +13,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -27,8 +20,6 @@ import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.databinding.FragmentQRReaderBinding
-import org.fmm.communitymgmt.ui.enrollment.brothers.BrothersEnrollmentState
-import org.fmm.communitymgmt.ui.enrollment.brothers.BrothersEnrollmentViewModel
 import org.fmm.communitymgmt.util.playBeep
 import org.fmm.communitymgmt.util.vibrate
 
@@ -68,6 +59,10 @@ class QRReaderFragment : Fragment() {
             } else {
                 startScanner()
             }
+        }
+
+        binding.btnStopScan.setOnClickListener {
+            stopScanner()
         }
     }
 

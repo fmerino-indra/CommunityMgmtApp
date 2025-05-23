@@ -7,6 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dagger.multibindings.IntoMap
+import dagger.multibindings.StringKey
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
@@ -29,7 +31,9 @@ import org.fmm.communitymgmt.domainlogic.repositories.RelationshipRepository
 import org.fmm.communitymgmt.domainlogic.repositories.UserInfoRepository
 import org.fmm.communitymgmt.domainlogic.usecase.CreateInvitationUseCase
 import org.fmm.communitymgmt.domainlogic.usecase.GetInvitationsUseCase
+import org.fmm.communitymgmt.domainlogic.usecase.InventUseCase
 import org.fmm.communitymgmt.domainlogic.usecase.SignUpUserInfoUseCase
+import org.fmm.communitymgmt.ui.enrollment.brothers.ScanUseCase
 import org.fmm.communitymgmt.ui.security.util.EncryptedPrefsStorage
 import retrofit2.Retrofit
 import javax.inject.Singleton
@@ -122,6 +126,14 @@ object NetworkModule {
     fun provideCreateInvitationUseCase(invitationRepository: InvitationRepository)
     :CreateInvitationUseCase {
         return CreateInvitationUseCase(invitationRepository)
+    }
+
+
+    @Provides
+    @IntoMap
+    @StringKey("brothers")
+    fun provideBrothersQRUseCase(invitationRepository: InvitationRepository): ScanUseCase {
+        return InventUseCase(invitationRepository)
     }
 
 

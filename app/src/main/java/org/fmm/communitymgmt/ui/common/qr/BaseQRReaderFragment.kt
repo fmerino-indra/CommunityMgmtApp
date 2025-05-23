@@ -22,6 +22,7 @@ import org.fmm.communitymgmt.databinding.FragmentQRReaderBinding
 import org.fmm.communitymgmt.util.playBeep
 import org.fmm.communitymgmt.util.vibrate
 
+@Deprecated("No ha funcionado esta técnica")
 abstract class BaseQRReaderFragment<V: BaseQRReaderViewModel> : Fragment() {
     private var _binding: FragmentQRReaderBinding? = null
     private val binding get() = _binding!!
