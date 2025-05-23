@@ -7,18 +7,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.fmm.communitymgmt.domainlogic.usecase.CreateInvitationUseCase
 import org.fmm.communitymgmt.domainlogic.usecase.GetInvitationsUseCase
-import org.fmm.communitymgmt.domainlogic.usecase.SignUpUserInfoUseCase
-import org.fmm.communitymgmt.domainmodels.model.CommunityModel
 import org.fmm.communitymgmt.domainmodels.model.InvitationModel
 import org.fmm.communitymgmt.domainmodels.model.InvitationState
-import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
-import org.fmm.communitymgmt.ui.common.AddressForm
-import org.fmm.communitymgmt.ui.common.AddressViewModel
 import org.fmm.communitymgmt.ui.security.model.UserSession
 import javax.inject.Inject
 
@@ -37,42 +31,48 @@ class BrothersEnrollmentViewModel @Inject constructor(
 
     fun initData() {
         viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) {
-                getInvitations()
-            }
-            if ((result != null)) {
-                invitationList = result.toMutableList()
-                _state.value = BrothersEnrollmentState.Success(result)
-            } else {
-                _state.value = BrothersEnrollmentState.Error( "[FMMP] Ha ocurrido un error " +
-                        "mientras se obtenían las invitaciones")
+            withContext(Dispatchers.IO) {
+                try {
+                    val result = getInvitations(userSession.userInfo.selectedCommunity?.myCommunityData?.id!!)
+                    invitationList = result.toMutableList()
+                    _state.value = BrothersEnrollmentState.Success(result)
+                } catch (e: Exception) {
+                    Log.e("BrothersEnrollmentViewModel", "An error has occurred", e)
+
+                    _state.value = BrothersEnrollmentState.Error(
+                        e.message ?: ("An error has " +
+                                "occurred"), e)
+                }
             }
         }
     }
     fun onAddInvitation(name: String, exp:Int,isMarriage:Boolean) {
-        Log.d("BrothersEnrollmentViewModel", "Ha escrito:\n$name $exp $isMarriage")
-
         viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) {
-                val invitation = createSignInvitation(name, exp.toLong(), userSession.userInfo!!
-                .community!!.id!!)
+            withContext(Dispatchers.IO) {
+                val invitation = createSignInvitation(name, exp.toLong(), userSession.userInfo
+                .selectedCommunity!!.myCommunityData.id!!, isMarriage)
                 try {
                     createInvitation(invitation)
                     initData()
                 } catch (e: Exception) {
-                    Log.e("BrothersEnrollmentViewModel", "[FMMP] Se ha producido un error", e)
+                    Log.e("BrothersEnrollmentViewModel", "An error has occurred", e)
+                    _state.value = BrothersEnrollmentState.Error(
+                        e.message ?: ("An error has " +
+                                "occurred"), e)
                 }
             }
-            /*
-            invitationList.add(result)
-            invitationList = invitationList.toMutableList()
-            _state.value = BrothersEnrollmentState.Success(invitationList)
-             */
         }
     }
 
-    private fun createSignInvitation(name: String, exp:Long, communityId: Int): InvitationModel {
+    private fun createSignInvitation(name: String, exp: Long, communityId: Int, isMarriage: Boolean): InvitationModel {
         return InvitationModel(name = name, exp = exp, state =
-        InvitationState.Generated, communityId = communityId)
+        InvitationState.Generated, communityId = communityId, forMarriage = isMarriage)
+    }
+
+    fun filterInvitationList(generatedChecked: Boolean, processingChecked: Boolean): List<InvitationModel> {
+        return invitationList.filter {
+            generatedChecked && it.state == InvitationState.Generated ||
+                    processingChecked && it.state == InvitationState.Processing
+        }
     }
 }

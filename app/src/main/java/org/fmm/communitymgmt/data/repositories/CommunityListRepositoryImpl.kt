@@ -3,7 +3,6 @@ package org.fmm.communitymgmt.data.repositories
 import android.util.Log
 import org.fmm.communitymgmt.data.network.CommunityListApiService
 import org.fmm.communitymgmt.data.network.response.MarriageDTO
-import org.fmm.communitymgmt.data.network.response.OtherDTO
 import org.fmm.communitymgmt.data.network.response.SingleDTO
 import org.fmm.communitymgmt.domainlogic.repositories.CommunityListRepository
 import org.fmm.communitymgmt.domainmodels.model.AbstractRelationship
@@ -20,12 +19,6 @@ class CommunityListRepositoryImpl @Inject constructor(private val apiService: Co
 
         list.forEach {
             when (it) {
-                is OtherDTO -> {
-                    val aux = it.toDomain()
-                    aux.forEach { it2 ->
-                        newList.add(SingleModel(it.id,it2.nickname,it2))
-                    }
-                }
                 is MarriageDTO -> newList.add(it.toDomain())
                 is SingleDTO -> newList.add(it.toDomain())
             }

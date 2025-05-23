@@ -7,13 +7,13 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.toJavaInstant
 import kotlinx.datetime.toLocalDateTime
-import kotlinx.parcelize.Parcelize
+//import kotlinx.parcelize.Parcelize
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoField
 import java.util.Locale
 
-@Parcelize
+//@Parcelize
 data class PersonModel(
     val id: Int?,
     val name: String,
@@ -25,5 +25,6 @@ data class PersonModel(
     val birthday: Long?,
     val gender: Genders,
     val image: String? = null
-    ): Parcelable {
+    ) {
+//    ): Parcelable {
 }

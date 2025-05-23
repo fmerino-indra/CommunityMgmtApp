@@ -8,18 +8,18 @@ import java.util.stream.Collectors
 data class UserInfoDTO (
     val socialUserInfo: SocialUserInfoDTO,
     // Relationship with Person
-    val person: PersonDTO?=null,
-    val community: CommunityDTO?=null,
-    val allCommunities: List<CommunityDTO>?=null,
+    val person: PersonDTO,
+    val selectedCommunity: CommunityInfoDTO?=null,
+    val myCommunities: List<CommunityInfoDTO>,
     val dataJWT: String?
 ) {
     fun toDomain():UserInfoModel = UserInfoModel(
         socialUserInfo.toDomain(),
-        person?.toDomain(),
-        community?.toDomain(),
-        allCommunities?.stream()?.map {
+        person.toDomain(),
+        selectedCommunity?.toDomain(),
+        myCommunities.stream().map {
             it.toDomain()
-        }?.collect(Collectors.toList()),
+        }.collect(Collectors.toList()),
         dataJWT
     )
 
@@ -28,12 +28,13 @@ data class UserInfoDTO (
         fun fromDomain(userInfo: UserInfoModel) =
             with(userInfo) {
 
-                UserInfoDTO(socialUserInfo.let { SocialUserInfoDTO.fromDomain(it) },
-                    person?.let { PersonDTO.fromDomain(it)},
-                    community?.let { CommunityDTO.fromDomain(it) },
-                    allCommunities?.stream()?.map { com ->
-                        CommunityDTO.fromDomain(com)
-                    }?.collect(Collectors.toList()),
+                UserInfoDTO(
+                    socialUserInfo.let { SocialUserInfoDTO.fromDomain(it) },
+                    person.let { PersonDTO.fromDomain(it)},
+                    selectedCommunity?.let { CommunityInfoDTO.fromDomain(it) },
+                    myCommunities.stream()
+                        .map { com -> CommunityInfoDTO.fromDomain(com) }
+                        .collect(Collectors.toList()),
                     dataJWT)
             }
     }

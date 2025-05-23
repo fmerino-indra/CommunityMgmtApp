@@ -10,17 +10,18 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.fmm.communitymgmt.domainlogic.usecase.SignUpUserInfoUseCase
+import org.fmm.communitymgmt.domainmodels.model.CommunityInfoModel
 import org.fmm.communitymgmt.domainmodels.model.CommunityModel
-import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
 import org.fmm.communitymgmt.ui.common.AddressForm
 import org.fmm.communitymgmt.ui.common.AddressViewModel
-import org.fmm.communitymgmt.ui.security.model.UserSession
+import org.fmm.communitymgmt.ui.common.UserInfoViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class CommunityEnrollmentViewModel @Inject constructor(
-    private val useCase: SignUpUserInfoUseCase,
-    private val _userSession:UserSession
+    private val useCase: SignUpUserInfoUseCase
+    //,
+    //private val _userSession:UserSession
 ): ViewModel() {
     private val _formCommunityEnrollmentState
             = MutableStateFlow(CommunityEnrollmentForm(isResponsible = true)
@@ -44,13 +45,15 @@ class CommunityEnrollmentViewModel @Inject constructor(
 
     val addressViewModel = AddressViewModel(_formAddressState)
 
+    private lateinit var _userInfoViewModel: UserInfoViewModel
 
 
-    private lateinit var _userInfo: UserInfoModel
-    private val userInfo get() = _userInfo
+//    private lateinit var _userInfo: UserInfoModel
+//    private val userInfo get() = _userInfo
 
-    fun initData() {
-        _userInfo = _userSession.userInfo!!
+    fun initData(userInfoViewModel: UserInfoViewModel) {
+        _userInfoViewModel = userInfoViewModel
+  //      _userInfo = _userSession.userInfo!!
         _uiCommunityEnrollmentState.value = CommunityEnrollmentUIState.EditMode
     }
 
@@ -59,9 +62,9 @@ class CommunityEnrollmentViewModel @Inject constructor(
 //            _uiCommunityEnrollmentState.value = CommunityEnrollmentUIState.Loading
 
             val result = withContext(Dispatchers.IO) {
-                val userInfo = _userInfo.copy(community =
+                val userInfo = _userInfoViewModel.userSession.userInfo.copy(_selectedCommunity =
                     formCommunityEnrollmentState.value.run {
-                        CommunityModel(
+                        CommunityInfoModel(CommunityModel(
                             id = null,
                             communityNumber = communityNumber,
                             parish = parish,
@@ -70,12 +73,14 @@ class CommunityEnrollmentViewModel @Inject constructor(
                             parishAddressPostalCode = parishAddressForm.postalCode,
                             parishAddressCity = parishAddressForm.city,
                             isActivated = false
-                        )
+                        ),null)
                     }
                 )
                 runCatching {
                     useCase(userInfo)
                 }.onSuccess {
+                    // [FMMP] Esto hay que arreglarlo userInfoViewModel
+                    //_userInfoViewModel.setUserInfo(it)
                     _uiCommunityEnrollmentState.value = CommunityEnrollmentUIState.RegisteredMode
                 }.onFailure {
                     _uiCommunityEnrollmentState.value = CommunityEnrollmentUIState.Error(

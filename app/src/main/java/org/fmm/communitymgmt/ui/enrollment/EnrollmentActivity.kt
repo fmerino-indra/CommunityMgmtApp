@@ -20,14 +20,17 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import coil.ImageLoader
 import coil.request.ImageRequest
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import dagger.hilt.android.AndroidEntryPoint
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.ActivityEnrollmentBinding
 import org.fmm.communitymgmt.databinding.ActivityMainBinding
+import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
 import org.fmm.communitymgmt.ui.common.EnrollmentStates
 import org.fmm.communitymgmt.ui.common.UserInfoViewModel
 import org.fmm.communitymgmt.ui.enrollment.signup.SignUpFormState
 import org.fmm.communitymgmt.ui.enrollment.signup.SignUpViewModel
+import org.fmm.communitymgmt.ui.security.model.CredentialsData
 
 @AndroidEntryPoint
 class EnrollmentActivity : AppCompatActivity() {
@@ -35,6 +38,8 @@ class EnrollmentActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     private val userInfoViewModel: UserInfoViewModel by viewModels()
+    private lateinit var userInfo: UserInfoModel
+    private lateinit var credential: CredentialsData
     private lateinit var iLoader: ImageLoader
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,9 +50,17 @@ class EnrollmentActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
+        initUserInfoViewModel()
         initUserSession()
         initNavigation()
 //        initToolBarManual()
+    }
+
+    private fun initUserInfoViewModel() {
+        if (userInfoViewModel.userSession.isLoggedIn())
+            credential = userInfoViewModel.userSession.credential
+        if (userInfoViewModel.userSession.isFullLoggedIn())
+            userInfo = userInfoViewModel.userSession.userInfo
     }
 
     private fun initUserSession() {
@@ -68,13 +81,10 @@ class EnrollmentActivity : AppCompatActivity() {
     }
 
     private fun loadImageProfile() {
-        if (userInfoViewModel.userInfo.socialUserInfo.imageUrl.isNotBlank() &&
-            userInfoViewModel.userInfo.socialUserInfo.imageUrl
-                .isNotEmpty
-                    ()
-        ) {
+        if (credential.profilePictureUri != null) {
             val request = ImageRequest.Builder(this)
-                .data(userInfoViewModel.userInfo.socialUserInfo.imageUrl)
+//                .data(userInfoViewModel.userSession.userInfo.socialUserInfo.imageUrl)
+                .data(credential.profilePictureUri)
                 .target(binding.userInfoPhoto)
                 .build()
             iLoader.enqueue(request)

@@ -3,6 +3,7 @@ package org.fmm.communitymgmt.domainlogic.usecase
 import android.util.Log
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import io.fusionauth.jwt.JWTUtils
+import org.fmm.communitymgmt.domainlogic.exceptions.SocialUserNotFoundException
 import org.fmm.communitymgmt.domainlogic.repositories.UserInfoRepository
 import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
 import org.fmm.communitymgmt.ui.security.util.EncryptedPrefsStorage
@@ -14,6 +15,8 @@ class GetUserInfo @Inject constructor(private val userInfoRepository:UserInfoRep
     suspend operator fun invoke(): UserInfoModel {
         try {
             return userInfoRepository.getUserInfo()
+        } catch (uinfe: SocialUserNotFoundException) {
+            throw uinfe
         } catch (re: RuntimeException) {
             // @todo Acceder a BBDD local room para ver si el user está ya enrolado y hay datos
             Log.d("GetUserInfo", "Unspected UserInfo $re")

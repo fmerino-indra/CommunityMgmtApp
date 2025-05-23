@@ -18,7 +18,6 @@ import org.fmm.communitymgmt.BuildConfig.BASE_URL
 import org.fmm.communitymgmt.data.core.interceptors.AuthInterceptor
 import org.fmm.communitymgmt.data.network.response.AbstractRelationshipDTO
 import org.fmm.communitymgmt.data.network.response.MarriageDTO
-import org.fmm.communitymgmt.data.network.response.OtherDTO
 import org.fmm.communitymgmt.data.network.response.SingleDTO
 import org.fmm.communitymgmt.data.repositories.CommunityListRepositoryImpl
 import org.fmm.communitymgmt.data.repositories.InvitationRepositoryImpl
@@ -40,7 +39,6 @@ val relationshipModule = SerializersModule {
     polymorphic(AbstractRelationshipDTO::class) {
         subclass(MarriageDTO::class, MarriageDTO.serializer())
         subclass(SingleDTO::class, SingleDTO.serializer())
-        subclass(OtherDTO::class, OtherDTO.serializer())
     }
 }
 

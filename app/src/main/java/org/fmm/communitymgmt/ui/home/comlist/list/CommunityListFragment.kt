@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -15,12 +16,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.FragmentCommunityListBinding
-import org.fmm.communitymgmt.domainmodels.model.CommunityModel
+import org.fmm.communitymgmt.ui.common.UserInfoViewModel
 import org.fmm.communitymgmt.ui.home.comlist.list.recyclerview.CommunityListAdapter
 import org.fmm.communitymgmt.ui.home.comlist.selectcommunity.CommunitySelectFragment
 
@@ -34,6 +34,7 @@ class CommunityListFragment : Fragment() {
     private lateinit var communityListAdapter: CommunityListAdapter
 
     private lateinit var communitySelectFragment: CommunitySelectFragment
+    private val userInfoViewModel: UserInfoViewModel by activityViewModels<UserInfoViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,8 +52,8 @@ class CommunityListFragment : Fragment() {
 
     // Hacemos la carga de los datos pidiéndoselo al viewModel. Podría hacerlo él mismo desde init{}
     private fun initData() {
-        if (communityListViewModel.userSession.userInfo?.allCommunities?.size == 1)
-            communityListViewModel.selectCommunity(communityListViewModel.userSession.userInfo!!.allCommunities!![0])
+        if (communityListViewModel.userSession.userInfo.myCommunities.size == 1)
+            communityListViewModel.selectCommunity(communityListViewModel.userSession.userInfo.myCommunities[0])
         else
             communityListViewModel.getData()
     }
@@ -66,6 +67,7 @@ class CommunityListFragment : Fragment() {
 
     private fun initDialog() {
         communitySelectFragment=CommunitySelectFragment(onSelected = {
+            userInfoViewModel.selectCommunity(it)
             communityListViewModel.selectCommunity(it)
         })
     }

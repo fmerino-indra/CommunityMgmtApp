@@ -15,7 +15,7 @@ data class SingleDTO(
 
     ) : AbstractRelationshipDTO() {
 
-    fun toDomain() = SingleModel(id, relationshipName, person.toDomain())
+    override fun toDomain() = SingleModel(id, relationshipName, person.toDomain())
 
     companion object {
         fun fromDomain(model: SingleModel) = model.run {

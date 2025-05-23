@@ -11,26 +11,29 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.ItemCommunitySelectBinding
+import org.fmm.communitymgmt.domainmodels.model.CommunityInfoModel
 import org.fmm.communitymgmt.domainmodels.model.CommunityModel
 
 class CommunitySelectViewHolder(view: View): RecyclerView.ViewHolder(view) {
     private val binding = ItemCommunitySelectBinding.bind(view)
 
-    fun render(community: CommunityModel, onItemSelected: (CommunityModel) -> Unit){
-        val connector = when (community.communityNumber.takeLast(1)) {
+    fun render(community: CommunityInfoModel, onItemSelected: (CommunityInfoModel) -> Unit){
+        val connector = when (community.myCommunityData?.communityNumber?.takeLast(1)) {
             "1" -> "st"
             "2" -> "nd"
             "3" -> "rd"
             else -> "th"
         }
 
-        val aux =             binding.root.context.getString(
-            R.string.communityName,
-            community.communityNumber,
-            connector,
-            community.parish
-        )
-        val numberDigits = community.communityNumber.length
+        val aux = community.myCommunityData.let {
+            binding.root.context.getString(
+                R.string.communityName,
+                it.communityNumber,
+                connector,
+                it.parish
+            ) }
+
+        val numberDigits = community.myCommunityData.communityNumber.length
         val connectorCharacters = connector.length
         val mStringSpan = SpannableString(aux)
         mStringSpan.setSpan(SuperscriptSpan(),numberDigits, numberDigits+connectorCharacters, Spannable
@@ -44,12 +47,5 @@ class CommunitySelectViewHolder(view: View): RecyclerView.ViewHolder(view) {
         binding.communityName.setOnClickListener {
             onItemSelected(community)
         }
-//        binding.cvCommunityItem.setOnClickListener {
-//            itemClicked(newLambda = {onItemSelected(community)})
-//        }
-    }
-
-    private fun itemClicked(newLambda: () -> Unit) {
-        newLambda()
     }
 }

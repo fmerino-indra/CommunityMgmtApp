@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -27,27 +28,23 @@ import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.FragmentSignUpBinding
 import org.fmm.communitymgmt.domainmodels.model.Genders
-import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
-import org.fmm.communitymgmt.ui.security.model.UserSession
+import org.fmm.communitymgmt.ui.common.UserInfoViewModel
 
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {
     private val signUpViewModel by viewModels<SignUpViewModel>()
+    // @TODO Revisar si es necesario en esta activity
+    private val userInfoViewModel: UserInfoViewModel by activityViewModels<UserInfoViewModel>()
 
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
 
-    // Para recibir parámetros, ya no hace falta
-//    private val args: SignUpFragmentArgs by navArgs()
     private lateinit var iLoader: ImageLoader
 
-    private lateinit var userSession: UserSession
-    private lateinit var userInfo: UserInfoModel
-
-    private lateinit var aux: SignUpFragmentArgs
+//    private lateinit var userSession: UserSession
+//    private lateinit var userInfo: UserInfoModel
 
     private var isResponsible: Boolean = false
-//    val isResponsible = args.isResponsible
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,10 +71,10 @@ class SignUpFragment : Fragment() {
 
         val args: SignUpFragmentArgs by navArgs()
         isResponsible = args.isResponsible
-        val state= requireActivity().intent.getIntExtra(getString(R.string.enrollmentState),-1)
+        val enrollmentState= requireActivity().intent.getIntExtra(getString(R.string.enrollmentState),-1)
 
-        userSession = signUpViewModel.userSession
-        userInfo = userSession.userInfo!!
+//        userSession = signUpViewModel.userSession
+//        userInfo = userSession.userInfo!!
     }
 
     private fun initUI() {
@@ -211,10 +208,18 @@ class SignUpFragment : Fragment() {
         binding.pb.isVisible = false
 
         Toast.makeText(
+            requireContext(), getString(R.string.signUpException, editPersonUIState.errorMessage,
+                editPersonUIState.error), Toast
+                .LENGTH_LONG
+        ).show()
+/*
+        binding.pb.isVisible = false
+
+        Toast.makeText(
             requireContext(), "Se ha producido un error preparando la edición", Toast
                 .LENGTH_SHORT
         ).show()
-
+*/
     }
 
 

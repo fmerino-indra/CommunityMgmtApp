@@ -22,8 +22,10 @@ data class CommunityDTO(
     companion object {
         fun fromDomain(community: CommunityModel) =
             with(community) {
-                CommunityDTO(id, communityNumber, parish, parishAddress, parishAddressNumber,
-                    parishAddressPostalCode, parishAddressCity, isActivated)
+                CommunityDTO(
+                    id, communityNumber, parish, parishAddress, parishAddressNumber,
+                    parishAddressPostalCode, parishAddressCity, isActivated
+                )
             }
     }
 }

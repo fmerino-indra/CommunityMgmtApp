@@ -4,13 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.fmm.communitymgmt.R
+import org.fmm.communitymgmt.domainmodels.model.CommunityInfoModel
 import org.fmm.communitymgmt.domainmodels.model.CommunityModel
 import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
 import org.fmm.communitymgmt.ui.security.model.UserSession
 
 class CommunitySelectAdapter(
-    private var communities: List<CommunityModel>,
-    private val onItemSelected: (CommunityModel) -> Unit
+    private var communities: List<CommunityInfoModel>,
+    private val onItemSelected: (CommunityInfoModel) -> Unit
 ):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -27,7 +28,7 @@ class CommunitySelectAdapter(
         (holder as CommunitySelectViewHolder).render(item,onItemSelected)
     }
 
-    fun updateCommunities(list:List<CommunityModel>) {
+    fun updateCommunities(list:List<CommunityInfoModel>) {
         communities = list
         notifyDataSetChanged()
     }

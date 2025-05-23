@@ -11,7 +11,6 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.fusionauth.jwt.JWTDecoder
 import io.fusionauth.jwt.JWTUtils
 import io.fusionauth.jwt.domain.JWT
 import kotlinx.coroutines.Dispatchers
@@ -20,9 +19,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.fmm.communitymgmt.R
+import org.fmm.communitymgmt.domainlogic.exceptions.SocialUserNotFoundException
 import org.fmm.communitymgmt.domainlogic.usecase.GetUserInfo
 import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
-import org.fmm.communitymgmt.ui.common.EnrollmentStates
+import org.fmm.communitymgmt.ui.security.model.CredentialsData
 import org.fmm.communitymgmt.ui.security.model.UserSession
 import org.fmm.communitymgmt.ui.security.util.EncryptedPrefsStorage
 import org.fmm.communitymgmt.util.StringResourcesProvider
@@ -35,11 +35,19 @@ class SignInViewModel @Inject constructor(
     private val getUserInfo: GetUserInfo,
     private val encryptedPrefsStorage: EncryptedPrefsStorage,
     private val userSession: UserSession
+    //,
+    //private val userSession: UserSession
 ):ViewModel() {
     private val _signInState = MutableStateFlow<SignInState>(SignInState.NotLoggedIn)
 //    val signInSate: StateFlow<LoginState?> = _signInState.asStateFlow()
     val signInSate: StateFlow<SignInState> = _signInState
     private lateinit var credentialManager: CredentialManager
+//    private lateinit var userInfoViewModel: UserInfoViewModel
+
+    // @TODO Revisar si es necesario referencia el UserInfoViewModel
+//    fun initData(userInfoViewModel: UserInfoViewModel) {
+//        this.userInfoViewModel = userInfoViewModel
+//    }
 
     private fun processJwt(idToken: String) {
         val jwt = JWTUtils.decodePayload(idToken)
@@ -48,16 +56,12 @@ class SignInViewModel @Inject constructor(
     }
 
     private fun whatSate(userInfo:UserInfoModel):SignInState {
-        if (userInfo.person == null) {
-            return SignInState.NotRegisteredState
-        } else if (userInfo.allCommunities?.isEmpty() == true) {
-            return SignInState.RegisteringState
-//        } else if (userInfo.community == null) {
-            // A seleccionar comunidad
-        } else if (userInfo.community?.isActivated == false) {
-            return SignInState.NotActivatedState
+        return if (userInfo.myCommunities.isEmpty()) {
+            SignInState.RegisteringState
+        } else if (userInfo.selectedCommunity?.myCommunityData?.isActivated == false) {
+            SignInState.NotActivatedState
         } else {
-            return SignInState.LoggedInState(userInfo)
+            SignInState.LoggedInState(userInfo)
         }
     }
     private fun onGoogleCredentialReceived(idToken: String) {
@@ -70,11 +74,19 @@ class SignInViewModel @Inject constructor(
                 runCatching {
                     getUserInfo()
                 }.onSuccess {
-                    userSession.userInfo = it
-                    _signInState.value = whatSate(userSession.userInfo!!)
+//                    userInfoViewModel.setUserInfo(it)
+                    if (userSession.isFullLoggedIn())
+                        userSession.logout()
+                    userSession.initialize(it)
+                    _signInState.value = whatSate(it)
                 }.onFailure {
+                    if (it is SocialUserNotFoundException) {
+                        _signInState.value = SignInState.NotRegisteredState
+                    } else {
+                        _signInState.value =
+                            SignInState.Error("Error while Signing In", kotlin.Exception(it))
+                    }
                     Log.e("SignInViewModel", "Error while login", it)
-                    _signInState.value = SignInState.Error("Error whil Signing In", kotlin.Exception(it))
                 }
             }
 //            userSession.userInfo = result
@@ -95,15 +107,12 @@ class SignInViewModel @Inject constructor(
     private fun onNoCredentials() {
         _signInState.value = SignInState.NotCredentialsState
     }
+//    fun initViewModel(cManager: CredentialManager, userInfoViewModel: UserInfoViewModel) {
+        //this.userInfoViewModel = userInfoViewModel
+//        credentialManager = cManager
+//    }
     fun initViewModel(cManager: CredentialManager) {
         credentialManager = cManager
-        //@todo Esto hay que coordinarlo con ManagerCredential de google, en la forma de login
-        // automático
-        if (userSession.isLoggedIn()) {
-
-        } else {
-
-        }
     }
 
     fun launchGoogleSignIn(context: Context) {
@@ -176,7 +185,17 @@ class SignInViewModel @Inject constructor(
 
         if (credential is GoogleIdTokenCredential) {
             val idToken = credential.idToken
+            val jwt: JWT = org.fmm.communitymgmt.util.processJwt(idToken)
             if (idToken.isNotEmpty()) {
+                // @TODO Es necesario eliminar tokens, etc. Se hará en userSession.logout().
+                if (userSession.isLoggedIn()) {
+                    userSession.logout()
+                }
+                userSession.initialize(
+                    CredentialsData(jwt.subject, credential.idToken,credential.displayName,
+                        credential.familyName, credential.givenName, credential
+                            .profilePictureUri, credential.phoneNumber, "google", credential.id)
+                )
                 onGoogleCredentialReceived(idToken)
             } else {
                 onSignInError(Exception("No ID Token received"))

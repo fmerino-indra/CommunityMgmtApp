@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.domainmodels.model.AbstractRelationship
 import org.fmm.communitymgmt.domainmodels.model.MarriageModel
-import org.fmm.communitymgmt.domainmodels.model.OtherModel
 import org.fmm.communitymgmt.domainmodels.model.SingleModel
 
 class CommunityListAdapter(private var communityList: List<AbstractRelationship> = emptyList(),
@@ -18,14 +17,12 @@ class CommunityListAdapter(private var communityList: List<AbstractRelationship>
         companion object {
             private const val VIEW_TYPE_MARRIAGE=0
             private const val VIEW_TYPE_SINGLE=1
-            private const val VIEW_TYPE_OTHER=2
         }
 
     override fun getItemViewType(position: Int): Int {
         return when (communityList[position]) {
             is MarriageModel -> VIEW_TYPE_MARRIAGE
             is SingleModel -> VIEW_TYPE_SINGLE
-            is OtherModel -> VIEW_TYPE_OTHER
 
             else -> VIEW_TYPE_SINGLE
         }

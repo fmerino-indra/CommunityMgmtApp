@@ -2,7 +2,9 @@
 <resources>
     <string name="qrException">An exception has occurred while QR generation.</string>
     <string name="loginException">An exception has occurred after Signing In. Try again later
-        .</string>
+        . %1$s (%2$s)</string>
+    <string name="signUpException">An exception has occurred while Signing Up. Try again later
+        . %1$s (%2$s)</string>
     <string name="listException">An exception has occurred while CommunityList (%1$s).</string>
 
 </resources>

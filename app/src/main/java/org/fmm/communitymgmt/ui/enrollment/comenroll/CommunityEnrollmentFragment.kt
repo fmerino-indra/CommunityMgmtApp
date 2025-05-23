@@ -3,7 +3,6 @@ package org.fmm.communitymgmt.ui.enrollment.comenroll
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,8 @@ import android.widget.CompoundButton
 import android.widget.EditText
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -24,13 +23,15 @@ import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.FragmentCommunityEnrollmentBinding
 import org.fmm.communitymgmt.ui.common.AddressViewModel
+import org.fmm.communitymgmt.ui.common.UserInfoViewModel
 import org.fmm.communitymgmt.ui.enrollment.YesNoBottomSheetDialogFragment
-import org.fmm.communitymgmt.ui.enrollment.YesNoDialog
 
 @AndroidEntryPoint
 class CommunityEnrollmentFragment : Fragment() {
 
     private val communityEnrollmentViewModel: CommunityEnrollmentViewModel by viewModels()
+    // @TODO Revisar si es necesario en esta activity
+    private val userInfoViewModel: UserInfoViewModel by activityViewModels<UserInfoViewModel>()
 
     private var _binding: FragmentCommunityEnrollmentBinding? = null
     private val binding get() = _binding!!
@@ -59,7 +60,7 @@ class CommunityEnrollmentFragment : Fragment() {
 
         binding.parishAddress.addressCallback = communityEnrollmentViewModel.addressViewModel
         binding.parishAddress.addressForm = communityEnrollmentViewModel.formAddressState.value
-        communityEnrollmentViewModel.initData()
+        communityEnrollmentViewModel.initData(userInfoViewModel)
     }
     private fun initUI() {
         initListeners()
@@ -118,7 +119,7 @@ class CommunityEnrollmentFragment : Fragment() {
         // Navega a BrothersEnrollment creando una petición para el cónyuge
     }
     private fun registeredState(it: CommunityEnrollmentUIState.RegisteredMode) {
-        askMarried2()
+        askMarried()
         /*
         findNavController().navigate(
             CommunityEnrollmentFragmentDirections.actionCommunityEnrollmentFragmentToHomeActivity2()
@@ -135,25 +136,6 @@ class CommunityEnrollmentFragment : Fragment() {
     }
 
     private fun askMarried() {
-        val responseCallback:YesNoDialog.NoticeDialogListener = object:YesNoDialog
-            .NoticeDialogListener {
-            override fun onDialogPositiveClick(dialog: DialogFragment) {
-                Log.d("dialogListener", "Ha pulsado Sí. Está casado")
-                communityEnrollmentViewModel.onIsMarriedChanged(true)
-            }
-
-            override fun onDialogNegativeClick(dialog: DialogFragment) {
-                Log.d("dialogListener", "Ha pulsado No. Está soltero")
-                communityEnrollmentViewModel.onIsMarriedChanged(false)
-            }
-        }
-
-        val newFragment = YesNoDialog(responseCallback,requireContext().getString(R.string
-            .isMarried))
-        newFragment.show(parentFragmentManager, "isMarried")
-    }
-
-    private fun askMarried2() {
         val dialog = YesNoBottomSheetDialogFragment(getString(R.string.isMarried)) {
                 isMarried ->
             if (isMarried) {

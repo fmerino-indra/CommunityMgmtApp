@@ -1,22 +1,20 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("kotlin-kapt")
-//    id("com.google.dagger.hilt.android")
-    id("androidx.navigation.safeargs.kotlin")
 
-//    alias(libs.plugins.kotlin.kapt)
+    // 23/05/2025
+//    id("kotlin-kapt")
+    alias(libs.plugins.kotlin.kapt)
+//    alias(libs.plugins.ksp)
+
+    id("androidx.navigation.safeargs.kotlin")
 
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt.android)
 
-    id("kotlin-parcelize")
-
-//    id("androidx.navigation.safeargs.kotlin")
-
-//    id("com.google.dagger.hilt.android")
-//    kotlin("plugin.serialization") version "1.9.24"
-//    kotlin("plugin.serialization")
+    //23/05/2025
+    //id("kotlin-parcelize")
+    //kotlin("plugin.parcelize") version "1.9.20"
 }
 
 android {
@@ -96,7 +94,7 @@ dependencies {
     //DaggerHilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
-//    kapt ("org.jetbrains.kotlin:kotlin-annotation-processing-gradle")
+//    ksp(libs.hilt.android.compiler)
 
 
     //Retrofit
@@ -144,4 +142,21 @@ dependencies {
     // QR
     implementation (libs.zxing.android.embedded)
 
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
+
+}
+
+tasks.register("listConfigurations") {
+    doLast {
+        configurations.filter {
+            it.isCanBeResolved
+        }.forEach { config ->
+            println("Name: ${config.name}, canBeResolved: ${config.isCanBeResolved}, canBeConsumed: ${config.isCanBeConsumed}")
+        }
+    }
+}
+configurations.all {
+    resolutionStrategy {
+        force("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
+    }
 }

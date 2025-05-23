@@ -14,19 +14,23 @@ import coil.request.ImageRequest
 import dagger.hilt.android.AndroidEntryPoint
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.ActivityHomeBinding
+import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
 import org.fmm.communitymgmt.ui.common.UserInfoViewModel
 import org.fmm.communitymgmt.ui.enrollment.EnrollmentFragmentDirections
 import org.fmm.communitymgmt.ui.home.comlist.list.CommunityListFragmentDirections
 import org.fmm.communitymgmt.ui.home.comlist.list.CommunityListViewModel
+import org.fmm.communitymgmt.ui.security.model.UserSession
+import javax.inject.Inject
 
 // FMMP: Para que esta clase pueda recibir cosas inyectadas
 @AndroidEntryPoint
 class HomeActivity: AppCompatActivity() {
     private lateinit var binding:ActivityHomeBinding
     private lateinit var navController: NavController
-
     private lateinit var iLoader: ImageLoader
-    private val userInfoViewModel: UserInfoViewModel by viewModels()
+
+    private val userInfoViewModel:UserInfoViewModel by viewModels<UserInfoViewModel>()
+    private lateinit var userInfo: UserInfoModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,15 +40,20 @@ class HomeActivity: AppCompatActivity() {
     }
 
     private fun initUI() {
+        initVars()
         initUserSession()
         initNavigation()
         initToolBar()
 //        homeNavigate()
-//        initToolBarManual()
+    }
+
+    private fun initVars() {
+        userInfo = userInfoViewModel.userSession.sessionData.userInfo
     }
 
     private fun initUserSession() {
-//        _userInfo = userSession.userInfo!!
+        // Si sessionData es null lanza error
+
         iLoader = ImageLoader.Builder(baseContext).build()
         loadImageProfile()
         binding.laToolbar.title = "probemos aqui" // nada
@@ -59,6 +68,9 @@ class HomeActivity: AppCompatActivity() {
         binding.laToolbar.setupWithNavController(navController,appBarConfiguration)
         binding.mainBottomNavView.setupWithNavController(navController)
 
+        if (userInfo.isResponsible()) {
+            binding.mainBottomNavView.menu.findItem(R.id.enrollmentFragment)
+        }
     }
 
     private fun initNavigation() {
@@ -73,8 +85,8 @@ class HomeActivity: AppCompatActivity() {
 
     private fun homeNavigate() {
 
-        userInfoViewModel.userInfo.apply {
-            if (community == null) {
+        userInfo.apply {
+            if (selectedCommunity == null) {
                 // To select community
                 navController.navigate(
                     CommunityListFragmentDirections.actionCommunityListFragmentToCommunitySelectFragment()
@@ -95,11 +107,10 @@ class HomeActivity: AppCompatActivity() {
         }
     }
     private fun loadImageProfile() {
-        if (userInfoViewModel.userInfo.socialUserInfo.imageUrl.isNotBlank() && userInfoViewModel
-            .userInfo.socialUserInfo.imageUrl
-                .isNotEmpty()) {
+        if (userInfo.socialUserInfo.imageUrl.isNotBlank() &&
+            userInfo.socialUserInfo.imageUrl.isNotEmpty()) {
             val request = ImageRequest.Builder(this)
-                .data(userInfoViewModel.userInfo.socialUserInfo.imageUrl)
+                .data(userInfo.socialUserInfo.imageUrl)
                 .target(binding.userInfoPhoto)
                 .build()
             iLoader.enqueue(request)

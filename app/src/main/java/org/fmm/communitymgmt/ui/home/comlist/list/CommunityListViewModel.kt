@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.fmm.communitymgmt.domainlogic.usecase.GetCommunityList
 import org.fmm.communitymgmt.domainmodels.model.AbstractRelationship
+import org.fmm.communitymgmt.domainmodels.model.CommunityInfoModel
 import org.fmm.communitymgmt.domainmodels.model.CommunityModel
 import org.fmm.communitymgmt.ui.security.model.UserSession
 import javax.inject.Inject
@@ -25,7 +26,7 @@ class CommunityListViewModel @Inject constructor(
     private val _userSession: UserSession
 ):ViewModel(){
     val userSession: UserSession get() = _userSession
-    val userInfo = userSession.userInfo!!
+    val userInfo = userSession.userInfo
 
     private var _state =
         MutableStateFlow<CommunityListState>(CommunityListState.Loading)
@@ -36,7 +37,8 @@ class CommunityListViewModel @Inject constructor(
 
     private lateinit var communityList : List<AbstractRelationship>
 
-    fun selectCommunity(community: CommunityModel) {
+    fun selectCommunity(community: CommunityInfoModel) {
+        userSession.userInfo.setSelectedCommunity(community)
         _selectedCommunity.value = CommunitySelectState.Selected(community)
     }
 
@@ -56,7 +58,8 @@ class CommunityListViewModel @Inject constructor(
             val result = withContext(Dispatchers.IO) {
                 runCatching {
 //                    getCommunityList(userSession.userInfo?.community?.id!!)
-                    getCommunityList((selectedCommunity.value as CommunitySelectState.Selected).community.id!!)
+                    getCommunityList((selectedCommunity.value as CommunitySelectState.Selected)
+                        .community.myCommunityData?.id!!)
                 }.onSuccess {
                     _state.value = CommunityListState.Success(it)
                 }.onFailure {

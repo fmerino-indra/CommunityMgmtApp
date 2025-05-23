@@ -11,17 +11,15 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.credentials.CredentialManager
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.FragmentMainBinding
-import org.fmm.communitymgmt.ui.common.EnrollmentStates
 import org.fmm.communitymgmt.ui.enrollment.EnrollmentActivity
 import org.fmm.communitymgmt.ui.home.HomeActivity
 import org.fmm.communitymgmt.ui.security.google.signin.SignInState
@@ -34,10 +32,8 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: SignInViewModel by viewModels<SignInViewModel>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    // @TODO Revisar si es necesario en esta activity
+//    private val userInfoViewModel: UserInfoViewModel by activityViewModels<UserInfoViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,9 +51,22 @@ class MainFragment : Fragment() {
 
     private fun initData() {
         viewModel.initViewModel(CredentialManager.create(requireContext()))
+//        viewModel.initViewModel(CredentialManager.create(requireContext()), userInfoViewModel)
     }
 
     private fun initUI() {
+/*
+        //@todo Esto hay que coordinarlo con ManagerCredential de google, en la forma de login
+        // automático
+        if (userSession.isLoggedIn()) {
+
+        } else {
+
+        }
+
+
+ */
+
         initUIState()
         initListeners()
     }
@@ -77,7 +86,7 @@ class MainFragment : Fragment() {
                         // Inner states
                         SignInState.NotLoggedIn -> notLoggedInState()
                         is SignInState.LoggingInState -> loggingInState()
-                        is SignInState.Error -> errorState()
+                        is SignInState.Error -> errorState(it)
                         SignInState.NotCredentialsState -> noCredentials()
                         // Navigation states
                         SignInState.NotRegisteredState -> navigateToEnrollment(it)
@@ -118,9 +127,9 @@ class MainFragment : Fragment() {
     }
 
     private fun navigateToEnrollment(it: SignInState) {
-        Log.d(this::class.simpleName, "Navigating to ${it.state?.name}")
+        Log.d(this::class.simpleName, "Navigating to ${it.enrollmentState?.name}")
         val intent = Intent(requireContext(), EnrollmentActivity::class.java).apply {
-            putExtra(getString(R.string.enrollmentState), it.state?.id)
+            putExtra(getString(R.string.enrollmentState), it.enrollmentState?.id)
         }
         startActivity(intent)
     }
@@ -144,11 +153,13 @@ class MainFragment : Fragment() {
         binding.pb.isVisible = true
     }
 
-    private fun errorState() {
+
+    private fun errorState(it:SignInState.Error) {
         binding.pb.isVisible = false
 
         Toast.makeText(
-            requireContext(), getString(R.string.loginException), Toast.LENGTH_LONG
+            requireContext(), getString(R.string.loginException, it.errorMessage, it.error), Toast
+                .LENGTH_LONG
         ).show()
     }
 

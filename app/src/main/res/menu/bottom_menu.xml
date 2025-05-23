@@ -6,7 +6,12 @@
         android:icon="@drawable/ic_list"
         />
     <item
-        android:id="@+id/enrollmentFragment"
+        android:id="@+id/calendarFragment"
+        android:title="@string/calendar"
+        android:icon="@drawable/ic_calendar"
+        />
+    <item
+        android:id="@+id/brothersEnrollmentFragment"
         android:title="@string/enrollment"
         android:icon="@drawable/ic_add_people"
         />

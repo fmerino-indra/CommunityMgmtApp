@@ -13,7 +13,11 @@ import org.fmm.communitymgmt.domainlogic.usecase.SignUpUserInfoUseCase
 import org.fmm.communitymgmt.domainmodels.model.EmailAccount
 import org.fmm.communitymgmt.domainmodels.model.Genders
 import org.fmm.communitymgmt.domainmodels.model.PersonModel
+import org.fmm.communitymgmt.domainmodels.model.SocialUserInfoModel
 import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
+import org.fmm.communitymgmt.ui.common.UserInfoState
+import org.fmm.communitymgmt.ui.common.UserInfoViewModel
+import org.fmm.communitymgmt.ui.security.google.signin.SignInState
 import org.fmm.communitymgmt.ui.security.model.UserSession
 import org.fmm.communitymgmt.util.DateExtensions
 import org.fmm.communitymgmt.util.toEpochDaysLong
@@ -22,7 +26,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val signUpUserInfoUseCase: SignUpUserInfoUseCase,
-    private val _userSession: UserSession):ViewModel() {
+    private val userSession: UserSession
+):ViewModel() {
 
     private val _uiSignUpState = MutableStateFlow<SignUpUIState>(SignUpUIState.Loading)
     val uiSignUpSate: StateFlow<SignUpUIState> = _uiSignUpState
@@ -30,20 +35,16 @@ class SignUpViewModel @Inject constructor(
     private val _formSignUpState = MutableStateFlow<SignUpFormState>(SignUpFormState())
     val formSignUpState: StateFlow<SignUpFormState> = _formSignUpState
 
-    val userSession: UserSession get() = _userSession
-
     private lateinit var _userInfoModel: UserInfoModel
-    private val userInfo get() = _userInfoModel
+    //private val userInfo get() = _userInfoModel
 
+    // @TODO Revisar si es necesario referencia el UserInfoViewModel
     fun initData() {
-        require(userSession.isLoggedIn())
-        _userInfoModel = userSession.userInfo!!
-
-        _formSignUpState.value = userSession.userInfo!!.socialUserInfo.run {
+        _formSignUpState.value = userSession.credential.let {
             SignUpFormState(
-                providerId = providerId,
-                name = name,
-                emailAccount = email,
+                providerId = it.id,
+                name = it.displayName ?: "",
+                emailAccount = it.email,
                 gender = null
             )
         }
@@ -57,7 +58,18 @@ class SignUpViewModel @Inject constructor(
         viewModelScope.launch {
             _uiSignUpState.value = SignUpUIState.Loading
             val result = withContext(Dispatchers.IO) {
-                val userInfo = _userInfoModel.copy(person =
+                val userInfo = UserInfoModel(
+                    formSignUpState.value.run {
+                        SocialUserInfoModel (
+                            id = null,
+                            name = name,
+                            email = emailAccount,
+                            emailVerified = false,
+                            providerId = userSession.credential.id,
+                            provider = userSession.credential.providerName,
+                            imageUrl = userSession.credential.profilePictureUri.toString()
+                        )
+                    },
                     formSignUpState.value.run {
                         PersonModel(
                             id = null,
@@ -69,16 +81,18 @@ class SignUpViewModel @Inject constructor(
                             birthday = DateExtensions.parseSpanishDate(birthday)?.toEpochDaysLong(),
                             emailAccounts = listOf(EmailAccount(emailAccount =  emailAccount))
                         )
-                    })
+                    }, null, emptyList(), null
+                )
                 runCatching {
                     signUpUserInfoUseCase(userInfo)
                 }.onSuccess {
-                    userSession.userInfo = it
                     _uiSignUpState.value = SignUpUIState.RegisteredMode
+                    // [FMMP] Revisar userInfoViewModel
+                    //_userInfoViewModel.setUserInfo(it)
                 }.onFailure {
                     _uiSignUpState.value = SignUpUIState.Error(
                         "[FMMP] - Ha ocurrido un error " +
-                                "en SignUpUserInfo"
+                                "en SignUpUserInfo", it
                     )
                 }
             }
@@ -165,9 +179,11 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun onEmailChanged(text: String) {
-        _formSignUpState.update {
-            it.copy(emailAccount =  text)
-        }
+        val updated = _formSignUpState.value.copy(emailAccount = text)
+        _formSignUpState.value = validateForm(updated)
+//        _formSignUpState.update {
+//            it.copy(emailAccount =  text)
+//        }
     }
     fun onAddressChanged(text: String) {
         val updated = _formSignUpState.value.copy(address = text)

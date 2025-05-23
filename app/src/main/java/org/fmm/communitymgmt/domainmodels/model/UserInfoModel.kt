@@ -7,25 +7,54 @@ import io.fusionauth.jwt.domain.JWT
 data class UserInfoModel (
     val socialUserInfo: SocialUserInfoModel,
     // Relationship with Person @IgnoredOnParcel
-    val person: PersonModel? = null,
-    val community: CommunityModel? = null,
-    val allCommunities: List<CommunityModel>?=null,
+    val person: PersonModel,
+    private var _selectedCommunity: CommunityInfoModel? = null,
+    val myCommunities: List<CommunityInfoModel>,
     val dataJWT: String?=""
 ) {
-    val jwt: JWT? = if (dataJWT != null && dataJWT.isNotEmpty())
+    val selectedCommunity get() = _selectedCommunity
+
+    val jwt: JWT? = if (!dataJWT.isNullOrEmpty())
         JWTUtils.decodePayload(dataJWT)
     else null
     /**
      * Not enrolled user
      */
     fun isFullEnrolled():Boolean {
-        return (person != null && community != null && community?.isActivated ?: false)
+        //return (person != null && community != null && community?.isActivated ?: false)
+        return (myCommunities.isNotEmpty())
     }
 
     /**
      * The userInfo record exists, but there isn't a community
      */
     fun isRegistering():Boolean {
-        return (person != null && community == null)
+        return myCommunities.isEmpty()
+    }
+
+    /**
+     * Only if is Responsible
+     */
+    fun isResponsible(): Boolean {
+        if (isFullEnrolled() && selectedCommunity != null && myCommunities.isNotEmpty()) {
+            return selectedCommunity!!.myCharges?.contains(TChargeModel.Responsible) ?: false
+        }
+        return false
+    }
+
+    /**
+     * Can manage this community
+     * @TODO Complete with all non functional charges (delegated)
+     */
+    fun canManage(): Boolean {
+        if (isFullEnrolled() && selectedCommunity != null) {
+            return selectedCommunity?.myCharges?.contains(TChargeModel.Responsible) ?: false||
+                    selectedCommunity?.myCharges?.contains(TChargeModel.ResponsibleSpouse) ?: false
+        }
+        return false
+    }
+
+    fun setSelectedCommunity (selected: CommunityInfoModel) {
+        _selectedCommunity = selected
     }
 }

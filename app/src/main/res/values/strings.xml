@@ -61,5 +61,6 @@
     <string name="welcome_home">Welcome to Home Community List</string>
     <string name="community">Community</string>
     <string name="communityName">%1$s%2$s Community of %3$s</string>
+    <string name="calendar">Calendar</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package org.fmm.communitymgmt.ui.enrollment.brothers
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
@@ -13,8 +14,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +23,8 @@ import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.FragmentBrothersEnrollmentBinding
 import org.fmm.communitymgmt.domainmodels.model.InvitationModel
+import org.fmm.communitymgmt.domainmodels.model.InvitationState
+import org.fmm.communitymgmt.ui.enrollment.EnrollmentActivity
 import org.fmm.communitymgmt.ui.enrollment.brothers.dialog.AddInvitationDialog
 import org.fmm.communitymgmt.ui.enrollment.brothers.recyclerview.InvitationListAdapter
 import org.fmm.communitymgmt.ui.enrollment.qr.QRGenBottomSheetDialogFragment
@@ -33,6 +36,9 @@ class BrothersEnrollmentFragment : Fragment() {
 
     private var _binding: FragmentBrothersEnrollmentBinding? = null
     private val binding get() = _binding!!
+
+    private var generatedChecked = true
+    private var processingChecked = true
 
     private lateinit var invitationListAdapter: InvitationListAdapter
 
@@ -55,15 +61,37 @@ class BrothersEnrollmentFragment : Fragment() {
     }
 
     private fun initUI() {
+        initButtons()
         initAdapter()
         initUIState()
         initListeners()
+    }
+
+    private fun initButtons() {
+        generatedChecked = binding.tgGenerated.isChecked
+        processingChecked = binding.tgProcessing.isChecked
     }
 
     private fun initListeners() {
         binding.fabAddInvitation.setOnClickListener {
             showAddInvitationDialog()
         }
+        binding.tgGenerated.setOnClickListener {
+            onGeneratedChange(binding.tgGenerated.isChecked)
+        }
+        binding.tgProcessing.setOnClickListener {
+            onProcessingChange(binding.tgProcessing.isChecked)
+        }
+    }
+
+    private fun onGeneratedChange(checked: Boolean) {
+        generatedChecked = checked
+        filterInvitationList()
+    }
+
+    private fun onProcessingChange(checked: Boolean) {
+        processingChecked = checked
+        filterInvitationList()
     }
 
     private fun showAddInvitationDialog() {
@@ -84,7 +112,10 @@ class BrothersEnrollmentFragment : Fragment() {
 
     private fun initAdapter() {
         invitationListAdapter = InvitationListAdapter(onItemSelected = {
-            generateQR(it)
+            if (it.state == InvitationState.Generated)
+                generateQR(it)
+            else
+                navigateToQR()
         })
 
         binding.rvInvitationList.apply {
@@ -95,11 +126,18 @@ class BrothersEnrollmentFragment : Fragment() {
         }
         initRefreshList()
     }
+
+    private fun navigateToQR() {
+        findNavController().navigate(
+            BrothersEnrollmentFragmentDirections.actionBrothersEnrollmentFragmentToQRReaderBrothersEnrollmentFragment()
+        )
+    }
+
     private fun initRefreshList() {
-        binding.swipeRefreshLayout.setOnRefreshListener(OnRefreshListener {
-            binding.swipeRefreshLayout.setRefreshing(false)
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.swipeRefreshLayout.isRefreshing = false
             brothersEnrollmentViewModel.initData()
-        })
+        }
 
     }
     private fun initUIState() {
@@ -107,7 +145,7 @@ class BrothersEnrollmentFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 brothersEnrollmentViewModel.state.collect {
                     when(it) {
-                        is BrothersEnrollmentState.Error -> errorState()
+                        is BrothersEnrollmentState.Error -> errorState(it)
                         BrothersEnrollmentState.Loading -> loadingState()
                         is BrothersEnrollmentState.Success -> successState(it)
                     }
@@ -116,9 +154,11 @@ class BrothersEnrollmentFragment : Fragment() {
         }
     }
 
-    private fun errorState() {
+    private fun errorState(brothersEnrollmentState: BrothersEnrollmentState.Error) {
         binding.progressBar.isVisible = false
-        Log.d("[FMMP]", "Se ha producido un error al recibir o pintar la información")
+        Log.e("[BrothersEnrollmentFragment]", brothersEnrollmentState.errorMessage,
+            brothersEnrollmentState.exception)
+        message(brothersEnrollmentState.errorMessage)
     }
 
     private fun loadingState() {
@@ -127,7 +167,13 @@ class BrothersEnrollmentFragment : Fragment() {
 
     private fun successState(state: BrothersEnrollmentState.Success) {
         binding.progressBar.isVisible = false
-        invitationListAdapter.updateInvitationList(state.invitations)
+        filterInvitationList()
+    }
+    private fun filterInvitationList() {
+        val selectedInvitations = brothersEnrollmentViewModel
+            .filterInvitationList(generatedChecked,processingChecked)
+        invitationListAdapter.updateInvitationList(selectedInvitations)
+
     }
 
     private fun generateQR(invitation: InvitationModel) {
@@ -139,12 +185,17 @@ class BrothersEnrollmentFragment : Fragment() {
                 val barcodeEncoder = BarcodeEncoder()
                  barcodeEncoder.encodeBitmap(uri, BarcodeFormat.QR_CODE, 400, 400)
             } catch (e: Exception) {
-                Toast.makeText(
-                    requireContext(), getString(R.string.qrException), Toast.LENGTH_LONG
-                ).show()
+                message(getString(R.string.qrException))
                 null
             }
         // Aquí usamos el parentFragmentManager porque estamos ya en un Fragment
         if (bitmap != null) QRGenBottomSheetDialogFragment(bitmap).show(parentFragmentManager, "qrBottomSheet")
+    }
+
+    private fun message(message: String) {
+        Toast.makeText(
+            requireContext(), message, Toast.LENGTH_LONG
+        ).show()
+
     }
 }

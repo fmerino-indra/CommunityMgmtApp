@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_communityListFragment_to_editPersonFragment"
             app:destination="@id/editPersonFragment" />
+        <action
+            android:id="@+id/action_communityListFragment_to_brothersEnrollmentFragment"
+            app:destination="@id/brothersEnrollmentFragment" />
     </fragment>
     <fragment
         android:id="@+id/editPersonFragment"
@@ -30,4 +33,17 @@
             android:name="relationshipId"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/brothersEnrollmentFragment"
+        android:name="org.fmm.communitymgmt.ui.enrollment.brothers.BrothersEnrollmentFragment"
+        android:label="fragment_brothers_enrollment"
+        tools:layout="@layout/fragment_brothers_enrollment" >
+        <action
+            android:id="@+id/action_brothersEnrollmentFragment_to_QRReaderBrothersEnrollmentFragment"
+            app:destination="@id/QRReaderBrothersEnrollmentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/QRReaderBrothersEnrollmentFragment"
+        android:name="org.fmm.communitymgmt.ui.enrollment.brothers.QRReaderBrothersEnrollmentFragment"
+        android:label="QRReaderBrothersEnrollmentFragment" />
 </navigation>
