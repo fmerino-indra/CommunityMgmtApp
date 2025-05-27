@@ -18,3 +18,7 @@ local.properties
 /.kotlin
 /secrets/
 /app/src/main/assets/comunidad-v2.json
+/app/src/main/assets/invitation-response.json
+/app/src/main/assets/request-invitation.json
+/app/src/main/assets/response.json
+/app/src/main/assets/response2.json
