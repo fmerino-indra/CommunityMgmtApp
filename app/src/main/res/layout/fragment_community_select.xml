@@ -7,7 +7,9 @@
     android:layout_marginBottom="10dp"
     app:cardCornerRadius="16dp"
     app:cardElevation="16dp"
-    app:cardUseCompatPadding="false">
+    app:cardUseCompatPadding="false"
+    android:background="?attr/colorSurfaceContainerLow"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,10 +24,10 @@
             android:src="@drawable/iconos_del_camino"
             android:layout_margin="6dp"
             android:layout_gravity="center"
-            app:strokeColor="@color/primary"
+            app:strokeColor="?attr/colorPrimary"
 
             />
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Community Management"
@@ -33,14 +35,14 @@
             android:textSize="11sp"
             android:layout_gravity="center_horizontal"
             android:textAlignment="center"
-            app:dividerColor="@color/primary"
-
+            app:dividerColor="?attr/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             />
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:dividerColor="@color/primary"
+            app:dividerColor="?attr/colorPrimary"
             app:dividerThickness="3dp"
             />
 
@@ -53,7 +55,7 @@
             android:layout_gravity="center"
             android:textSize="24sp"
             android:textAlignment="center"
-            android:textColor="@color/primary"
+            android:textColor="?attr/colorPrimary"
 
             />
 

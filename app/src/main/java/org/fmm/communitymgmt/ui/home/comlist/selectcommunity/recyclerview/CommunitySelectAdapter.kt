@@ -25,7 +25,7 @@ class CommunitySelectAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = communities[position]
-        (holder as CommunitySelectViewHolder).render(item,onItemSelected)
+            (holder as CommunitySelectViewHolder).render(item, position, itemCount, onItemSelected)
     }
 
     fun updateCommunities(list:List<CommunityInfoModel>) {

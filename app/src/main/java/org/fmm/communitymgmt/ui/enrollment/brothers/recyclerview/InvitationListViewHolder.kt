@@ -29,6 +29,7 @@ class InvitationListViewHolder(view: View): RecyclerView.ViewHolder(view) {
         if (invitation.exp !=null)
             binding.qrExp.text = Instant.fromEpochMilliseconds(invitation.exp).toLocalDateTime(TimeZone.of("Europe/Madrid")).toString()
         binding.cvInvitation.setOnClickListener {
+            //onItemSelected(invitation)
             itemClicked(newLambda = {onItemSelected(invitation)})
         }
     }

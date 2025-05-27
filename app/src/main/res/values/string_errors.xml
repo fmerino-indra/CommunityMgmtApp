@@ -6,5 +6,7 @@
     <string name="signUpException">An exception has occurred while Signing Up. Try again later
         . %1$s (%2$s)</string>
     <string name="listException">An exception has occurred while CommunityList (%1$s).</string>
+    <string name="invitationException">An exception has occurred while retrieving invitations.
+        Try again later.</string>
 
 </resources>

@@ -136,8 +136,8 @@ class BrothersEnrollmentFragment : Fragment() {
             binding.swipeRefreshLayout.isRefreshing = false
             brothersEnrollmentViewModel.initData()
         }
-
     }
+
     private fun initUIState() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -175,19 +175,12 @@ class BrothersEnrollmentFragment : Fragment() {
     }
 
     private fun generateQR(invitation: InvitationModel) {
-        //generateURI
-        val uri = "https://misitio.com/invitation?id=${invitation.id}&communityId=${invitation
-            .communityId}&signature=${invitation.signature}"
-        val bitmap: Bitmap? =
-            try {
-                val barcodeEncoder = BarcodeEncoder()
-                 barcodeEncoder.encodeBitmap(uri, BarcodeFormat.QR_CODE, 400, 400)
-            } catch (e: Exception) {
-                message(getString(R.string.qrException))
-                null
-            }
-        // Aquí usamos el parentFragmentManager porque estamos ya en un Fragment
-        if (bitmap != null) QRGenBottomSheetDialogFragment(bitmap).show(parentFragmentManager, "qrBottomSheet")
+
+        val uri = "${requireContext().getString(R.string.intent_base_ur)}${requireContext()
+            .getString(R.string.intent_invitation_command)}" +
+                "?id=${invitation.id}&communityId=${invitation.communityId}&signature=${invitation.signature}"
+
+        QRGenBottomSheetDialogFragment(uri).show(parentFragmentManager, "qrBottomSheet")
     }
 
     private fun message(message: String) {

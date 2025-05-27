@@ -1,5 +1,6 @@
 package org.fmm.communitymgmt.data.network
 
+import kotlinx.serialization.json.JsonObject
 import org.fmm.communitymgmt.data.network.response.FullInvitationDTO
 import org.fmm.communitymgmt.data.network.response.InvitationDTO
 import retrofit2.http.Body
@@ -17,7 +18,23 @@ interface InvitationApiService {
     suspend fun createInvitation(@Path("communityId") communityId:Int, @Body invitation:
     InvitationDTO): InvitationDTO
 
+    /**
+     * Convendría controlar el id de la invitación, de forma que la uri fuera:
+     * enrollment/{communityId}/invitations/{invitationId}
+     */
     @PUT("enrollment/{communityId}/invitations")
     suspend fun updateInvitation(@Path("communityId") communityId:Int, @Body invitation:
     InvitationDTO): FullInvitationDTO
+
+    @GET("enrollment/persons/{personId}/invitations")
+    suspend fun getPersonalInvitation(@Path("personId") personId:Int):
+            List<FullInvitationDTO>
+
+    @POST("enrollment/{communityId}/invitations/{invitationId}/signature")
+    suspend fun updateSignedInvitation(
+        @Path("communityId") communityId:Int,
+        @Path("invitationId") invitationId:Int,
+        @Body json:JsonObject
+    ): FullInvitationDTO
+
 }

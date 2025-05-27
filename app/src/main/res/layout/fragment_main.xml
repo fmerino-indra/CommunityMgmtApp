@@ -28,7 +28,7 @@
             android:src="@drawable/iconos_del_camino"
             android:layout_margin="6dp"
             android:layout_gravity="center"
-            app:strokeColor="@color/primary"
+            app:strokeColor="?attr/colorTertiary"
 
             />
         <TextView
@@ -42,7 +42,7 @@
             android:text="@string/app_title"
             android:textStyle="bold"
             android:textSize="36sp"
-            android:textColor="@color/primary"
+            android:textColor="?attr/colorPrimary"
             android:gravity="center"
             />
         <!-- TODO: Update blank fragment layout -->

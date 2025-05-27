@@ -19,4 +19,8 @@
     <string name="web_server_client_id">828614483216-4qvhvjf40tokokb7vjjgv1m1589i9ds7.apps.googleusercontent.com</string>
 
     <string name="enrollmentState">enrollmentState</string>
+
+    <string name="intent_base_ur">https://misitio.com/</string>
+    <string name="intent_invitation_command">invitation</string>
+    <string name="intent_accept_invitation_command">invitation</string>
 </resources>

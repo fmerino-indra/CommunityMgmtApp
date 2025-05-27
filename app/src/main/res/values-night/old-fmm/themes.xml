@@ -1,0 +1,33 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.CommunityMgmtApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorTertiary">@color/tertiary</item>
+        <item name="colorError">@color/error</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorOutline">@color/outline</item>
+
+        <item name="colorOnPrimary">@color/onprimary</item>
+        <item name="colorOnSecondary">@color/onsecondary</item>
+        <item name="colorOnTertiary">@color/ontertiary</item>
+        <item name="colorOnError">@color/onerror</item>
+        <item name="colorOnBackground">@color/onbackground</item>
+
+        <item name="colorPrimaryContainer">@color/primaryContainer</item>
+        <item name="colorSecondaryContainer">@color/secondaryContainer</item>
+        <item name="colorTertiaryContainer">@color/tertiaryContainer</item>
+        <item name="colorErrorContainer">@color/errorContainer</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorSurfaceVariant">@color/surfaceVariant</item>
+
+        <item name="colorOnPrimaryContainer">@color/onprimaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/onsecondaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/ontertiaryContainer</item>
+        <item name="colorOnErrorContainer">@color/onerrorContainer</item>
+        <item name="colorOnSurface">@color/onsurface</item>
+        <item name="colorOnSurfaceVariant">@color/onsurfaceVariant</item>
+    </style>
+</resources>

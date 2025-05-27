@@ -20,7 +20,7 @@
             app:destination="@id/brothersEnrollmentFragment" />
         <action
             android:id="@+id/action_enrollmentFragment_to_QRReaderFragment"
-            app:destination="@id/QRReaderFragment" />
+            app:destination="@id/invitationFragment" />
     </fragment>
     <fragment
         android:id="@+id/communityEnrollmentFragment"
@@ -44,7 +44,7 @@
             app:destination="@id/communityEnrollmentFragment" />
         <action
             android:id="@+id/action_signUpFragment_to_QRReaderFragment2"
-            app:destination="@id/QRReaderFragment" />
+            app:destination="@id/invitationFragment" />
         <argument
             android:name="isResponsible"
             app:argType="boolean"
@@ -61,10 +61,10 @@
         android:label="fragment_brothers_enrollment"
         tools:layout="@layout/fragment_brothers_enrollment" />
     <fragment
-        android:id="@+id/QRReaderFragment"
-        android:name="org.fmm.communitymgmt.ui.enrollment.qr.QRReaderFragment"
-        android:label="fragment_q_r_reader"
-        tools:layout="@layout/fragment_q_r_reader" >
+        android:id="@+id/invitationFragment"
+        android:name="org.fmm.communitymgmt.ui.enrollment.invitation.InvitationFragment"
+        android:label="fragment_invitation"
+        tools:layout="@layout/fragment_invitation" >
         <action
             android:id="@+id/action_QRReaderFragment_to_homeActivity2"
             app:destination="@id/homeActivity2" />

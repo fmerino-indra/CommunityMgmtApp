@@ -9,12 +9,17 @@ data class FullInvitationModel(
     val forMarriage: Boolean=false,
     val state: InvitationState,
     val invitationType: Int,
-    val community:CommunityModel,
-    val person:PersonModel,
-    val invitationRelationship: AbstractRelationship,
+    val communityId: Int,
+    val communityFullName: String,
+    val communityCity: String,
+    val communityCountry: String,
+    val personId: Int,
+    val personFullName: String,
+    val personPublicKey: String?=null,
+    val personSignature: String?="",
+    val responsibleId: Int,
+    val responsibleFullName: String,
     val responsibleSignature:String?="",
     val responsiblePublicKey: String?=null,
-    val personSignature: String?="",
-    val personPublicKey: String?=null
 ) {
 }

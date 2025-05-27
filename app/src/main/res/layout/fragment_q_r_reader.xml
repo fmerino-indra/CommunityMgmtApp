@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
 
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingHorizontal="0dp"
-    tools:context=".ui.enrollment.qr.QRReaderFragment"
-    android:background="#0000FF"
+    tools:context=".ui.enrollment.qr.QRGenBottomSheetDialogFragment"
+    android:maxHeight="800dp"
+    android:minHeight="400dp"
     >
 
         <TextView
@@ -19,7 +20,9 @@
             android:text="@string/qr_scan_code"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textAlignment="center"/>
 
         <Button
             android:id="@+id/btnStartScan"

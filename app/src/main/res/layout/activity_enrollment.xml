@@ -54,7 +54,6 @@
                 android:scaleType="centerCrop"
                 app:shapeAppearanceOverlay="@style/Circular"
                 android:layout_gravity="end"
-                android:background="@color/red"
                 android:layout_margin="6dp"
                 />
 

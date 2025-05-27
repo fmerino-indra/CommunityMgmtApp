@@ -23,7 +23,7 @@
             app:popupTheme="@style/Theme.AppCompat.Light"
             app:title="Título en xml: atributo title de toolbar">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/toolbarTitleParticular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,9 +53,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/laToolbar"
             app:navGraph="@navigation/community_list_graph_v2"
-            android:padding="12dp"
-            android:layout_margin="16dp"
-            android:background="@color/red"
+            android:padding="0dp"
+            android:layout_margin="0dp"
             />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

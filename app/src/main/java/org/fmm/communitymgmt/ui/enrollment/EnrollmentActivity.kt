@@ -107,8 +107,8 @@ class EnrollmentActivity : AppCompatActivity() {
         } else {
             fragmentRef = when(state) {
                 EnrollmentStates.NOTENROLLED.id -> R.id.signUpFragment
-                EnrollmentStates.NOTCOMMUNITY.id -> R.id.QRReaderFragment
-                EnrollmentStates.FULLENROLLED.id -> R.id.QRReaderFragment // Cuando la comunidad
+                EnrollmentStates.NOTCOMMUNITY.id -> R.id.invitationFragment
+                EnrollmentStates.FULLENROLLED.id -> R.id.invitationFragment // Cuando la comunidad
                 // no está activada
                 else -> {
                     -1

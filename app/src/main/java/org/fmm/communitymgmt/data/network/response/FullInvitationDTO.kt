@@ -16,13 +16,18 @@ data class FullInvitationDTO(
     val forMarriage: Boolean=false,
     val state: String,
     val invitationType: Int,
-    val community:CommunityDTO,
-    val person:PersonDTO,
-    val invitationRelationship: @Polymorphic AbstractRelationshipDTO,
-    val responsibleSignature:String?="",
-    val responsiblePublicKey: String?=null,
+    val communityId: Int,
+    val communityFullName: String,
+    val communityCity: String,
+    val communityCountry: String,
+    val personId: Int,
+    val personFullName: String,
+    val personPublicKey: String?=null,
     val personSignature: String?="",
-    val personPublicKey: String?=null
+    val responsibleId: Int,
+    val responsibleFullName: String,
+    val responsibleSignature:String?="",
+    val responsiblePublicKey: String?=null
 ) {
     fun toDomain(): FullInvitationModel = FullInvitationModel(id, name,iat,nbf, exp,forMarriage,
         state = when(state) {
@@ -31,12 +36,19 @@ data class FullInvitationDTO(
             "F" -> InvitationState.Finished
             else -> InvitationState.Generated
         },
-        invitationType, community.toDomain(), person.toDomain(),
-        invitationRelationship = invitationRelationship.toDomain(),
-        responsibleSignature,
-        responsiblePublicKey,
+        invitationType,
+        communityId,
+        communityFullName,
+        communityCity,
+        communityCountry,
+        personId,
+        personFullName,
+        personPublicKey,
         personSignature,
-        personPublicKey
+        responsibleId,
+        responsibleFullName,
+        responsiblePublicKey,
+        responsibleSignature
     )
 
     companion object {
@@ -44,11 +56,19 @@ data class FullInvitationDTO(
             with(invitation) {
                 FullInvitationDTO(id, name,iat,nbf,exp, forMarriage,
                     state.id,invitationType,
-                    CommunityDTO.fromDomain(community),
-                    PersonDTO.fromDomain(person),
-                    AbstractRelationshipDTO.fromDomain(invitationRelationship),
-                    responsibleSignature, responsiblePublicKey,
-                    personSignature, personPublicKey)
+                    communityId,
+                    communityFullName,
+                    communityCity,
+                    communityCountry,
+                    personId,
+                    personFullName,
+                    personPublicKey,
+                    personSignature,
+                    responsibleId,
+                    responsibleFullName,
+                    responsiblePublicKey,
+                    responsibleSignature
+                )
             }
     }
 }

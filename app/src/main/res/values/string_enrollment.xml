@@ -19,5 +19,14 @@
     <string name="invitation_name">Invitation name</string>
     <string name="add_brothers">Add brothers</string>
     <string name="create_invitation">Create invitation</string>
+    <string name="get_invitation">Get Invitation</string>
+    <string name="sign_invitation">Sign Invitation</string>
+    <string name="show_qr_invitation">Show QR Invitation</string>
+    <string name="accept_message">You are about to sign to accept being part of the next
+        community in the App. If you have more than one invitation, select one tapping on the icon
+        .</string>
+    <string name="community_name">%1$s of %2$s</string>
+    <string name="city_country">%1$s (%2$s)</string>
+    <string name="here_goes_the_qr">Here goes the QR</string>
 
 </resources>
