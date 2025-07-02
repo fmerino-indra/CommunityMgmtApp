@@ -31,6 +31,7 @@ class AssignedInvitationListViewHolder(view: View): RecyclerView.ViewHolder(view
             binding.photo.setImageResource(R.drawable.ic_check)
         else
             binding.photo.setImageResource(R.drawable.ic_parish)
+
         binding.photo.setOnClickListener {
             setSelectedLambda()
             flipIcon(binding.photo, getSelectedIndex() == currentIndex)

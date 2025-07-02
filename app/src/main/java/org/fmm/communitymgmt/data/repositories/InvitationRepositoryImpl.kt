@@ -113,4 +113,24 @@ class InvitationRepositoryImpl @Inject constructor(
         }
         throw RuntimeException("Exception while posting Invitation")
     }
+    override suspend fun acceptBrother(communityId: Int,invitationId:Int): FullInvitationModel {
+        runCatching {
+
+            apiService.acceptBrother(
+                communityId =  communityId,
+                invitationId = invitationId
+            )
+        }.onSuccess {
+            return it.toDomain()
+        }.onFailure {
+            if (it is ConnectException || (it is HttpException && it.code() == 500)) {
+                Log.e("InvitationRepositoryImpl", "Http Error 500", it)
+                throw RuntimeException("An exception has occurred while trying to connect to server", it
+                )
+            } else {
+                throw it
+            }
+        }
+        throw RuntimeException("Exception while accepting brother")
+    }
 }

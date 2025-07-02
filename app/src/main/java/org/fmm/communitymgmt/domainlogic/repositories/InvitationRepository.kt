@@ -9,4 +9,5 @@ interface InvitationRepository {
     suspend fun updateInvitation(invitation: InvitationModel):FullInvitationModel
     suspend fun getPersonalInvitation(personId: Int): List<FullInvitationModel>
     suspend fun updateSignedInvitation(invitation: FullInvitationModel):FullInvitationModel
+    suspend fun acceptBrother(communityId: Int,invitationId:Int): FullInvitationModel
 }

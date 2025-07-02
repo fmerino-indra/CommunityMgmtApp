@@ -1,6 +1,5 @@
 package org.fmm.communitymgmt.ui.enrollment.brothers
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,8 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.zxing.BarcodeFormat
-import com.journeyapps.barcodescanner.BarcodeEncoder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.R
@@ -26,6 +23,7 @@ import org.fmm.communitymgmt.domainmodels.model.InvitationState
 import org.fmm.communitymgmt.ui.enrollment.brothers.dialog.AddInvitationDialog
 import org.fmm.communitymgmt.ui.enrollment.brothers.recyclerview.InvitationListAdapter
 import org.fmm.communitymgmt.ui.enrollment.qr.QRGenBottomSheetDialogFragment
+import org.fmm.communitymgmt.ui.enrollment.qr.QRReaderBottomSheetDialogFragment
 
 
 @AndroidEntryPoint
@@ -40,6 +38,8 @@ class BrothersEnrollmentFragment : Fragment() {
 
     private lateinit var invitationListAdapter: InvitationListAdapter
 
+    private lateinit var qrReaderBottomDialog: QRReaderBottomSheetDialogFragment
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,8 +50,8 @@ class BrothersEnrollmentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initData()
         initUI()
+        initData()
     }
 
     private fun initData() {
@@ -63,6 +63,7 @@ class BrothersEnrollmentFragment : Fragment() {
         initAdapter()
         initUIState()
         initListeners()
+        initDialogs()
     }
 
     private fun initButtons() {
@@ -112,8 +113,11 @@ class BrothersEnrollmentFragment : Fragment() {
         invitationListAdapter = InvitationListAdapter(onItemSelected = {
             if (it.state == InvitationState.Generated)
                 generateQR(it)
-            else
-                navigateToQR()
+            else {
+                // Navegando a otra página
+                //navigateToQR()
+                shoqQRReader()
+            }
         })
 
         binding.rvInvitationList.apply {
@@ -141,7 +145,7 @@ class BrothersEnrollmentFragment : Fragment() {
     private fun initUIState() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                brothersEnrollmentViewModel.state.collect {
+                brothersEnrollmentViewModel.brothersEnrollmentFlow.collect {
                     when(it) {
                         is BrothersEnrollmentState.Error -> errorState(it)
                         BrothersEnrollmentState.Loading -> loadingState()
@@ -189,4 +193,29 @@ class BrothersEnrollmentFragment : Fragment() {
         ).show()
 
     }
+
+    /**
+     * Methods for Read Accept Invitations QR
+     */
+
+    private fun initDialogs() {
+        qrReaderBottomDialog=QRReaderBottomSheetDialogFragment({
+            onReadQRReaderDialog(it)
+        })
+        /*
+        qrGenBottomSheetDialogFragment= QRGenBottomSheetDialogFragment()
+
+         */
+    }
+
+    private fun onReadQRReaderDialog(qr:String) {
+        qrReaderBottomDialog.dismiss()
+        brothersEnrollmentViewModel.onQRRead(qr)
+
+    }
+
+    private fun shoqQRReader() {
+        qrReaderBottomDialog.show(parentFragmentManager, "qrBottomSheet")
+    }
+
 }

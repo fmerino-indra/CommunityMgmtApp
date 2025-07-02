@@ -37,4 +37,10 @@ interface InvitationApiService {
         @Body json:JsonObject
     ): FullInvitationDTO
 
+    @POST("enrollment/{communityId}/invitations/{invitationId}/accept")
+    suspend fun acceptBrother(
+        @Path("communityId") communityId:Int,
+        @Path("invitationId") invitationId:Int
+    ): FullInvitationDTO
+
 }

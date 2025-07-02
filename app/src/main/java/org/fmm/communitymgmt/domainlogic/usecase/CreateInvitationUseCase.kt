@@ -1,14 +1,16 @@
 package org.fmm.communitymgmt.domainlogic.usecase
 
 import org.fmm.communitymgmt.domainlogic.repositories.InvitationRepository
-import org.fmm.communitymgmt.domainlogic.repositories.UserInfoRepository
+import org.fmm.communitymgmt.domainmodels.model.FullInvitationModel
 import org.fmm.communitymgmt.domainmodels.model.InvitationModel
-import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
 import javax.inject.Inject
 
-class CreateInvitationUseCase @Inject constructor (private val invitationRespository:
+class CreateInvitationUseCase @Inject constructor (private val invitationRepository:
                                                    InvitationRepository){
     suspend operator fun invoke(invitation: InvitationModel): InvitationModel {
-        return invitationRespository.createInvitation(invitation)
+        return invitationRepository.createInvitation(invitation)
+    }
+    suspend fun acceptBrother(communityId:Int, invitationId:Int): FullInvitationModel {
+        return invitationRepository.acceptBrother(communityId, invitationId)
     }
 }
