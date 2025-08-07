@@ -17,8 +17,8 @@ import kotlinx.coroutines.launch
 import org.fmm.communitymgmt.R
 import org.fmm.communitymgmt.databinding.FragmentInvitationBinding
 import org.fmm.communitymgmt.ui.enrollment.invitation.recyclerview.AssignedInvitationListAdapter
-import org.fmm.communitymgmt.ui.enrollment.qr.QRGenBottomSheetDialogFragment
-import org.fmm.communitymgmt.ui.enrollment.qr.QRReaderBottomSheetDialogFragment
+import org.fmm.qr.ui.QRGenBottomSheetDialogFragment
+import org.fmm.qr.ui.QRReaderBottomSheetDialogFragment
 
 @AndroidEntryPoint
 class InvitationFragment : Fragment() {
@@ -27,7 +27,7 @@ class InvitationFragment : Fragment() {
     private val invitationViewModel by viewModels<InvitationViewModel> ()
 
     private lateinit var qrReaderBottomDialog: QRReaderBottomSheetDialogFragment
-    private lateinit var qrGenBottomSheetDialogFragment: QRGenBottomSheetDialogFragment
+    private lateinit var qrGenBottomDialog: QRGenBottomSheetDialogFragment
 
     private lateinit var assignedInvitationListAdapter: AssignedInvitationListAdapter
 
@@ -81,13 +81,10 @@ class InvitationFragment : Fragment() {
     }
 
     private fun initDialogs() {
-        qrReaderBottomDialog=QRReaderBottomSheetDialogFragment({
-            invitationViewModel.onInvitationRead(it)
+        qrGenBottomDialog= QRGenBottomSheetDialogFragment()
+        qrReaderBottomDialog=QRReaderBottomSheetDialogFragment({stringRead ->
+            invitationViewModel.onInvitationRead(stringRead)
         })
-        /*
-        qrGenBottomSheetDialogFragment= QRGenBottomSheetDialogFragment()
-
-         */
     }
 
     private fun initListeners() {
@@ -107,13 +104,10 @@ class InvitationFragment : Fragment() {
     }
 
     private fun showQRReader() {
-        qrReaderBottomDialog=QRReaderBottomSheetDialogFragment({
-            hideQRReaderDialog(it)
-        })
-
         qrReaderBottomDialog.show(parentFragmentManager, "qrBottomSheet")
     }
     private fun showQR() {
+        // @TODO Revisar la generación del QR de invitación
         if (invitationViewModel.selectedInvitation != null) {
             val invitation = invitationViewModel.selectedInvitation!!
             val uri = "${requireContext().getString(R.string.intent_base_ur)}${
@@ -123,15 +117,12 @@ class InvitationFragment : Fragment() {
                     "?id=${invitation.id}&communityId=${invitation
                         .communityId}&signature=${invitation.personSignature}"
 
-            QRGenBottomSheetDialogFragment(uri).show(parentFragmentManager, "qrBottomSheet")
+            qrGenBottomDialog.uri=uri
+            qrGenBottomDialog.show(parentFragmentManager, "qrBottomSheet")
         }
 
     }
-    private fun hideQRReaderDialog(result:String) {
-        qrReaderBottomDialog.dismiss()
-        invitationViewModel.onInvitationRead(result)
 
-    }
     private fun initUIState() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

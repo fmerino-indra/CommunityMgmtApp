@@ -31,7 +31,6 @@ import org.fmm.communitymgmt.domainlogic.repositories.RelationshipRepository
 import org.fmm.communitymgmt.domainlogic.repositories.UserInfoRepository
 import org.fmm.communitymgmt.domainlogic.usecase.CreateInvitationUseCase
 import org.fmm.communitymgmt.domainlogic.usecase.GetInvitationsUseCase
-import org.fmm.communitymgmt.domainlogic.usecase.InventUseCase
 import org.fmm.communitymgmt.domainlogic.usecase.SignUpUserInfoUseCase
 import org.fmm.communitymgmt.ui.enrollment.brothers.ScanUseCase
 import org.fmm.communitymgmt.ui.security.util.EncryptedPrefsStorage
@@ -126,14 +125,6 @@ object NetworkModule {
     fun provideCreateInvitationUseCase(invitationRepository: InvitationRepository)
     :CreateInvitationUseCase {
         return CreateInvitationUseCase(invitationRepository)
-    }
-
-
-    @Provides
-    @IntoMap
-    @StringKey("brothers")
-    fun provideBrothersQRUseCase(invitationRepository: InvitationRepository): ScanUseCase {
-        return InventUseCase(invitationRepository)
     }
 
 

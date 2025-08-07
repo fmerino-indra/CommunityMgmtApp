@@ -18,4 +18,7 @@ interface UserInfoApiService {
      * suspend fun postUserInfo(@Body userInfoDTO:UserInfoDTO): Call<UserInfoDTO>
      */
 
+    @POST("userinfo/communities")
+    suspend fun putUserInfo(@Body userInfoDTO: UserInfoDTO): UserInfoDTO
+
 }

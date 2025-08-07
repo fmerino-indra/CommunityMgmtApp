@@ -60,4 +60,28 @@ class UserInfoRepositoryImpl @Inject constructor(private val apiService: UserInf
         }
         throw RuntimeException("Exception while posting UserInfo")
     }
+
+    override suspend fun signUpCommunity(userInfo: UserInfoModel): UserInfoModel {
+        runCatching {
+            apiService.putUserInfo(UserInfoDTO.fromDomain(userInfo))
+        }.onSuccess {
+            return it.toDomain()
+        }.onFailure {
+            Log.e("UserInfoRepositoryImpl", "Problems while posting UserInfo", it)
+            if (it is ConnectException || (it is HttpException && it.code() == 500)) {
+                throw RuntimeException(
+                    "An exception has occurred while trying to connect to " +
+                            "server", it
+                )
+//            } else if (it is HttpException && it.code() == 500) {
+//                throw SocialUserNotFoundException(
+//                    "The user: XXXX, has not been found",
+//                    it
+//                )
+            } else {
+                throw it
+            }
+        }
+        throw RuntimeException("Exception while posting UserInfo")
+    }
 }

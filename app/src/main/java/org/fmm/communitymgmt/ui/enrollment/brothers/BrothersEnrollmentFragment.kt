@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -22,9 +21,8 @@ import org.fmm.communitymgmt.domainmodels.model.InvitationModel
 import org.fmm.communitymgmt.domainmodels.model.InvitationState
 import org.fmm.communitymgmt.ui.enrollment.brothers.dialog.AddInvitationDialog
 import org.fmm.communitymgmt.ui.enrollment.brothers.recyclerview.InvitationListAdapter
-import org.fmm.communitymgmt.ui.enrollment.qr.QRGenBottomSheetDialogFragment
-import org.fmm.communitymgmt.ui.enrollment.qr.QRReaderBottomSheetDialogFragment
-
+import org.fmm.qr.ui.QRGenBottomSheetDialogFragment
+import org.fmm.qr.ui.QRReaderBottomSheetDialogFragment
 
 @AndroidEntryPoint
 class BrothersEnrollmentFragment : Fragment() {
@@ -39,6 +37,7 @@ class BrothersEnrollmentFragment : Fragment() {
     private lateinit var invitationListAdapter: InvitationListAdapter
 
     private lateinit var qrReaderBottomDialog: QRReaderBottomSheetDialogFragment
+    private lateinit var qrGenBottomDialog: QRGenBottomSheetDialogFragment
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -98,15 +97,6 @@ class BrothersEnrollmentFragment : Fragment() {
         val newFragment = AddInvitationDialog(this.brothersEnrollmentViewModel)
 
         newFragment.show(fragmentManager, "dialog")
-        /* No funciona
-        val transaction = fragmentManager.beginTransaction()
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        transaction
-            .add(android.R.id.content, newFragment)
-            .addToBackStack(null)
-            .commit()
-
-         */
     }
 
     private fun initAdapter() {
@@ -116,7 +106,7 @@ class BrothersEnrollmentFragment : Fragment() {
             else {
                 // Navegando a otra página
                 //navigateToQR()
-                shoqQRReader()
+                showQRReader()
             }
         })
 
@@ -127,12 +117,6 @@ class BrothersEnrollmentFragment : Fragment() {
             adapter = invitationListAdapter
         }
         initRefreshList()
-    }
-
-    private fun navigateToQR() {
-        findNavController().navigate(
-            BrothersEnrollmentFragmentDirections.actionBrothersEnrollmentFragmentToQRReaderBrothersEnrollmentFragment()
-        )
     }
 
     private fun initRefreshList() {
@@ -183,8 +167,9 @@ class BrothersEnrollmentFragment : Fragment() {
         val uri = "${requireContext().getString(R.string.intent_base_ur)}${requireContext()
             .getString(R.string.intent_invitation_command)}" +
                 "?id=${invitation.id}&communityId=${invitation.communityId}&signature=${invitation.signature}"
-
-        QRGenBottomSheetDialogFragment(uri).show(parentFragmentManager, "qrBottomSheet")
+// @TODO Pendiente generar el QR del Brother para que lo lea el responsable: JSON
+        qrGenBottomDialog.uri = uri
+        qrGenBottomDialog.show(parentFragmentManager, "qrBottomSheet")
     }
 
     private fun message(message: String) {
@@ -199,13 +184,10 @@ class BrothersEnrollmentFragment : Fragment() {
      */
 
     private fun initDialogs() {
+        qrGenBottomDialog = QRGenBottomSheetDialogFragment()
         qrReaderBottomDialog=QRReaderBottomSheetDialogFragment({
             onReadQRReaderDialog(it)
         })
-        /*
-        qrGenBottomSheetDialogFragment= QRGenBottomSheetDialogFragment()
-
-         */
     }
 
     private fun onReadQRReaderDialog(qr:String) {
@@ -214,7 +196,7 @@ class BrothersEnrollmentFragment : Fragment() {
 
     }
 
-    private fun shoqQRReader() {
+    private fun showQRReader() {
         qrReaderBottomDialog.show(parentFragmentManager, "qrBottomSheet")
     }
 

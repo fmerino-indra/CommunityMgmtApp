@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.fmm.communitymgmt.domainlogic.usecase.SignUpUserInfoUseCase
+import org.fmm.communitymgmt.domainlogic.usecase.SignUpCommunityUserInfoUseCase
 import org.fmm.communitymgmt.domainmodels.model.CommunityInfoModel
 import org.fmm.communitymgmt.domainmodels.model.CommunityModel
 import org.fmm.communitymgmt.ui.common.AddressForm
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CommunityEnrollmentViewModel @Inject constructor(
-    private val useCase: SignUpUserInfoUseCase
+    private val useCase: SignUpCommunityUserInfoUseCase
     //,
     //private val _userSession:UserSession
 ): ViewModel() {

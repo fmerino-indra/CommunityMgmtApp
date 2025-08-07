@@ -23,7 +23,7 @@ android {
 
     defaultConfig {
         applicationId = "org.fmm.communitymgmt"
-        minSdk = 26
+        minSdk = 29
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -144,6 +144,8 @@ dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
 
+    implementation(libs.qr.util)
+    implementation(libs.cryptography.util)
 }
 
 tasks.register("listConfigurations") {

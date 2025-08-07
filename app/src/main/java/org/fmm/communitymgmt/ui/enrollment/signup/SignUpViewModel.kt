@@ -86,6 +86,8 @@ class SignUpViewModel @Inject constructor(
                 runCatching {
                     signUpUserInfoUseCase(userInfo)
                 }.onSuccess {
+                    userSession.initialize(it)
+
                     _uiSignUpState.value = SignUpUIState.RegisteredMode
                     // [FMMP] Revisar userInfoViewModel
                     //_userInfoViewModel.setUserInfo(it)
