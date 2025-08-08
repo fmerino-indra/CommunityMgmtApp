@@ -93,10 +93,9 @@ class CommunityEnrollmentViewModel @Inject constructor(
     }
 
     private fun validateForm(updatedForm: CommunityEnrollmentForm): CommunityEnrollmentForm {
-        val nError = if (updatedForm.communityNumber.isBlank()) "Name is mandatory" else
+        val nError = if (updatedForm.communityNumber.isBlank()) "Community number is mandatory" else
             null
-        val pError = if (updatedForm.parish.isBlank()) "Surname1 is mandatory" else null
-//        val newAddress = addressViewModel.validateAddress(updatedState.parishAddressForm)
+        val pError = if (updatedForm.parish.isBlank()) "Parish name is mandatory" else null
 
         val isValid = nError == null
                 && pError == null

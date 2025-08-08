@@ -359,6 +359,13 @@ class SignUpFragment : Fragment() {
         }
 
  */
+        @BindingAdapter("personFormReadOnlyFieldValue", requireAll = true)
+        @JvmStatic
+        fun bindReadOnlyGenericaField(
+            view: EditText, value: String?
+        ) {
+            bindGenericaField(view, value, null)
+        }
 
         @BindingAdapter("formFieldValue", "onFieldChanged", requireAll = false)
         @JvmStatic

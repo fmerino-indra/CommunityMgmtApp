@@ -1,11 +1,12 @@
 package org.fmm.communitymgmt.ui.enrollment.signup
 
-import org.fmm.communitymgmt.domainmodels.model.Genders
-import org.fmm.communitymgmt.domainmodels.model.UserInfoModel
+import org.fmm.communitymgmt.ui.common.person.PersonForm
 
 // @todo Actualizar los campos con los correspondientes
 // @todo Pintar la pantalla
 data class SignUpFormState (
+    val personForm: PersonForm = PersonForm(),
+    /*
     val providerId : String? = "",
     val name: String = "",
     val surname1: String = "",
@@ -14,14 +15,19 @@ data class SignUpFormState (
     val gender: Genders? = null,
     val birthday: String = "",
     val emailAccount: String = "",
+
+     */
     val isResponsible: Boolean? = false,
 
+    /*
     val nameError: String = "",
     val surname1Error: String = "",
     val surname2Error: String = "",
     val nicknameError: String = "",
     val genderError: String = "",
     val emailAccountError: String = "",
+
+     */
     val isResponibleError: String = "",
 
     val isStep1Valid:Boolean = false,

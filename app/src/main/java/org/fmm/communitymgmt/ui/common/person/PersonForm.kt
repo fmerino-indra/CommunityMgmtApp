@@ -2,7 +2,8 @@ package org.fmm.communitymgmt.ui.common.person
 
 import org.fmm.communitymgmt.domainmodels.model.Genders
 
-data class PersonFormState (
+data class PersonForm (
+    val providerId: String = "",
     val name: String = "",
     val surname1: String = "",
     val surname2: String = "",
@@ -12,6 +13,7 @@ data class PersonFormState (
     val emailAccount: String = "",
     val isResponsible: Boolean? = false,
 
+    val providerIdError: String? = "",
     val nameError: String? = "",
     val surname1Error: String? = "",
     val surname2Error: String? = "",
@@ -20,6 +22,6 @@ data class PersonFormState (
     val emailAccountError: String? = "",
     val isResponibleError: String? = "",
 
-    val isStep1Valid:Boolean = false,
+    val isPersonValid:Boolean = false,
 ){
 }
